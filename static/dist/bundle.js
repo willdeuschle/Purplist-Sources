@@ -86,7 +86,7 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                'hello world'
+	                'hello world, this is a protected page'
 	            );
 	        }
 	    }]);

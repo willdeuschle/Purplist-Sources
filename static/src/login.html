@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
     <h1>Login</h1>
-    <form action='' method='post' name='login'>
-        <input type='submit' value='Login with Facebook' />
-    </form>
+    {% if current_user.is_authenticated %}
+        <h2>Hi, {{ current_user.nickname }}</h2>
+        <p><a href="{{ url_for('logout') }}">Click here to logout.</a></p>
+    {% else %}
+    <h2>Welcome to Source</h2>
+        <p><a href="{{ url_for('authorize', provider='facebook') }}">Click here to login with Facebook</a></p>
+    {% endif %}
 {% endblock %}
