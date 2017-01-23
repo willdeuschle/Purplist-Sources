@@ -1,6 +1,6 @@
 module.exports = {
     entry: [
-        './static/src/index.js'
+        './static/src/js/index.js'
     ],
     output: {
         path: __dirname + '/static/dist/',
@@ -8,7 +8,8 @@ module.exports = {
     },
     module: {
         loaders: [
-            { test: /\.js$/, include: __dirname + '/static', loader: 'babel-loader'}
+            { test: /\.js$/, include: __dirname + '/static/src', loader: 'babel-loader'},
+            { test: /\.css$/, include: __dirname + '/static/src', loader: 'style-loader!css-loader' }
         ]
     }
 }

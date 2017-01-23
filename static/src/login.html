@@ -1,11 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Login</h1>
-    {% if current_user.is_authenticated %}
-        <h2>Hi, {{ current_user.nickname }}</h2>
-        <p><a href="{{ url_for('logout') }}">Click here to logout.</a></p>
-    {% else %}
-    <h2>Welcome to Source</h2>
-        <p><a href="{{ url_for('authorize', provider='facebook') }}">Click here to login with Facebook</a></p>
-    {% endif %}
+    <div class='page-wrapper'>
+        <div class='login-wrapper'>
+            <h1 class='welcome-source'>Welcome to Source</h1>
+            {% if current_user.is_authenticated %}
+                <h2 class='greeting-user'>Hi, {{ current_user.nickname }}</h2>
+                <p class='logout-offer'>
+                    <a class='logout-button' href="{{ url_for('logout') }}">
+                        Click here to logout.
+                    </a>
+                </p>
+            {% else %}
+                <a class='login-button' href="{{ url_for('authorize', provider='facebook') }}">
+                    Login with Facebook
+                </a>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

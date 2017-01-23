@@ -19,13 +19,6 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-# this is only for development right now, but it logs the user in
-@app.route('/unsafe_login', methods=['GET', 'POST'])
-def unsafe_login():
-    w = User.query.first()
-    login_user(w)
-    return redirect(url_for('index'))
-
 # this route is for authorizing users
 @app.route('/authorize/<provider>')
 def authorize(provider):
