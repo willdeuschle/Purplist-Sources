@@ -1,0 +1,5 @@
+six>=1.10.0
+promise>=0.4.2
+
+[gevent]
+gevent==1.1rc1
