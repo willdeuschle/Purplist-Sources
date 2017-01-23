@@ -20,6 +20,12 @@ class ProductionConfig(Config):
 class StagingConfig(Config):
     DEVELOPMENT=True
     DEBUG=True
+    OAUTH_CREDENTIALS = {
+        'facebook': {
+            'id': '157719788054501',
+            'secret': '522f75f33205a5ef90dcd1130f6937c7'
+        }
+    }
 
 class DevelopmentConfig(Config):
     DEVELOPMENT=True

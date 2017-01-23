@@ -73,7 +73,7 @@ def logout():
     return redirect(url_for('login'))
 
 # this is the index page
-@app.route('/home', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
     return render_template('index.html')
