@@ -3,6 +3,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager, login_required, logout_user, login_user, current_user
 from flask import Flask, render_template, url_for, redirect, flash
 from oauth import OAuthSignIn
+from flask_graphql import GraphQLView
 
 
 app = Flask(__name__, static_folder='./static/dist', template_folder='./static/src')
@@ -10,7 +11,20 @@ app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-from models import User
+# we can't import User until the db is set up
+from models import User, Source
+
+# we cant import schema until the models are set up, and they need the db
+from schema import schema
+app.add_url_rule(
+    '/graphql',
+    view_func=GraphQLView.as_view(
+        'graphql',
+        schema=schema,
+        graphiql=True
+    )
+)
+
 
 # manages user authentication and sesions
 lm = LoginManager(app)

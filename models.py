@@ -10,7 +10,7 @@ class User(UserMixin, db.Model):
     nickname = db.Column(db.String(64), nullable=False)
     email = db.Column(db.String(64), nullable=True)
 
-    def __init__(self, social_id, nickname, email):
+    def __init__(self, social_id, nickname, email=None):
         self.social_id = social_id
         self.nickname = nickname
         self.email = email
@@ -26,11 +26,15 @@ class Source(db.Model):
     title = db.Column(db.String())
     source_url = db.Column(db.String())
     favicon_url = db.Column(db.String())
+    # foreign key
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = db.relationship('User', backref='sources')
 
-    def __init__(self, title, source_url, favicon_url):
+    def __init__(self, title, source_url, favicon_url, user):
         self.title = title
         self.source_url = source_url
         self.favicon_url = favicon_url
+        self.user = user
 
     def __repr__(self):
         return '<Source: {}>'.format(self.title)
