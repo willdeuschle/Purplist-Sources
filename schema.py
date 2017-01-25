@@ -40,9 +40,17 @@ class UserType(graphene.ObjectType):
 class Query(graphene.ObjectType):
     user = graphene.Field(
         UserType,
-        id=graphene.ID(),
+        # this is an argument to the user root field on Query
+        userId=graphene.ID(),
         nickname=graphene.String(),
         description='A user',
+    )
+
+    sources = graphene.List(
+        SourceType,
+        # this is an argument to the sources root field on Query
+        userId = graphene.ID(),
+        description='The sources for a given user',
     )
 
     def resolve_user(self, args, context, info):
@@ -50,8 +58,12 @@ class Query(graphene.ObjectType):
         if nickname:
             return User.query.filter_by(nickname=nickname).first()
         else:
-            user_id = args.get('id')
+            user_id = args.get('userId')
             return User.query.get(user_id)
+
+    def resolve_sources(self, args, context, info):
+        user_id = args.get('userId')
+        return Source.query.filter_by(user_id=user_id)
 
 
 schema = graphene.Schema(query=Query)

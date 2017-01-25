@@ -1,24 +1,16 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
+import ApolloClient from 'apollo-client'
+import { ApolloProvider } from 'react-apollo'
 
-import '../styles/App.css'
+const client = new ApolloClient()
 
-class App extends Component {
-    componentDidMount() {
-        console.log("now need to access some data")
-    }
-
-    render() {
-        return (
-            <div className='reactive-base'>
-                hello world, this is a protected page
-                <a className='foo' href='logout'>Logout</a>
-            </div>
-        )
-    }
-}
+import { AppWithData } from './App.js'
 
 
 ReactDOM.render(
-    <App />, document.getElementById('root')
+    <ApolloProvider client={client}>
+        <AppWithData />
+    </ApolloProvider>,
+    document.getElementById('root')
 )

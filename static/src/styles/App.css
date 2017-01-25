@@ -4,4 +4,27 @@
     background: #B993D6; /* fallback for old browsers */
     background: -webkit-linear-gradient(to left, #B993D6 , #8CA6DB); /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to left, #B993D6 , #8CA6DB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
+    /*background: #6441A5; [> fallback for old browsers <]*/
+    /*background: -webkit-linear-gradient(to left, #6441A5 , #2a0845); [> Chrome 10-25, Safari 5.1-6 <]*/
+    /*background: linear-gradient(to left, #6441A5 , #2a0845); [> W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ <]*/
+}
+
+.reactive-base .logout-button {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 5px;
+    font-size: 12px;
+    margin: 10px;
+    font-weight: 200;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    background: #9932CC;
+    color: white;
+}
+
+.logout-button:hover {
+    background: #8B008B;
 }
