@@ -26,11 +26,22 @@ class App extends Component {
 
     componentWillReceiveProps(newProps) {
         console.log("newProps", newProps)
-        if (newProps.user && newProps.sources) {
-            console.log("hi")
+        if (newProps.user) {
             this.setState({
                 name: newProps.user.nickname,
-                sourceTitle: newProps.sources[0].title,
+            })
+        }
+    }
+
+    renderHeapList() {
+        if (this.props.user) {
+            return this.props.user.heapList.sources.map((sourceItem) => {
+                return (
+                    <div key={sourceItem.id} className='sourceItem'>
+                        <img className='sourceImg' src={sourceItem.faviconUrl}/>
+                        {sourceItem.title}
+                    </div>
+                )
             })
         }
     }
@@ -39,8 +50,8 @@ class App extends Component {
         return (
             <div className='reactive-base'>
                 hello {this.state.name || 'person'}, this is a protected page
-                here are some of your sources: {this.state.sourceTitle}
                 <a className='logout-button' href='logout'>Logout</a>
+                {this.renderHeapList()}
             </div>
         )
     }
@@ -56,11 +67,15 @@ const myQuery = gql`
     query ($cu_id: ID!) {
         user(userId: $cu_id) {
             nickname,
-        },
-        sources(userId: $cu_id) {
-            title,
-            faviconUrl,
-            sourceUrl,
+            heapList {
+                name,
+                sources {
+                    id,
+                    title,
+                    sourceUrl,
+                    faviconUrl,
+                },
+            },
         },
     }
 `
@@ -73,9 +88,8 @@ const options = {
 }
 
 // potentially rename our props in the future
-const props = ({ ownProps, data: { user, sources } }) => ({
+const props = ({ ownProps, data: { user } }) => ({
     user: user,
-    sources: sources,
 })
 
 // export the 'connected' component

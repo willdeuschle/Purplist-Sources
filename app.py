@@ -12,7 +12,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 # we can't import User until the db is set up
-from models import User, Source
+from models import User, Source, SourceList
 
 # we cant import schema until the models are set up, and they need the db
 from schema import schema
@@ -60,10 +60,14 @@ def oauth_callback(provider):
     # get the user
     user = User.query.filter_by(social_id=social_id).first()
     # create them if this is their first time
+    # also create their heap list
     if not user:
         user = User(social_id=social_id, nickname=nickname, email=email)
+        heap_list = SourceList(name="Heap", user=user, is_heap=True)
         db.session.add(user)
+        db.session.add(heap_list)
         db.session.commit()
+    # the 'True' tells our login manager to remember the user
     login_user(user, True)
     return redirect(url_for('index'))
 

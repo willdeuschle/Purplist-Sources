@@ -67,7 +67,7 @@
 
 	var _reactApollo = __webpack_require__(208);
 
-	var _App = __webpack_require__(223);
+	var _App = __webpack_require__(217);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28541,7 +28541,151 @@
 /* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var parse = __webpack_require__(218).parse;
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.AppWithData = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _templateObject = _taggedTemplateLiteral(['\n    query ($cu_id: ID!) {\n        user(userId: $cu_id) {\n            nickname,\n            heapList {\n                name,\n                sources {\n                    id,\n                    title,\n                    sourceUrl,\n                    faviconUrl,\n                },\n            },\n        },\n    }\n'], ['\n    query ($cu_id: ID!) {\n        user(userId: $cu_id) {\n            nickname,\n            heapList {\n                name,\n                sources {\n                    id,\n                    title,\n                    sourceUrl,\n                    faviconUrl,\n                },\n            },\n        },\n    }\n']);
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _apolloClient = __webpack_require__(179);
+
+	var _apolloClient2 = _interopRequireDefault(_apolloClient);
+
+	var _reactApollo = __webpack_require__(208);
+
+	var _graphqlTag = __webpack_require__(218);
+
+	var _graphqlTag2 = _interopRequireDefault(_graphqlTag);
+
+	__webpack_require__(220);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	// set up our ApolloClient for data management
+	var client = new _apolloClient2.default();
+
+	// styling for this component
+
+	// our base component
+	var App = function (_Component) {
+	    _inherits(App, _Component);
+
+	    function App() {
+	        _classCallCheck(this, App);
+
+	        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
+
+	        _this.state = {
+	            name: null,
+	            sourceTitle: null
+	        };
+	        return _this;
+	    }
+
+	    _createClass(App, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            console.log("now need to access some datas", cu_id);
+	        }
+	    }, {
+	        key: 'componentWillReceiveProps',
+	        value: function componentWillReceiveProps(newProps) {
+	            console.log("newProps", newProps);
+	            if (newProps.user) {
+	                this.setState({
+	                    name: newProps.user.nickname
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'renderHeapList',
+	        value: function renderHeapList() {
+	            if (this.props.user) {
+	                return this.props.user.heapList.sources.map(function (sourceItem) {
+	                    return _react2.default.createElement(
+	                        'div',
+	                        { key: sourceItem.id, className: 'sourceItem' },
+	                        _react2.default.createElement('img', { className: 'sourceImg', src: sourceItem.faviconUrl }),
+	                        sourceItem.title
+	                    );
+	                });
+	            }
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'reactive-base' },
+	                'hello ',
+	                this.state.name || 'person',
+	                ', this is a protected page',
+	                _react2.default.createElement(
+	                    'a',
+	                    { className: 'logout-button', href: 'logout' },
+	                    'Logout'
+	                ),
+	                this.renderHeapList()
+	            );
+	        }
+	    }]);
+
+	    return App;
+	}(_react.Component);
+
+	exports.default = App;
+
+	// query for Apollo to execute
+	// we could access all of the sources from the
+	// user itself, but this creates a flatter
+	// data structure
+
+	var myQuery = (0, _graphqlTag2.default)(_templateObject);
+
+	// the variables we want to use with the query
+	var options = {
+	    variables: {
+	        cu_id: window.cu_id
+	    }
+	};
+
+	// potentially rename our props in the future
+	var props = function props(_ref) {
+	    var ownProps = _ref.ownProps,
+	        user = _ref.data.user;
+	    return {
+	        user: user
+	    };
+	};
+
+	// export the 'connected' component
+	var AppWithData = exports.AppWithData = (0, _reactApollo.graphql)(myQuery, {
+	    options: options,
+	    props: props
+	})(App);
+
+/***/ },
+/* 218 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var parse = __webpack_require__(219).parse;
 
 	// Strip insignificant whitespace
 	// Note that this could do a lot more, such as reorder fields etc.
@@ -28704,7 +28848,7 @@
 
 
 /***/ },
-/* 218 */
+/* 219 */
 /***/ function(module, exports) {
 
 	module.exports =
@@ -31477,16 +31621,16 @@
 	/******/ ]);
 
 /***/ },
-/* 219 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(220);
+	var content = __webpack_require__(221);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(222)(content, {});
+	var update = __webpack_require__(223)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -31503,21 +31647,21 @@
 	}
 
 /***/ },
-/* 220 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(221)();
+	exports = module.exports = __webpack_require__(222)();
 	// imports
 
 
 	// module
-	exports.push([module.id, ".reactive-base {\n    width: 100%;\n    height: 100vh;\n    background: #B993D6; /* fallback for old browsers */\n    background: -webkit-linear-gradient(to left, #B993D6 , #8CA6DB); /* Chrome 10-25, Safari 5.1-6 */\n    background: linear-gradient(to left, #B993D6 , #8CA6DB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */\n    \n    /*background: #6441A5; [> fallback for old browsers <]*/\n    /*background: -webkit-linear-gradient(to left, #6441A5 , #2a0845); [> Chrome 10-25, Safari 5.1-6 <]*/\n    /*background: linear-gradient(to left, #6441A5 , #2a0845); [> W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ <]*/\n}\n\n.reactive-base .logout-button {\n    position: fixed;\n    bottom: 0;\n    right: 0;\n    padding: 5px;\n    font-size: 12px;\n    margin: 10px;\n    font-weight: 200;\n    border-radius: 4px;\n    text-decoration: none;\n    cursor: pointer;\n    background: #9932CC;\n    color: white;\n}\n\n.logout-button:hover {\n    background: #8B008B;\n}\n", ""]);
+	exports.push([module.id, ".reactive-base {\n    width: 100%;\n    height: 100vh;\n    background: #B993D6; /* fallback for old browsers */\n    background: -webkit-linear-gradient(to left, #B993D6 , #8CA6DB); /* Chrome 10-25, Safari 5.1-6 */\n    background: linear-gradient(to left, #B993D6 , #8CA6DB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */\n    \n    /*background: #6441A5; [> fallback for old browsers <]*/\n    /*background: -webkit-linear-gradient(to left, #6441A5 , #2a0845); [> Chrome 10-25, Safari 5.1-6 <]*/\n    /*background: linear-gradient(to left, #6441A5 , #2a0845); [> W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ <]*/\n}\n\n.reactive-base .logout-button {\n    position: fixed;\n    bottom: 0;\n    right: 0;\n    padding: 5px;\n    font-size: 12px;\n    margin: 10px;\n    font-weight: 200;\n    border-radius: 4px;\n    text-decoration: none;\n    cursor: pointer;\n    background: #9932CC;\n    color: white;\n}\n\n.logout-button:hover {\n    background: #8B008B;\n}\n\n/*this is totally experimental*/\n.sourceItem {\n    font-size: 20px;\n    display: flex;\n    height: 30px;\n    justify-content: center;\n    align-items: center;\n    border: 1px solid black;\n    padding: 5px;\n    width: 600px;\n    margin: auto;\n    border-radius: 4px;\n}\n\n.sourceImg {\n    width: 30px;\n    margin-right: 10px;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 221 */
+/* 222 */
 /***/ function(module, exports) {
 
 	/*
@@ -31573,7 +31717,7 @@
 
 
 /***/ },
-/* 222 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -31823,141 +31967,6 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
-
-/***/ },
-/* 223 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.AppWithData = undefined;
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _templateObject = _taggedTemplateLiteral(['\n    query ($cu_id: ID!) {\n        user(userId: $cu_id) {\n            nickname,\n        },\n        sources(userId: $cu_id) {\n            title,\n            faviconUrl,\n            sourceUrl,\n        },\n    }\n'], ['\n    query ($cu_id: ID!) {\n        user(userId: $cu_id) {\n            nickname,\n        },\n        sources(userId: $cu_id) {\n            title,\n            faviconUrl,\n            sourceUrl,\n        },\n    }\n']);
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _apolloClient = __webpack_require__(179);
-
-	var _apolloClient2 = _interopRequireDefault(_apolloClient);
-
-	var _reactApollo = __webpack_require__(208);
-
-	var _graphqlTag = __webpack_require__(217);
-
-	var _graphqlTag2 = _interopRequireDefault(_graphqlTag);
-
-	__webpack_require__(219);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	// set up our ApolloClient for data management
-	var client = new _apolloClient2.default();
-
-	// styling for this component
-
-	// our base component
-	var App = function (_Component) {
-	    _inherits(App, _Component);
-
-	    function App() {
-	        _classCallCheck(this, App);
-
-	        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
-
-	        _this.state = {
-	            name: null,
-	            sourceTitle: null
-	        };
-	        return _this;
-	    }
-
-	    _createClass(App, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            console.log("now need to access some datas", cu_id);
-	        }
-	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(newProps) {
-	            console.log("newProps", newProps);
-	            if (newProps.user && newProps.sources) {
-	                console.log("hi");
-	                this.setState({
-	                    name: newProps.user.nickname,
-	                    sourceTitle: newProps.sources[0].title
-	                });
-	            }
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'reactive-base' },
-	                'hello ',
-	                this.state.name || 'person',
-	                ', this is a protected page here are some of your sources: ',
-	                this.state.sourceTitle,
-	                _react2.default.createElement(
-	                    'a',
-	                    { className: 'logout-button', href: 'logout' },
-	                    'Logout'
-	                )
-	            );
-	        }
-	    }]);
-
-	    return App;
-	}(_react.Component);
-
-	exports.default = App;
-
-	// query for Apollo to execute
-	// we could access all of the sources from the
-	// user itself, but this creates a flatter
-	// data structure
-
-	var myQuery = (0, _graphqlTag2.default)(_templateObject);
-
-	// the variables we want to use with the query
-	var options = {
-	    variables: {
-	        cu_id: window.cu_id
-	    }
-	};
-
-	// potentially rename our props in the future
-	var props = function props(_ref) {
-	    var ownProps = _ref.ownProps,
-	        _ref$data = _ref.data,
-	        user = _ref$data.user,
-	        sources = _ref$data.sources;
-	    return {
-	        user: user,
-	        sources: sources
-	    };
-	};
-
-	// export the 'connected' component
-	var AppWithData = exports.AppWithData = (0, _reactApollo.graphql)(myQuery, {
-	    options: options,
-	    props: props
-	})(App);
 
 /***/ }
 /******/ ]);

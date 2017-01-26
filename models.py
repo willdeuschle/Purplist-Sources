@@ -29,12 +29,31 @@ class Source(db.Model):
     # foreign key
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     user = db.relationship('User', backref='sources')
+    # another foreign key for lists
+    source_list_id = db.Column(db.Integer, db.ForeignKey('source_lists.id'))
+    source_list = db.relationship('SourceList', backref='sources')
 
-    def __init__(self, title, source_url, favicon_url, user):
+    def __init__(self, title, source_url, favicon_url, user, source_list):
         self.title = title
         self.source_url = source_url
         self.favicon_url = favicon_url
         self.user = user
+        self.source_list = source_list
 
     def __repr__(self):
         return '<Source: {}>'.format(self.title)
+
+class SourceList(db.Model):
+    __tablename__ = 'source_lists'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String())
+    is_heap = db.Column(db.Boolean())
+    # foreign key
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = db.relationship('User', backref='source_lists')
+
+    def __init__(self, name, user, is_heap=False):
+        self.name = name
+        self.user = user
+        self.is_heap = is_heap

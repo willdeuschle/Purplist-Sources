@@ -28,3 +28,22 @@
 .logout-button:hover {
     background: #8B008B;
 }
+
+/*this is totally experimental*/
+.sourceItem {
+    font-size: 20px;
+    display: flex;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    padding: 5px;
+    width: 600px;
+    margin: auto;
+    border-radius: 4px;
+}
+
+.sourceImg {
+    width: 30px;
+    margin-right: 10px;
+}
