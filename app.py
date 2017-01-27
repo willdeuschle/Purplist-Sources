@@ -27,10 +27,6 @@ from schema import schema
     # )
 # )
 
-@app.before_request
-def foo():
-    print('foo', request, current_user)
-
 # manages user authentication and sesions
 lm = LoginManager(app)
 @lm.user_loader
@@ -46,8 +42,7 @@ def graphql():
         'graphql',
         schema=schema,
         context={'current_user': current_user},
-        graphiql=app.config['DEVELOPMENT'] == True,
-        batch=app.config['DEVELOPMENT'] != True,
+        graphiql=app.config['DEVELOPMENT'],
     )()
 
 
