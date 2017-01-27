@@ -28544,13 +28544,13 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	exports.AppWithData = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _templateObject = _taggedTemplateLiteral(['\n    query ($cu_id: ID!) {\n        user(userId: $cu_id) {\n            nickname,\n            heapList {\n                name,\n                sources {\n                    id,\n                    title,\n                    sourceUrl,\n                    faviconUrl,\n                },\n            },\n        },\n    }\n'], ['\n    query ($cu_id: ID!) {\n        user(userId: $cu_id) {\n            nickname,\n            heapList {\n                name,\n                sources {\n                    id,\n                    title,\n                    sourceUrl,\n                    faviconUrl,\n                },\n            },\n        },\n    }\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  query ($cu_id: ID!) {\n    user(userId: $cu_id) {\n      nickname,\n      heapList {\n        name,\n        sources {\n          id,\n          title,\n          sourceUrl,\n          faviconUrl,\n        },\n      },\n    },\n  }\n'], ['\n  query ($cu_id: ID!) {\n    user(userId: $cu_id) {\n      nickname,\n      heapList {\n        name,\n        sources {\n          id,\n          title,\n          sourceUrl,\n          faviconUrl,\n        },\n      },\n    },\n  }\n']);
 
 	var _react = __webpack_require__(2);
 
@@ -28585,69 +28585,63 @@
 
 	// our base component
 	var App = function (_Component) {
-	    _inherits(App, _Component);
+	  _inherits(App, _Component);
 
-	    function App() {
-	        _classCallCheck(this, App);
+	  function App() {
+	    _classCallCheck(this, App);
 
-	        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
+	    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+	  }
 
-	        _this.state = {
-	            name: null,
-	            sourceTitle: null
-	        };
-	        return _this;
+	  _createClass(App, [{
+	    key: 'renderHeapList',
+	    value: function renderHeapList() {
+	      if (this.props.user) {
+	        return this.props.user.heapList.sources.map(function (sourceItem) {
+	          return _react2.default.createElement(
+	            'a',
+	            {
+	              href: sourceItem.sourceUrl,
+	              target: '_blank',
+	              key: sourceItem.id,
+	              className: 'sourceItem'
+	            },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'sourceImgWrapper' },
+	              _react2.default.createElement('img', { className: 'sourceImg', src: sourceItem.faviconUrl })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'sourceTxtWrapper' },
+	              sourceItem.title
+	            )
+	          );
+	        });
+	      }
 	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'reactive-base' },
+	        'this is a protected page',
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'HeapList' },
+	          this.renderHeapList()
+	        ),
+	        _react2.default.createElement(
+	          'a',
+	          { className: 'logout-button', href: 'logout' },
+	          'Logout'
+	        )
+	      );
+	    }
+	  }]);
 
-	    _createClass(App, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            console.log("now need to access some datas", cu_id);
-	        }
-	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(newProps) {
-	            console.log("newProps", newProps);
-	            if (newProps.user) {
-	                this.setState({
-	                    name: newProps.user.nickname
-	                });
-	            }
-	        }
-	    }, {
-	        key: 'renderHeapList',
-	        value: function renderHeapList() {
-	            if (this.props.user) {
-	                return this.props.user.heapList.sources.map(function (sourceItem) {
-	                    return _react2.default.createElement(
-	                        'div',
-	                        { key: sourceItem.id, className: 'sourceItem' },
-	                        _react2.default.createElement('img', { className: 'sourceImg', src: sourceItem.faviconUrl }),
-	                        sourceItem.title
-	                    );
-	                });
-	            }
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'reactive-base' },
-	                'hello ',
-	                this.state.name || 'person',
-	                ', this is a protected page',
-	                _react2.default.createElement(
-	                    'a',
-	                    { className: 'logout-button', href: 'logout' },
-	                    'Logout'
-	                ),
-	                this.renderHeapList()
-	            );
-	        }
-	    }]);
-
-	    return App;
+	  return App;
 	}(_react.Component);
 
 	exports.default = App;
@@ -28661,24 +28655,24 @@
 
 	// the variables we want to use with the query
 	var options = {
-	    variables: {
-	        cu_id: window.cu_id
-	    }
+	  variables: {
+	    cu_id: window.cu_id
+	  }
 	};
 
 	// potentially rename our props in the future
 	var props = function props(_ref) {
-	    var ownProps = _ref.ownProps,
-	        user = _ref.data.user;
-	    return {
-	        user: user
-	    };
+	  var ownProps = _ref.ownProps,
+	      user = _ref.data.user;
+	  return {
+	    user: user
+	  };
 	};
 
 	// export the 'connected' component
 	var AppWithData = exports.AppWithData = (0, _reactApollo.graphql)(myQuery, {
-	    options: options,
-	    props: props
+	  options: options,
+	  props: props
 	})(App);
 
 /***/ },
@@ -31655,7 +31649,7 @@
 
 
 	// module
-	exports.push([module.id, ".reactive-base {\n    width: 100%;\n    height: 100vh;\n    background: #B993D6; /* fallback for old browsers */\n    background: -webkit-linear-gradient(to left, #B993D6 , #8CA6DB); /* Chrome 10-25, Safari 5.1-6 */\n    background: linear-gradient(to left, #B993D6 , #8CA6DB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */\n    \n    /*background: #6441A5; [> fallback for old browsers <]*/\n    /*background: -webkit-linear-gradient(to left, #6441A5 , #2a0845); [> Chrome 10-25, Safari 5.1-6 <]*/\n    /*background: linear-gradient(to left, #6441A5 , #2a0845); [> W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ <]*/\n}\n\n.reactive-base .logout-button {\n    position: fixed;\n    bottom: 0;\n    right: 0;\n    padding: 5px;\n    font-size: 12px;\n    margin: 10px;\n    font-weight: 200;\n    border-radius: 4px;\n    text-decoration: none;\n    cursor: pointer;\n    background: #9932CC;\n    color: white;\n}\n\n.logout-button:hover {\n    background: #8B008B;\n}\n\n/*this is totally experimental*/\n.sourceItem {\n    font-size: 20px;\n    display: flex;\n    height: 30px;\n    justify-content: center;\n    align-items: center;\n    border: 1px solid black;\n    padding: 5px;\n    width: 600px;\n    margin: auto;\n    border-radius: 4px;\n}\n\n.sourceImg {\n    width: 30px;\n    margin-right: 10px;\n}\n", ""]);
+	exports.push([module.id, ".reactive-base {\n    width: 100%;\n    height: 100vh;\n    background: #fafafa;\n}\n\n.reactive-base .logout-button {\n    position: fixed;\n    bottom: 0;\n    right: 0;\n    padding: 5px;\n    font-size: 12px;\n    margin: 10px;\n    font-weight: 200;\n    border-radius: 4px;\n    text-decoration: none;\n    cursor: pointer;\n    background: #9932CC;\n    color: white;\n}\n\n.HeapList {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n\n.logout-button:hover {\n    background: #8B008B;\n}\n\n.sourceItem {\n    width: 500px;\n    height: 25px;\n    position: relative;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    font-size: 13px;\n    border: 1px solid #f0f0f0;\n    font-weight: 400;\n    font-style: normal;\n    font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n    letter-spacing: 0;\n    text-decoration: none;\n    padding: 5px 10px;\n    border-radius: 3px;\n    color: rgba(0,0,0,.6);\n    background: rgba(255,255,255,.97);\n    cursor: pointer;\n}\n\n.sourceItem:hover {\n    color: rgba(0,0,0,.8);\n    border-color: rgba(0,0,0,.15);\n    background: #fff;\n}\n\n.sourceImgWrapper {\n  position: absolute;\n  left: 10px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n.sourceImg {\n    width: 25px;\n}\n", ""]);
 
 	// exports
 

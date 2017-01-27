@@ -1,7 +1,7 @@
 import os
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager, login_required, logout_user, login_user, current_user
-from flask import Flask, render_template, url_for, redirect, flash
+from flask import Flask, render_template, url_for, redirect, flash, request
 from oauth import OAuthSignIn
 from flask_graphql import GraphQLView
 
@@ -16,22 +16,46 @@ from models import User, Source, SourceList
 
 # we cant import schema until the models are set up, and they need the db
 from schema import schema
-app.add_url_rule(
-    '/graphql',
-    view_func=GraphQLView.as_view(
-        'graphql',
-        schema=schema,
-        graphiql=True
-    )
-)
+# app.add_url_rule(
+    # '/graphql',
+    # view_func=GraphQLView.as_view(
+        # 'graphql',
+        # schema=schema,
+        # context={},
+        # graphiql=app.config['DEVELOPMENT'] == True,
+        # batch=app.config['DEVELOPMENT'] != True,
+    # )
+# )
 
+@app.before_request
+def foo():
+    print('foo', request, current_user)
 
 # manages user authentication and sesions
 lm = LoginManager(app)
 @lm.user_loader
 def load_user(id):
-    return User.query.get(int(id))
+    try:
+        return User.query.get(int(id))
+    except:
+        return None
 
+@app.route('/graphql', methods=['GET', 'POST'])
+def graphql():
+    return GraphQLView.as_view(
+        'graphql',
+        schema=schema,
+        context={'current_user': current_user},
+        graphiql=app.config['DEVELOPMENT'] == True,
+        batch=app.config['DEVELOPMENT'] != True,
+    )()
+
+
+
+# this route is to handle unauthorized people, just send them to login
+@lm.unauthorized_handler
+def unauthorized():
+    return redirect(url_for('login'))
 
 # this route is for authorizing users
 @app.route('/authorize/<provider>')
@@ -74,7 +98,7 @@ def oauth_callback(provider):
 # this is the landing page, don't need to be logged in to get here
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
+    return render_template('login.html', title='Login')
 
 # this logs you out and returns you to the landing page
 @app.route('/logout')
