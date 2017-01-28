@@ -64,16 +64,16 @@ class FacebookSignin(OAuthSignIn):
 
         # it seems like they are sending back the name instead of the email
         # but in any event I am checking
-        nickname = me.get('name', None)
+        name = me.get('name', None)
         email = me.get('email', None)
 
         # if we don't have a name but do have an email, use the
         # first half of the email
-        if not nickname and email:
-            nickname = email.split('@')[0]
+        if not name and email:
+            name = email.split('@')[0]
 
         return (
             'facebook$:' + me['id'],
-            nickname,
+            name,
             email
         )

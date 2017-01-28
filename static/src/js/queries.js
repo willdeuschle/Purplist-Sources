@@ -4,7 +4,7 @@ import gql from 'graphql-tag'
 export const heapListQuery = gql`
   query heapListQuery($cu_id: ID!) {
     user(userId: $cu_id) {
-      nickname,
+      name,
       heapList {
         name,
         sources {

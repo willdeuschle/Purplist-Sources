@@ -76,7 +76,7 @@ def oauth_callback(provider):
     if not current_user.is_anonymous:
         return redirect(url_for('index'))
     oauth = OAuthSignIn.get_provider(provider)
-    social_id, nickname, email = oauth.callback()
+    social_id, name, email = oauth.callback()
     if social_id is None:
         flash('Authentication failed')
         # returning here to the login page. might want to have the index
@@ -87,7 +87,7 @@ def oauth_callback(provider):
     # create them if this is their first time
     # also create their heap list
     if not user:
-        user = User(social_id=social_id, nickname=nickname, email=email)
+        user = User(social_id=social_id, name=name, email=email)
         heap_list = SourceList(name="Heap", user=user, is_heap=True)
         db.session.add(user)
         db.session.add(heap_list)

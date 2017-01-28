@@ -28567,7 +28567,7 @@
 
 	var _HeapList2 = _interopRequireDefault(_HeapList);
 
-	var _CreateSource = __webpack_require__(227);
+	var _CreateSource = __webpack_require__(230);
 
 	var _CreateSource2 = _interopRequireDefault(_CreateSource);
 
@@ -31925,11 +31925,11 @@
 
 	var _reactApollo = __webpack_require__(208);
 
-	var _immutabilityHelper = __webpack_require__(230);
+	var _immutabilityHelper = __webpack_require__(225);
 
 	var _immutabilityHelper2 = _interopRequireDefault(_immutabilityHelper);
 
-	__webpack_require__(225);
+	__webpack_require__(226);
 
 	var _queries = __webpack_require__(228);
 
@@ -32022,195 +32022,6 @@
 
 /***/ },
 /* 225 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(226);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(223)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./HeapList.css", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./HeapList.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 226 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(222)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".HeapList {\n  padding: 0px 15px;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  height: 85vh;\n}\n\n.sourceItem {\n  width: 100%;\n  height: 25px;\n  min-height: 25px;\n  overflow-y: auto;\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 13px;\n  border: 1px solid #f0f0f0;\n  font-weight: 400;\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  text-decoration: none;\n  padding: 5px 10px;\n  border-radius: 3px;\n  color: rgba(0,0,0,.6);\n  background: rgba(255,255,255,.97);\n  cursor: pointer;\n}\n\n.sourceItem:hover {\n    color: rgba(0,0,0,.8);\n    border-color: rgba(0,0,0,.15);\n    background: #fff;\n}\n\n.sourceImgWrapper {\n  position: absolute;\n  left: 10px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n.sourceImg {\n  width: 25px;\n}\n\n.sourceTxtWrapper {\n  /*this margin left accounts for the size of the image (25px) so there is */\n  /*no unwanted overlap as well as the 10px padding around the whole item */\n  /* so there is equal space from edge to image and image to text */\n  margin-left: calc(25px + 10px);\n  width: 80%;\n  white-space: nowrap;\n  overflow-x: hidden;\n  text-overflow: ellipsis;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 227 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactApollo = __webpack_require__(208);
-
-	var _mutations = __webpack_require__(229);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var CreateSource = function (_Component) {
-	  _inherits(CreateSource, _Component);
-
-	  function CreateSource() {
-	    _classCallCheck(this, CreateSource);
-
-	    var _this = _possibleConstructorReturn(this, (CreateSource.__proto__ || Object.getPrototypeOf(CreateSource)).call(this));
-
-	    _this.createSource = _this.createSource.bind(_this);
-	    return _this;
-	  }
-
-	  _createClass(CreateSource, [{
-	    key: 'createSource',
-	    value: function createSource() {
-	      if (this._input.value) {
-	        this.props.createSource(this._input.value);
-	      }
-	    }
-
-	    // need to style this still
-
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'new-source-wrapper' },
-	        _react2.default.createElement('input', {
-	          ref: function ref(node) {
-	            return _this2._input = node;
-	          },
-	          className: 'new-source-url'
-	        }),
-	        _react2.default.createElement(
-	          'div',
-	          { onClick: this.createSource },
-	          'Submit'
-	        )
-	      );
-	    }
-	  }]);
-
-	  return CreateSource;
-	}(_react.Component);
-
-	// configure our mutation so that we can call it with a single argument
-
-
-	var props = function props(_ref) {
-	  var mutate = _ref.mutate;
-
-	  return {
-	    createSource: function createSource(sourceUrl) {
-	      mutate({ variables: { cu_id: window.cu_id, sourceUrl: sourceUrl } }).then(function (resp) {
-	        return console.log("what is resp", resp);
-	      });
-	    }
-	  };
-	};
-
-	exports.default = (0, _reactApollo.graphql)(_mutations.createSource, { props: props })(CreateSource);
-
-/***/ },
-/* 228 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.queryTypes = exports.heapListQuery = undefined;
-
-	var _templateObject = _taggedTemplateLiteral(['\n  query heapListQuery($cu_id: ID!) {\n    user(userId: $cu_id) {\n      nickname,\n      heapList {\n        name,\n        sources {\n          id,\n          title,\n          sourceUrl,\n          faviconUrl,\n        },\n      },\n    },\n  }\n'], ['\n  query heapListQuery($cu_id: ID!) {\n    user(userId: $cu_id) {\n      nickname,\n      heapList {\n        name,\n        sources {\n          id,\n          title,\n          sourceUrl,\n          faviconUrl,\n        },\n      },\n    },\n  }\n']);
-
-	var _graphqlTag = __webpack_require__(218);
-
-	var _graphqlTag2 = _interopRequireDefault(_graphqlTag);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-	// grab data necessary for the HeapList component
-	var heapListQuery = exports.heapListQuery = (0, _graphqlTag2.default)(_templateObject);
-	var queryTypes = exports.queryTypes = {
-	  heapListQuery: 'heapListQuery'
-	};
-
-/***/ },
-/* 229 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.mutationTypes = exports.createSource = undefined;
-
-	var _templateObject = _taggedTemplateLiteral(['\n  mutation createSource($cu_id: ID!, $sourceUrl: String!) {\n    createSource(userId: $cu_id, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n    }\n  }\n'], ['\n  mutation createSource($cu_id: ID!, $sourceUrl: String!) {\n    createSource(userId: $cu_id, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n    }\n  }\n']);
-
-	var _graphqlTag = __webpack_require__(218);
-
-	var _graphqlTag2 = _interopRequireDefault(_graphqlTag);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-	// mutation to execute to add a source by its url
-	var createSource = exports.createSource = (0, _graphqlTag2.default)(_templateObject);
-
-	var mutationTypes = exports.mutationTypes = {
-	  APOLLO_MUTATION_RESULT: 'APOLLO_MUTATION_RESULT',
-	  createSource: 'createSource'
-	};
-
-/***/ },
-/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var invariant = __webpack_require__(210);
@@ -32398,6 +32209,195 @@
 	  );
 	}
 
+
+/***/ },
+/* 226 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(227);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./HeapList.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./HeapList.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 227 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(222)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".HeapList {\n  padding: 0px 15px;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  height: 85vh;\n}\n\n.sourceItem {\n  width: 100%;\n  height: 25px;\n  min-height: 25px;\n  overflow-y: auto;\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 13px;\n  border: 1px solid #f0f0f0;\n  font-weight: 400;\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  text-decoration: none;\n  padding: 5px 10px;\n  border-radius: 3px;\n  color: rgba(0,0,0,.6);\n  background: rgba(255,255,255,.97);\n  cursor: pointer;\n}\n\n.sourceItem:hover {\n    color: rgba(0,0,0,.8);\n    border-color: rgba(0,0,0,.15);\n    background: #fff;\n}\n\n.sourceImgWrapper {\n  position: absolute;\n  left: 10px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n.sourceImg {\n  width: 25px;\n}\n\n.sourceTxtWrapper {\n  /*this margin left accounts for the size of the image (25px) so there is */\n  /*no unwanted overlap as well as the 10px padding around the whole item */\n  /* so there is equal space from edge to image and image to text */\n  margin-left: calc(25px + 10px);\n  width: 80%;\n  white-space: nowrap;\n  overflow-x: hidden;\n  text-overflow: ellipsis;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 228 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.queryTypes = exports.heapListQuery = undefined;
+
+	var _templateObject = _taggedTemplateLiteral(['\n  query heapListQuery($cu_id: ID!) {\n    user(userId: $cu_id) {\n      name,\n      heapList {\n        name,\n        sources {\n          id,\n          title,\n          sourceUrl,\n          faviconUrl,\n        },\n      },\n    },\n  }\n'], ['\n  query heapListQuery($cu_id: ID!) {\n    user(userId: $cu_id) {\n      name,\n      heapList {\n        name,\n        sources {\n          id,\n          title,\n          sourceUrl,\n          faviconUrl,\n        },\n      },\n    },\n  }\n']);
+
+	var _graphqlTag = __webpack_require__(218);
+
+	var _graphqlTag2 = _interopRequireDefault(_graphqlTag);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+	// grab data necessary for the HeapList component
+	var heapListQuery = exports.heapListQuery = (0, _graphqlTag2.default)(_templateObject);
+	var queryTypes = exports.queryTypes = {
+	  heapListQuery: 'heapListQuery'
+	};
+
+/***/ },
+/* 229 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.mutationTypes = exports.createSource = undefined;
+
+	var _templateObject = _taggedTemplateLiteral(['\n  mutation createSource($cu_id: ID!, $sourceUrl: String!) {\n    createSource(userId: $cu_id, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n    }\n  }\n'], ['\n  mutation createSource($cu_id: ID!, $sourceUrl: String!) {\n    createSource(userId: $cu_id, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n    }\n  }\n']);
+
+	var _graphqlTag = __webpack_require__(218);
+
+	var _graphqlTag2 = _interopRequireDefault(_graphqlTag);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+	// mutation to execute to add a source by its url
+	var createSource = exports.createSource = (0, _graphqlTag2.default)(_templateObject);
+
+	var mutationTypes = exports.mutationTypes = {
+	  APOLLO_MUTATION_RESULT: 'APOLLO_MUTATION_RESULT',
+	  createSource: 'createSource'
+	};
+
+/***/ },
+/* 230 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactApollo = __webpack_require__(208);
+
+	var _mutations = __webpack_require__(229);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var CreateSource = function (_Component) {
+	  _inherits(CreateSource, _Component);
+
+	  function CreateSource() {
+	    _classCallCheck(this, CreateSource);
+
+	    var _this = _possibleConstructorReturn(this, (CreateSource.__proto__ || Object.getPrototypeOf(CreateSource)).call(this));
+
+	    _this.createSource = _this.createSource.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(CreateSource, [{
+	    key: 'createSource',
+	    value: function createSource() {
+	      if (this._input.value) {
+	        this.props.createSource(this._input.value);
+	      }
+	    }
+
+	    // need to style this still
+
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'new-source-wrapper' },
+	        _react2.default.createElement('input', {
+	          ref: function ref(node) {
+	            return _this2._input = node;
+	          },
+	          className: 'new-source-url'
+	        }),
+	        _react2.default.createElement(
+	          'div',
+	          { onClick: this.createSource },
+	          'Submit'
+	        )
+	      );
+	    }
+	  }]);
+
+	  return CreateSource;
+	}(_react.Component);
+
+	// configure our mutation so that we can call it with a single argument
+
+
+	var props = function props(_ref) {
+	  var mutate = _ref.mutate;
+
+	  return {
+	    createSource: function createSource(sourceUrl) {
+	      mutate({ variables: { cu_id: window.cu_id, sourceUrl: sourceUrl } }).then(function (resp) {
+	        return console.log("what is resp", resp);
+	      });
+	    }
+	  };
+	};
+
+	exports.default = (0, _reactApollo.graphql)(_mutations.createSource, { props: props })(CreateSource);
 
 /***/ }
 /******/ ]);

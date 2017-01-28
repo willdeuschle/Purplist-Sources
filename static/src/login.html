@@ -4,7 +4,7 @@
         <div class='login-wrapper'>
             <h1 class='welcome-source'>Welcome to Source</h1>
             {% if current_user.is_authenticated %}
-                <h2 class='greeting-user'>Hi, {{ current_user.nickname }}</h2>
+                <h2 class='greeting-user'>Hi, {{ current_user.name }}</h2>
                 <p class='logout-offer'>
                     <a class='logout-button' href="{{ url_for('logout') }}">
                         Click here to logout.

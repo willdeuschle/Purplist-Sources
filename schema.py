@@ -114,8 +114,8 @@ class UserType(graphene.ObjectType):
     id = graphene.ID(
         description='A user\'s unique id.',
     )
-    nickname = graphene.String(
-        description='A user\'s nickname',
+    name = graphene.String(
+        description='A user\'s name',
     )
     email = graphene.String(
         description='A user\'s email, can be null.',
@@ -154,7 +154,7 @@ class Query(graphene.ObjectType):
         UserType,
         # this is an argument to the user root field on Query
         user_id=graphene.ID(),
-        nickname=graphene.String(),
+        name=graphene.String(),
         description='A user',
     )
 
@@ -173,9 +173,9 @@ class Query(graphene.ObjectType):
     )
 
     def resolve_user(self, args, context, info):
-        nickname = args.get('nickname', None)
-        if nickname:
-            return User.query.filter_by(nickname=nickname).first()
+        name = args.get('name', None)
+        if name:
+            return User.query.filter_by(name=name).first()
         else:
             user_id = args.get('user_id')
             return User.query.get(user_id)

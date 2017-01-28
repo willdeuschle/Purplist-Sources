@@ -7,16 +7,16 @@ class User(UserMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     social_id = db.Column(db.String(64), nullable=False, unique=True)
-    nickname = db.Column(db.String(64), nullable=False)
+    name = db.Column(db.String(64), nullable=True)
     email = db.Column(db.String(64), nullable=True)
 
-    def __init__(self, social_id, nickname, email=None):
+    def __init__(self, social_id, name, email=None):
         self.social_id = social_id
-        self.nickname = nickname
+        self.name = name
         self.email = email
 
     def __repr__(self):
-        return '<User: {}>'.format(self.nickname)
+        return '<User: {}>'.format(self.name)
 
 
 class Source(db.Model):
