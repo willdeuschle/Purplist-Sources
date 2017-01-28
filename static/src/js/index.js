@@ -5,12 +5,12 @@ import { ApolloProvider } from 'react-apollo'
 
 const client = new ApolloClient()
 
-import { AppWithData } from './App.js'
+import App from './App.js'
 
 
 ReactDOM.render(
     <ApolloProvider client={client}>
-        <AppWithData />
+        <App />
     </ApolloProvider>,
     document.getElementById('root')
 )

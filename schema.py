@@ -1,5 +1,11 @@
 import graphene
+# for getting the favicon
+from urllib.parse import urlparse
+from urllib.request import Request, urlopen
+from bs4 import BeautifulSoup
+from requests import get
 from models import User, Source, SourceList
+from app import db
 
 
 class SourceType(graphene.ObjectType):
@@ -30,12 +36,78 @@ class SourceListType(graphene.ObjectType):
     )
     sources = graphene.List(
         SourceType,
-        sourceListId=graphene.ID(),
+        source_list_id=graphene.ID(),
         description='The sources for a given source list',
     )
 
     def resolve_sources(self, args, context, info):
         return Source.query.filter_by(source_list_id=self.id)
+
+
+
+class CreateSource(graphene.Mutation):
+    class Input:
+        user_id = graphene.ID()
+        source_url = graphene.String()
+        # eventually we will want to support adding to different lists
+        # source_list_id = graphene.Int()
+
+    id = graphene.ID()
+    user_id = graphene.ID()
+    title = graphene.String()
+    source_url = graphene.String()
+    favicon_url = graphene.String()
+
+    def mutate(self, args, context, info):
+        print("WE ARE HERE")
+        # must be given a user_id, and source_url
+        user_id = args.get('user_id')
+        source_url = args.get('source_url')
+
+        # query for the title or use the source url
+        try:
+            req = Request(source_url, headers={'User-Agent': 'Magic-Browser'})
+            fake_it = urlopen(req)
+            soup = BeautifulSoup(fake_it.read())
+            title = soup.title.string
+        except:
+            title = source_url
+
+        # query for the favicon url based on the source_url
+        try:
+            url_info = urlparse(source_url)
+            favicon_attempt = url_info.scheme + '://' + url_info.netloc + '/favicon.ico'
+            get(favicon_attempt)
+            favicon_url = favicon_attempt
+        except:
+            favicon_url = ''
+
+        # get the user and their heap list from the db
+        user = User.query.get(user_id)
+        # for the moment we are only allowing additions to the heap
+        heap_list = SourceList.query.filter_by(user_id=user_id, is_heap=True).first()
+
+        # create the new source
+        new_source = Source(
+            title=title,
+            source_url=source_url,
+            favicon_url=favicon_url,
+            user=user,
+            source_list=heap_list
+        )
+
+        db.session.add(new_source)
+        db.session.commit()
+
+        print("WHAT IS NS", new_source.__dict__, new_source.user.id)
+
+        return CreateSource(
+            user_id=new_source.user_id,
+            title=new_source.title,
+            source_url=new_source.source_url,
+            favicon_url=new_source.favicon_url,
+            id=new_source.id,
+        )
 
 
 class UserType(graphene.ObjectType):
@@ -51,19 +123,19 @@ class UserType(graphene.ObjectType):
     # all of the sources for a user
     sources = graphene.List(
         SourceType,
-        userId=graphene.ID(),
+        user_id=graphene.ID(),
         description='The sources for a given user',
     )
     # all of the source lists for a user
     source_lists = graphene.List(
         SourceListType,
-        userId=graphene.ID(),
+        user_id=graphene.ID(),
         description='The source lists for a given user',
     )
     # just the heap list of a user
     heap_list = graphene.Field(
         SourceListType,
-        userId=graphene.ID(),
+        user_id=graphene.ID(),
         description='The heap list for a user',
     )
 
@@ -81,7 +153,7 @@ class Query(graphene.ObjectType):
     user = graphene.Field(
         UserType,
         # this is an argument to the user root field on Query
-        userId=graphene.ID(),
+        user_id=graphene.ID(),
         nickname=graphene.String(),
         description='A user',
     )
@@ -89,14 +161,14 @@ class Query(graphene.ObjectType):
     source_lists = graphene.List(
         SourceListType,
         # this is an argument to the source_lists root field on query
-        userId=graphene.ID(),
+        user_id=graphene.ID(),
         description='The source lists for a given user',
     )
 
     sources = graphene.List(
         SourceType,
         # this is an argument to the sources root field on Query
-        userId=graphene.ID(),
+        user_id=graphene.ID(),
         description='The sources for a given user',
     )
 
@@ -105,16 +177,20 @@ class Query(graphene.ObjectType):
         if nickname:
             return User.query.filter_by(nickname=nickname).first()
         else:
-            user_id = args.get('userId')
+            user_id = args.get('user_id')
             return User.query.get(user_id)
 
     def resolve_source_lists(self, args, context, info):
-        user_id = args.get('userId')
+        user_id = args.get('user_id')
         return SourceList.query.filter_by(user_id=user_id)
 
     def resolve_sources(self, args, context, info):
-        user_id = args.get('userId')
+        user_id = args.get('user_id')
         return Source.query.filter_by(user_id=user_id)
 
 
-schema = graphene.Schema(query=Query)
+class Mutation(graphene.ObjectType):
+    create_source = CreateSource.Field()
+
+
+schema = graphene.Schema(query=Query, mutation=Mutation)

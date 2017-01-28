@@ -57,3 +57,6 @@ class SourceList(db.Model):
         self.name = name
         self.user = user
         self.is_heap = is_heap
+
+    def __repr__(self):
+        return '<SourceList: {}>'.format(self.name)

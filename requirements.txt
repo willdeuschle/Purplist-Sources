@@ -1,4 +1,6 @@
 alembic==0.8.10
+beautifulsoup4==4.5.3
+bs4==0.0.1
 Flask==0.10.1
 Flask-GraphQL==1.4.0
 Flask-Login==0.4.0

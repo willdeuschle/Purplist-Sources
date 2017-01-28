@@ -45,6 +45,12 @@ def graphql():
         graphiql=app.config['DEVELOPMENT'],
     )()
 
+# this endpoint handles additions of sources from the home page
+# @app.route('/addsource', methods=['POST'])
+# def addsource():
+    # title = request.data.get('title', None)
+    # sourceUrl = request.data.get('sourceUrl', None)
+
 
 
 # this route is to handle unauthorized people, just send them to login
