@@ -16,7 +16,9 @@ class App extends Component {
     return (
       <div className='reactive-base'>
         <CreateSource />
-        <HeapList />
+        <div className='HeapList-wrapper'>
+          <HeapList />
+        </div>
         <a className='logout-button' href='logout'>Logout</a>
       </div>
     )

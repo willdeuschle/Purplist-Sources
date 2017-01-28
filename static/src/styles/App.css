@@ -23,3 +23,10 @@
   background: #8B008B;
 }
 
+.HeapList-wrapper {
+    margin: auto;
+    height: 400px;
+    overflow: auto;
+    width: 35%;
+    min-width: 200px;
+}

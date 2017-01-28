@@ -28603,7 +28603,11 @@
 	        'div',
 	        { className: 'reactive-base' },
 	        _react2.default.createElement(_CreateSource2.default, null),
-	        _react2.default.createElement(_HeapList2.default, null),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'HeapList-wrapper' },
+	          _react2.default.createElement(_HeapList2.default, null)
+	        ),
 	        _react2.default.createElement(
 	          'a',
 	          { className: 'logout-button', href: 'logout' },
@@ -31592,7 +31596,7 @@
 
 
 	// module
-	exports.push([module.id, ".reactive-base {\n  width: 100%;\n  height: 100vh;\n  background: #fafafa;\n}\n\n.reactive-base .logout-button {\n  position: fixed;\n  bottom: 0;\n  right: 0;\n  padding: 5px;\n  font-size: 12px;\n  margin: 10px;\n  font-weight: 200;\n  border-radius: 4px;\n  text-decoration: none;\n  cursor: pointer;\n  background: #9932CC;\n  color: white;\n}\n\n.logout-button:hover {\n  background: #8B008B;\n}\n\n", ""]);
+	exports.push([module.id, ".reactive-base {\n  width: 100%;\n  height: 100vh;\n  background: #fafafa;\n}\n\n.reactive-base .logout-button {\n  position: fixed;\n  bottom: 0;\n  right: 0;\n  padding: 5px;\n  font-size: 12px;\n  margin: 10px;\n  font-weight: 200;\n  border-radius: 4px;\n  text-decoration: none;\n  cursor: pointer;\n  background: #9932CC;\n  color: white;\n}\n\n.logout-button:hover {\n  background: #8B008B;\n}\n\n.HeapList-wrapper {\n    margin: auto;\n    height: 400px;\n    overflow: auto;\n    width: 35%;\n    min-width: 200px;\n}\n", ""]);
 
 	// exports
 
@@ -32051,7 +32055,7 @@
 
 
 	// module
-	exports.push([module.id, ".HeapList {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n\n.sourceItem {\n  width: 500px;\n  height: 25px;\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 13px;\n  border: 1px solid #f0f0f0;\n  font-weight: 400;\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  text-decoration: none;\n  padding: 5px 10px;\n  border-radius: 3px;\n  color: rgba(0,0,0,.6);\n  background: rgba(255,255,255,.97);\n  cursor: pointer;\n}\n\n.sourceItem:hover {\n    color: rgba(0,0,0,.8);\n    border-color: rgba(0,0,0,.15);\n    background: #fff;\n}\n\n.sourceImgWrapper {\n  position: absolute;\n  left: 10px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n.sourceImg {\n  width: 25px;\n}\n\n.sourceTxtWrapper {\n  width: 400px;\n  white-space: nowrap;\n  overflow-x: hidden;\n  text-overflow: ellipsis;\n}\n", ""]);
+	exports.push([module.id, ".HeapList {\n  padding: 0px 10px;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n\n.sourceItem {\n  width: 100%;\n  height: 25px;\n  min-height: 25px;\n  overflow-y: auto;\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 13px;\n  border: 1px solid #f0f0f0;\n  font-weight: 400;\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  text-decoration: none;\n  padding: 5px 10px;\n  border-radius: 3px;\n  color: rgba(0,0,0,.6);\n  background: rgba(255,255,255,.97);\n  cursor: pointer;\n}\n\n.sourceItem:hover {\n    color: rgba(0,0,0,.8);\n    border-color: rgba(0,0,0,.15);\n    background: #fff;\n}\n\n.sourceImgWrapper {\n  position: absolute;\n  left: 10px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n.sourceImg {\n  width: 25px;\n}\n\n.sourceTxtWrapper {\n  /*this margin left accounts for the size of the image (25px) so there is */\n  /*no unwanted overlap as well as the 10px padding around the whole item */\n  /* so there is equal space from edge to image and image to text */\n  margin-left: calc(25px + 10px);\n  width: 80%;\n  white-space: nowrap;\n  overflow-x: hidden;\n  text-overflow: ellipsis;\n}\n", ""]);
 
 	// exports
 

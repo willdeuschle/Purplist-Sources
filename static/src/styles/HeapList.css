@@ -1,12 +1,15 @@
 .HeapList {
+  padding: 0px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .sourceItem {
-  width: 500px;
+  width: 100%;
   height: 25px;
+  min-height: 25px;
+  overflow-y: auto;
   position: relative;
   display: flex;
   align-items: center;
@@ -44,7 +47,11 @@
 }
 
 .sourceTxtWrapper {
-  width: 400px;
+  /*this margin left accounts for the size of the image (25px) so there is */
+  /*no unwanted overlap as well as the 10px padding around the whole item */
+  /* so there is equal space from edge to image and image to text */
+  margin-left: calc(25px + 10px);
+  width: 80%;
   white-space: nowrap;
   overflow-x: hidden;
   text-overflow: ellipsis;
