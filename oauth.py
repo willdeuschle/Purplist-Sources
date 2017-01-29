@@ -1,5 +1,6 @@
 from flask import redirect, current_app, url_for, request
 from rauth import OAuth2Service
+import json
 
 class OAuthSignIn(object):
     providers = None
@@ -45,11 +46,10 @@ class FacebookSignin(OAuthSignIn):
         )
 
     def authorize(self):
-        return redirect(self.service.get_authorize_url(
-            scope='email',
-            response_type='code',
-            redirect_uri=self.get_callback_url())
-        )
+        params = {'scope': 'email',
+                  'response_type': 'code',
+                  'redirect_uri': self.get_callback_url()}
+        return redirect(self.service.get_authorize_url(**params))
 
     def callback(self):
         # need the code from facebook to do anything further
@@ -57,13 +57,12 @@ class FacebookSignin(OAuthSignIn):
             return None, None, None
         oauth_session = self.service.get_auth_session(
             data={'code': request.args['code'],
-                'grand_type': 'authorization_code',
+                'grant_type': 'authorization_code',
                 'redirect_uri': self.get_callback_url()}
         )
-        me = oauth_session.get('me').json()
 
-        # it seems like they are sending back the name instead of the email
-        # but in any event I am checking
+        me = oauth_session.get('me', params={'fields':'name,email'}).json()
+
         name = me.get('name', None)
         email = me.get('email', None)
 
@@ -74,6 +73,54 @@ class FacebookSignin(OAuthSignIn):
 
         return (
             'facebook$:' + me['id'],
+            name,
+            email
+        )
+
+class GoogleSignIn(OAuthSignIn):
+    def __init__(self):
+        super(GoogleSignIn, self).__init__('google')
+        self.service = OAuth2Service(
+            name='google',
+            client_id=self.consumer_id,
+            client_secret=self.consumer_secret,
+            authorize_url='https://accounts.google.com/o/oauth2/v2/auth',
+            access_token_url='https://www.googleapis.com/oauth2/v3/token',
+            base_url='https://www.googleapis.com/oauth2/v3/'
+        )
+
+    def authorize(self):
+        params = {'scope': 'email',
+                  'response_type': 'code',
+                  'redirect_uri': self.get_callback_url()}
+        return redirect(self.service.get_authorize_url(**params))
+
+    def callback(self):
+        # need the code from facebook to do anything further
+        if 'code' not in request.args:
+            return None, None, None
+        oauth_session = self.service.get_auth_session(
+            data={'code': request.args['code'],
+                'grant_type': 'authorization_code',
+                'redirect_uri': self.get_callback_url()},
+            decoder=lambda b: json.loads(b.decode('utf-8'))
+        )
+
+        me = oauth_session.get('userinfo')
+
+        # google is sending back this information as bytes
+        me_info = json.loads(getattr(me, '_content').decode('utf-8'))
+
+        name = me_info.get('name', None)
+        email = me_info.get('email', None)
+
+        # if we don't have a name but do have an email, use the
+        # first half of the email
+        if not name and email:
+            name = email.split('@')[0]
+
+        return (
+            'google$:' + me_info.get('sub'),
             name,
             email
         )

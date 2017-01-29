@@ -44,6 +44,8 @@ body {
   letter-spacing: 0;
   font-weight: 400;
   font-style: normal;
+  width: 160px;
+  text-align: center;
 }
 
 .login-button:hover {

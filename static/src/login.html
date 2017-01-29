@@ -11,6 +11,9 @@
                     </a>
                 </p>
             {% else %}
+                <a class='login-button' href="{{ url_for('authorize', provider='google') }}">
+                    Login with Google
+                </a>
                 <a class='login-button' href="{{ url_for('authorize', provider='facebook') }}">
                     Login with Facebook
                 </a>

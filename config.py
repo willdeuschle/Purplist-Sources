@@ -12,6 +12,10 @@ class Config(object):
         'facebook': {
             'id': '1762608817393911',
             'secret': '8f59c30d0ad693f6a2a3891fabd7ff81'
+        },
+        'google': {
+            'id': '922844835572-s04q0ut5fia5oj3u4nsnfps5obpifdbs.apps.googleusercontent.com',
+            'secret': 'SoxNiINy3GPpcO3XKoseINmh'
         }
     }
 

@@ -87,7 +87,7 @@ def oauth_callback(provider):
     # create them if this is their first time
     # also create their heap list
     if not user:
-        user = User(social_id=social_id, name=name, email=email)
+        user = User.generate_user(social_id=social_id, name=name, email=email)
         heap_list = SourceList(name="Heap", user=user, is_heap=True)
         db.session.add(user)
         db.session.add(heap_list)
