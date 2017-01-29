@@ -24,7 +24,7 @@ class ProductionConfig(Config):
         'facebook': {
             'id': '1195308657191327',
             'secret': '3391246fc44e366cc85ff64f160e22e3'
-        }
+        },
         'google': {
             'id': '922844835572-g2eem8335kkmk2ja89kjlc4p0tpb7hfs.apps.googleusercontent.com',
             'secret': 'QmB0eH3HSx--KkTCG-mJoaqx'
@@ -38,7 +38,7 @@ class StagingConfig(Config):
         'facebook': {
             'id': '157719788054501',
             'secret': '522f75f33205a5ef90dcd1130f6937c7'
-        }
+        },
         'google': {
             'id': '922844835572-m8f49hovn09bkoqmrhdcb9f6iiqistm2.apps.googleusercontent.com',
             'secret': 'hcKCbZyrF4cII-PVOqelRK9H'
