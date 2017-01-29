@@ -1,0 +1,27 @@
+.CreateSource {
+  display: flex;
+  justify-content: center;
+}
+
+.new-source-url {
+  width: 50%;
+  border-radius: 3px;
+  height: 24px;
+  border: 1px solid #6441A5;
+  margin-right: 10px;
+  padding-left: 10px;
+  outline: none;
+}
+
+.create-new-source {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  font-size: 16px;
+  border-radius: 50%;
+  color: #6441A5;
+  border: 1px solid #6441A5;
+  cursor: pointer;
+}

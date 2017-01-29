@@ -1,6 +1,5 @@
 .reactive-base {
   width: 100%;
-  height: 100vh;
   /*background: #fafafa;*/
 }
 
@@ -15,7 +14,7 @@
   border-radius: 4px;
   text-decoration: none;
   cursor: pointer;
-  background: #9932CC;
+  background: #6441A5;
   color: white;
 }
 
@@ -23,9 +22,26 @@
   background: #8B008B;
 }
 
+.page-content-wrapper {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: row;
+}
+
+.SourceTools-wrapper {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .HeapList-wrapper {
     margin: auto;
     overflow: auto;
-    width: 35%;
+    width: 40%;
     min-width: 200px;
+}
+
+.SourceListColumn-wrapper {
+  width: 30%;
 }

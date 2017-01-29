@@ -1,12 +1,17 @@
 import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
 
+import '../styles/CreateSource.css'
+
 import { createSource } from './mutations.js'
 
 
 class CreateSource extends Component {
   constructor() {
     super()
+    this.state = {
+      inputVisible: false,
+    }
     this.createSource = this.createSource.bind(this)
   }
 
@@ -19,14 +24,16 @@ class CreateSource extends Component {
   // need to style this still
   render() {
     return (
-      <div className='new-source-wrapper'>
+      <div className='CreateSource'>
         <input
           ref={node => this._input=node}
           className='new-source-url'
+          placeholder='Add new source url here...'
         />
-        <div onClick={this.createSource}>
-          Submit
-        </div>
+        <i
+          onClick={this.createSource}
+          className='fa fa-plus create-new-source'
+        />
       </div>
     )
   }
