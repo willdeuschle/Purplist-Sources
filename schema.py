@@ -41,6 +41,7 @@ class SourceListType(graphene.ObjectType):
     )
 
     def resolve_sources(self, args, context, info):
+        print("well what is this", Source.query.filter_by(source_list_id=self.id))
         return Source.query.filter_by(source_list_id=self.id)
 
 
@@ -181,6 +182,7 @@ class Query(graphene.ObjectType):
             return User.query.get(user_id)
 
     def resolve_source_lists(self, args, context, info):
+        print("we are here", args, SourceList.query.filter_by(user_id=args['user_id']))
         user_id = args.get('user_id')
         return SourceList.query.filter_by(user_id=user_id)
 

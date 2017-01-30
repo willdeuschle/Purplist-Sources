@@ -1,0 +1,19 @@
+.SourceListColumn {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.SourceListBlock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: 200;
+  width: 200px;
+  height: 40px;
+  background: #6441A5;
+  border-radius: 3px;
+  margin-bottom: 50px;
+}

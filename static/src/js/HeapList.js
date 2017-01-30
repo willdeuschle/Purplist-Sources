@@ -65,7 +65,7 @@ const options = () => {
 }
 
 // potentially rename our props in the future
-const props = ({ ownProps, data: { user, loading } }) => ({
+const props = ({ ownProps, data: { user, loading }}) => ({
   user,
   loading,
 })

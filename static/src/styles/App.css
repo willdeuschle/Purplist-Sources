@@ -6,7 +6,7 @@
 .reactive-base .logout-button {
   position: fixed;
   bottom: 0;
-  right: 0;
+  left: 0;
   padding: 5px;
   font-size: 12px;
   margin: 10px;
@@ -22,17 +22,17 @@
   background: #8B008B;
 }
 
-.page-content-wrapper {
-  padding-top: 20px;
+.page-content-header {
+  height: 100px; 
+}
+
+.page-content {
   display: flex;
   flex-direction: row;
 }
 
 .SourceTools-wrapper {
   width: 30%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
 .HeapList-wrapper {

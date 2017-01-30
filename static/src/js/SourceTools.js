@@ -8,13 +8,15 @@ export default class SourceTools extends Component {
   render() {
     return (
       <div className='SourceTools'>
-        <CreateSource />
-        <div className='delete-source'>
+        <div className='SourceTool'>
+          <CreateSource />
+        </div>
+        <div className='delete-source SourceTool'>
           <i
             className='fa fa-trash-o SourceTools-icon delete-source'
           />
         </div>
-        <div className='explain-SourceTools'>
+        <div className='explain-SourceTools SourceTool'>
           <i
             className='fa fa-info SourceTools-icon explain-source'
           />

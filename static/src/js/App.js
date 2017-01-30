@@ -20,7 +20,10 @@ class App extends Component {
     return (
       <div className='reactive-base'>
         <Header />
-        <div className='page-content-wrapper'>
+        <div className='page-content-header'>
+          hello
+        </div>
+        <div className='page-content'>
             <div className='SourceTools-wrapper content-thirds'>
               <SourceTools />
             </div>
