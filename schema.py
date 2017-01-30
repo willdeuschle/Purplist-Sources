@@ -45,6 +45,40 @@ class SourceListType(graphene.ObjectType):
         return Source.query.filter_by(source_list_id=self.id)
 
 
+class CreateSourceList(graphene.Mutation):
+    class Input:
+        user_id = graphene.ID()
+        name = graphene.String()
+
+    id = graphene.ID()
+    user_id = graphene.ID()
+    name = graphene.String()
+    is_heap = graphene.Boolean()
+
+    def mutate(self, args, context, info):
+        print("We are mutation sorucelist")
+       # parameters we need
+        user_id = args.get('user_id')
+        name = args.get('name')
+
+        user = User.query.get(user_id)
+
+        new_source_list = SourceList(
+            user=user,
+            name=name,
+            is_heap=False,
+        )
+
+        db.session.add(new_source_list)
+        db.session.commit()
+
+        return CreateSourceList(
+            user_id=new_source_list.user.id,
+            name=new_source_list.name,
+            id=new_source_list.id,
+            is_heap=new_source_list.is_heap,
+        )
+
 
 class CreateSource(graphene.Mutation):
     class Input:
@@ -193,6 +227,7 @@ class Query(graphene.ObjectType):
 
 class Mutation(graphene.ObjectType):
     create_source = CreateSource.Field()
+    create_source_list = CreateSourceList.Field()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)

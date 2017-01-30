@@ -37,6 +37,15 @@ export const sourceListQuery = gql`
   }
 `
 
+export const userQuery = gql`
+  query userQuery($cu_id: ID!) {
+    user(userId: $cu_id) {
+      name,
+    },
+  }
+`
+
 export const queryTypes = {
   heapListQuery: 'heapListQuery',
+  sourceListQuery: 'sourceListQuery',
 }

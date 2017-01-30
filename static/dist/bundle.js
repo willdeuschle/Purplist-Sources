@@ -31633,7 +31633,7 @@
 
 
 	// module
-	exports.push([module.id, ".reactive-base {\n  width: 100%;\n  /*background: #fafafa;*/\n}\n\n.reactive-base .logout-button {\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  padding: 5px;\n  font-size: 12px;\n  margin: 10px;\n  font-weight: 200;\n  border-radius: 4px;\n  text-decoration: none;\n  cursor: pointer;\n  background: #6441A5;\n  color: white;\n}\n\n.logout-button:hover {\n  background: #8B008B;\n}\n\n.page-content-subheader {\n  height: 100px; \n}\n\n.page-content {\n  display: flex;\n  flex-direction: row;\n}\n\n.SourceTools-wrapper {\n  width: 30%;\n}\n\n.HeapList-wrapper {\n    margin: auto;\n    overflow: auto;\n    width: 40%;\n    min-width: 200px;\n}\n\n.SourceListColumn-wrapper {\n  width: 30%;\n}\n", ""]);
+	exports.push([module.id, ".reactive-base {\n  width: 100%;\n  /*background: #fafafa;*/\n}\n\n.reactive-base .logout-button {\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  padding: 5px;\n  font-size: 12px;\n  margin: 10px;\n  font-weight: 200;\n  border-radius: 4px;\n  text-decoration: none;\n  cursor: pointer;\n  background: #6441A5;\n  color: white;\n}\n\n.logout-button:hover {\n  background: #8B008B;\n}\n\n.page-content-subheader {\n  height: 100px; \n}\n\n.page-content {\n  display: flex;\n  flex-direction: row;\n  /*height: 500px;*/\n}\n\n.SourceTools-wrapper {\n  width: 30%;\n}\n\n.HeapList-wrapper {\n    overflow: auto;\n    width: 40%;\n    min-width: 200px;\n}\n\n.SourceListColumn-wrapper {\n  width: 30%;\n}\n", ""]);
 
 	// exports
 
@@ -32200,6 +32200,7 @@
 	    value: function createSource() {
 	      if (this._input.value) {
 	        this.props.createSource(this._input.value);
+	        this._input.value = '';
 	      }
 	    }
 
@@ -32297,9 +32298,10 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.mutationTypes = exports.createSource = undefined;
+	exports.mutationTypes = exports.createSourceList = exports.createSource = undefined;
 
-	var _templateObject = _taggedTemplateLiteral(['\n  mutation createSource($cu_id: ID!, $sourceUrl: String!) {\n    createSource(userId: $cu_id, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n    }\n  }\n'], ['\n  mutation createSource($cu_id: ID!, $sourceUrl: String!) {\n    createSource(userId: $cu_id, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n    }\n  }\n']);
+	var _templateObject = _taggedTemplateLiteral(['\n  mutation createSource($cu_id: ID!, $sourceUrl: String!) {\n    createSource(userId: $cu_id, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n    }\n  }\n'], ['\n  mutation createSource($cu_id: ID!, $sourceUrl: String!) {\n    createSource(userId: $cu_id, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n    }\n  }\n']),
+	    _templateObject2 = _taggedTemplateLiteral(['\n  mutation createSourceList($cu_id: ID!, $sourceListName: String!) {\n    createSourceList(userId: $cu_id, name: $sourceListName) {\n      name,\n      id,\n      isHeap,\n    }\n  }\n'], ['\n  mutation createSourceList($cu_id: ID!, $sourceListName: String!) {\n    createSourceList(userId: $cu_id, name: $sourceListName) {\n      name,\n      id,\n      isHeap,\n    }\n  }\n']);
 
 	var _graphqlTag = __webpack_require__(218);
 
@@ -32312,9 +32314,12 @@
 	// mutation to execute to add a source by its url
 	var createSource = exports.createSource = (0, _graphqlTag2.default)(_templateObject);
 
+	var createSourceList = exports.createSourceList = (0, _graphqlTag2.default)(_templateObject2);
+
 	var mutationTypes = exports.mutationTypes = {
 	  APOLLO_MUTATION_RESULT: 'APOLLO_MUTATION_RESULT',
-	  createSource: 'createSource'
+	  createSource: 'createSource',
+	  createSourceList: 'createSourceList'
 	};
 
 /***/ },
@@ -32667,11 +32672,12 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.queryTypes = exports.sourceListQuery = exports.heapListQuery = exports.SourceInfoFragment = undefined;
+	exports.queryTypes = exports.userQuery = exports.sourceListQuery = exports.heapListQuery = exports.SourceInfoFragment = undefined;
 
 	var _templateObject = _taggedTemplateLiteral(['\n    fragment SourceInfoFragment on SourceType {\n      id,\n      title,\n      sourceUrl,\n      faviconUrl,\n  },\n'], ['\n    fragment SourceInfoFragment on SourceType {\n      id,\n      title,\n      sourceUrl,\n      faviconUrl,\n  },\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  query heapListQuery($cu_id: ID!) {\n    user(userId: $cu_id) {\n      name,\n      heapList {\n        name,\n        sources {\n          ...SourceInfoFragment,\n        },\n      },\n    },\n  }\n  ', ',\n'], ['\n  query heapListQuery($cu_id: ID!) {\n    user(userId: $cu_id) {\n      name,\n      heapList {\n        name,\n        sources {\n          ...SourceInfoFragment,\n        },\n      },\n    },\n  }\n  ', ',\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  query sourceListQuery($cu_id: ID!) {\n    sourceLists(userId: $cu_id) {\n      id,\n      name,\n      isHeap,\n    },\n  }\n'], ['\n  query sourceListQuery($cu_id: ID!) {\n    sourceLists(userId: $cu_id) {\n      id,\n      name,\n      isHeap,\n    },\n  }\n']);
+	    _templateObject3 = _taggedTemplateLiteral(['\n  query sourceListQuery($cu_id: ID!) {\n    sourceLists(userId: $cu_id) {\n      id,\n      name,\n      isHeap,\n    },\n  }\n'], ['\n  query sourceListQuery($cu_id: ID!) {\n    sourceLists(userId: $cu_id) {\n      id,\n      name,\n      isHeap,\n    },\n  }\n']),
+	    _templateObject4 = _taggedTemplateLiteral(['\n  query userQuery($cu_id: ID!) {\n    user(userId: $cu_id) {\n      name,\n    },\n  }\n'], ['\n  query userQuery($cu_id: ID!) {\n    user(userId: $cu_id) {\n      name,\n    },\n  }\n']);
 
 	var _graphqlTag = __webpack_require__(218);
 
@@ -32690,8 +32696,11 @@
 
 	var sourceListQuery = exports.sourceListQuery = (0, _graphqlTag2.default)(_templateObject3);
 
+	var userQuery = exports.userQuery = (0, _graphqlTag2.default)(_templateObject4);
+
 	var queryTypes = exports.queryTypes = {
-	  heapListQuery: 'heapListQuery'
+	  heapListQuery: 'heapListQuery',
+	  sourceListQuery: 'sourceListQuery'
 	};
 
 /***/ },
@@ -32712,7 +32721,13 @@
 
 	var _reactApollo = __webpack_require__(208);
 
+	var _immutabilityHelper = __webpack_require__(235);
+
+	var _immutabilityHelper2 = _interopRequireDefault(_immutabilityHelper);
+
 	var _queries = __webpack_require__(238);
+
+	var _mutations = __webpack_require__(233);
 
 	__webpack_require__(240);
 
@@ -32765,6 +32780,19 @@
 
 	var options = function options() {
 	  return {
+	    // we need this reducer for when we add new SourceLists
+	    reducer: function reducer(previousResult, action, variables) {
+	      if (action.type === _mutations.mutationTypes.APOLLO_MUTATION_RESULT && action.operationName === _mutations.mutationTypes.createSourceList) {
+	        console.log("in the mutation", previousResult, action);
+	        return (0, _immutabilityHelper2.default)(previousResult, {
+	          sourceLists: {
+	            $push: [action.result.data.createSourceList]
+	          }
+	        });
+	      }
+	      // return previous result if not doing anything special
+	      return previousResult;
+	    },
 	    variables: {
 	      cu_id: window.cu_id
 	    }
@@ -32824,7 +32852,7 @@
 
 
 	// module
-	exports.push([module.id, ".SourceListColumn {\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n\n.SourceListBlock {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  color: white;\n  font-weight: 200;\n  width: 200px;\n  height: 40px;\n  background: #6441A5;\n  border-radius: 3px;\n  margin-bottom: 50px;\n}\n", ""]);
+	exports.push([module.id, ".SourceListColumn {\n  width: 100%;\n  max-height: 500px;\n  overflow-y: auto;\n}\n\n.SourceListBlock {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  color: white;\n  font-weight: 200;\n  width: 200px;\n  height: 40px;\n  background: #6441A5;\n  border-radius: 3px;\n  margin-bottom: 50px;\n  margin-left: auto;\n  margin-right: auto;\n}\n", ""]);
 
 	// exports
 
@@ -32845,6 +32873,14 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactApollo = __webpack_require__(208);
+
+	var _queries = __webpack_require__(238);
+
+	var _CreateSourceList = __webpack_require__(245);
+
+	var _CreateSourceList2 = _interopRequireDefault(_CreateSourceList);
+
 	__webpack_require__(243);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -32861,10 +32897,34 @@
 	  function SubHeader() {
 	    _classCallCheck(this, SubHeader);
 
-	    return _possibleConstructorReturn(this, (SubHeader.__proto__ || Object.getPrototypeOf(SubHeader)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (SubHeader.__proto__ || Object.getPrototypeOf(SubHeader)).call(this));
+
+	    _this.renderListTitle = _this.renderListTitle.bind(_this);
+	    return _this;
 	  }
 
 	  _createClass(SubHeader, [{
+	    key: 'renderListTitle',
+	    value: function renderListTitle() {
+	      if (this.props.user) {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'ListTitle' },
+	          this.props.user.name,
+	          '\'s Heap',
+	          _react2.default.createElement('hr', null),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'ListTitle-button-row' },
+	            _react2.default.createElement('i', { className: 'fa fa-info ListTitleControl' }),
+	            _react2.default.createElement('i', { className: 'fa fa-download ListTitleControl' }),
+	            _react2.default.createElement('i', { className: 'fa fa-envelope-o ListTitleControl' }),
+	            _react2.default.createElement('i', { className: 'fa fa-trash-o ListTitleControl' })
+	          )
+	        );
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -32878,12 +32938,12 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'ListTitleAndTools' },
-	          'this is the subheader'
+	          this.renderListTitle()
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'CreateList' },
-	          'Make new lists'
+	          { className: 'CreateSourceList-wrapper' },
+	          _react2.default.createElement(_CreateSourceList2.default, null)
 	        )
 	      );
 	    }
@@ -32892,7 +32952,32 @@
 	  return SubHeader;
 	}(_react.Component);
 
-	exports.default = SubHeader;
+	// could eventually rename these if we wished
+
+
+	var props = function props(_ref) {
+	  var ownProps = _ref.ownProps,
+	      _ref$data = _ref.data,
+	      user = _ref$data.user,
+	      loading = _ref$data.loading;
+	  return {
+	    user: user,
+	    loading: loading
+	  };
+	};
+
+	var options = function options() {
+	  return {
+	    variables: {
+	      cu_id: window.cu_id
+	    }
+	  };
+	};
+
+	exports.default = (0, _reactApollo.graphql)(_queries.userQuery, {
+	  options: options,
+	  props: props
+	})(SubHeader);
 
 /***/ },
 /* 243 */
@@ -32929,7 +33014,138 @@
 
 
 	// module
-	exports.push([module.id, ".SubHeader {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n}\n\n.IndividualStats {\n  width: 30%;\n}\n\n.ListTitleAndTools {\n  width: 40%;\n}\n\n.CreateList {\n  width: 30%;\n}\n", ""]);
+	exports.push([module.id, ".SubHeader {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n}\n\n.IndividualStats {\n  width: 30%;\n}\n\n.ListTitleAndTools {\n  width: 40%;\n  text-align: center;\n}\n\n.ListTitle {\n  margin-top: 15px;\n  font-weight: bold;\n  color: rgba(0,0,0,0.6);\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  font-size: 20px;\n}\n\n.ListTitle hr {\n  margin: 5px 30px;\n}\n\n.ListTitle-button-row {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n}\n\n.ListTitleControl {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  color: #6441A5;\n  font-size: 14px;\n  margin: 0px 5px;\n  width: 25px;\n  height: 25px;\n  border: 1px solid #6441A5;\n  border-radius: 50%;\n  cursor: pointer;\n}\n\n.CreateSourceList-wrapper {\n  width: 30%;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: flex-end;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 245 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactApollo = __webpack_require__(208);
+
+	var _mutations = __webpack_require__(233);
+
+	__webpack_require__(246);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var CreateSourceList = function (_Component) {
+	  _inherits(CreateSourceList, _Component);
+
+	  function CreateSourceList() {
+	    _classCallCheck(this, CreateSourceList);
+
+	    var _this = _possibleConstructorReturn(this, (CreateSourceList.__proto__ || Object.getPrototypeOf(CreateSourceList)).call(this));
+
+	    _this.createSourceList = _this.createSourceList.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(CreateSourceList, [{
+	    key: 'createSourceList',
+	    value: function createSourceList() {
+	      console.log("what have");
+	      if (this._input.value) {
+	        this.props.createSourceList(this._input.value);
+	        this._input.value = '';
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'CreateSourceList' },
+	        _react2.default.createElement('input', {
+	          ref: function ref(node) {
+	            return _this2._input = node;
+	          },
+	          className: 'new-source-list-name',
+	          placeholder: 'Enter name of new list...'
+	        }),
+	        _react2.default.createElement('i', {
+	          onClick: this.createSourceList,
+	          className: 'fa fa-plus create-new-source-list'
+	        })
+	      );
+	    }
+	  }]);
+
+	  return CreateSourceList;
+	}(_react.Component);
+
+	var props = function props(_ref) {
+	  var mutate = _ref.mutate;
+
+	  return {
+	    createSourceList: function createSourceList(sourceListName) {
+	      mutate({ variables: { cu_id: window.cu_id, sourceListName: sourceListName } }).then(function (resp) {
+	        return console.log("what did we create", resp);
+	      });
+	    }
+	  };
+	};
+
+	exports.default = (0, _reactApollo.graphql)(_mutations.createSourceList, { props: props })(CreateSourceList);
+
+/***/ },
+/* 246 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(247);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./CreateSourceList.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./CreateSourceList.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 247 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(222)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".CreateSourceList {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  width: 100%;\n}\n\n.CreateSourceList .new-source-list-name {\n  width: 220px;\n  border-radius: 3px;\n  height: 24px;\n  border: 1px solid #6441A5;\n  margin-right: 10px;\n  padding-left: 10px;\n  outline: none;\n}\n\n.CreateSourceList .create-new-source-list {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  width: 24px;\n  height: 24px;\n  font-size: 16px;\n  border-radius: 50%;\n  color: #6441A5;\n  border: 1px solid #6441A5;\n  cursor: pointer;\n}\n", ""]);
 
 	// exports
 

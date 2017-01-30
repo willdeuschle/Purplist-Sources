@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
+import update from 'immutability-helper'
 
 import { sourceListQuery } from './queries.js'
+import { mutationTypes } from './mutations.js'
 
 import '../styles/SourceListColumn.css'
 
@@ -35,6 +37,19 @@ class SourceListColumn extends Component {
 
 const options = () => {
   return {
+    // we need this reducer for when we add new SourceLists
+    reducer: (previousResult, action, variables) => {
+      if (action.type === mutationTypes.APOLLO_MUTATION_RESULT && action.operationName === mutationTypes.createSourceList) {
+        console.log("in the mutation", previousResult, action)
+        return update(previousResult, {
+          sourceLists: {
+            $push: [action.result.data.createSourceList]
+          }
+        })
+      }
+      // return previous result if not doing anything special
+      return previousResult
+    },
     variables: {
       cu_id: window.cu_id,
     },

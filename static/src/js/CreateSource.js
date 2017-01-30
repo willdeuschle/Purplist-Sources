@@ -18,6 +18,7 @@ class CreateSource extends Component {
   createSource() {
     if (this._input.value) {
       this.props.createSource(this._input.value)
+      this._input.value = ''
     }
   }
 
@@ -43,7 +44,7 @@ class CreateSource extends Component {
 const props = ({ mutate }) => {
   return ({
     createSource: (sourceUrl) => {
-      mutate({ variables: { cu_id: window.cu_id, sourceUrl } })
+      mutate({ variables: { cu_id: window.cu_id, sourceUrl, }})
         .then((resp) => console.log("what is resp", resp))
     },
   })

@@ -13,7 +13,18 @@ export const createSource = gql`
   }
 `
 
+export const createSourceList = gql`
+  mutation createSourceList($cu_id: ID!, $sourceListName: String!) {
+    createSourceList(userId: $cu_id, name: $sourceListName) {
+      name,
+      id,
+      isHeap,
+    }
+  }
+`
+
 export const mutationTypes = {
   APOLLO_MUTATION_RESULT: 'APOLLO_MUTATION_RESULT',
   createSource: 'createSource',
+  createSourceList: 'createSourceList',
 }

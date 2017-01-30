@@ -29,6 +29,7 @@
 .page-content {
   display: flex;
   flex-direction: row;
+  /*height: 500px;*/
 }
 
 .SourceTools-wrapper {
@@ -36,7 +37,6 @@
 }
 
 .HeapList-wrapper {
-    margin: auto;
     overflow: auto;
     width: 40%;
     min-width: 200px;
