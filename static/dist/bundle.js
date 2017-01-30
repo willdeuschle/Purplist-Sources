@@ -28579,6 +28579,10 @@
 
 	var _SourceListColumn2 = _interopRequireDefault(_SourceListColumn);
 
+	var _SubHeader = __webpack_require__(242);
+
+	var _SubHeader2 = _interopRequireDefault(_SubHeader);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28596,6 +28600,8 @@
 	// the HeapList component
 
 	// the SourceListColumn component
+
+	// the SubHeader component
 
 
 	// our base component
@@ -28617,8 +28623,8 @@
 	        _react2.default.createElement(_Header2.default, null),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'page-content-header' },
-	          'hello'
+	          { className: 'page-content-subheader' },
+	          _react2.default.createElement(_SubHeader2.default, null)
 	        ),
 	        _react2.default.createElement(
 	          'div',
@@ -31627,7 +31633,7 @@
 
 
 	// module
-	exports.push([module.id, ".reactive-base {\n  width: 100%;\n  /*background: #fafafa;*/\n}\n\n.reactive-base .logout-button {\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  padding: 5px;\n  font-size: 12px;\n  margin: 10px;\n  font-weight: 200;\n  border-radius: 4px;\n  text-decoration: none;\n  cursor: pointer;\n  background: #6441A5;\n  color: white;\n}\n\n.logout-button:hover {\n  background: #8B008B;\n}\n\n.page-content-header {\n  height: 100px; \n}\n\n.page-content {\n  display: flex;\n  flex-direction: row;\n}\n\n.SourceTools-wrapper {\n  width: 30%;\n}\n\n.HeapList-wrapper {\n    margin: auto;\n    overflow: auto;\n    width: 40%;\n    min-width: 200px;\n}\n\n.SourceListColumn-wrapper {\n  width: 30%;\n}\n", ""]);
+	exports.push([module.id, ".reactive-base {\n  width: 100%;\n  /*background: #fafafa;*/\n}\n\n.reactive-base .logout-button {\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  padding: 5px;\n  font-size: 12px;\n  margin: 10px;\n  font-weight: 200;\n  border-radius: 4px;\n  text-decoration: none;\n  cursor: pointer;\n  background: #6441A5;\n  color: white;\n}\n\n.logout-button:hover {\n  background: #8B008B;\n}\n\n.page-content-subheader {\n  height: 100px; \n}\n\n.page-content {\n  display: flex;\n  flex-direction: row;\n}\n\n.SourceTools-wrapper {\n  width: 30%;\n}\n\n.HeapList-wrapper {\n    margin: auto;\n    overflow: auto;\n    width: 40%;\n    min-width: 200px;\n}\n\n.SourceListColumn-wrapper {\n  width: 30%;\n}\n", ""]);
 
 	// exports
 
@@ -32819,6 +32825,111 @@
 
 	// module
 	exports.push([module.id, ".SourceListColumn {\n  width: 100%;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n}\n\n.SourceListBlock {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  color: white;\n  font-weight: 200;\n  width: 200px;\n  height: 40px;\n  background: #6441A5;\n  border-radius: 3px;\n  margin-bottom: 50px;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 242 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	__webpack_require__(243);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SubHeader = function (_Component) {
+	  _inherits(SubHeader, _Component);
+
+	  function SubHeader() {
+	    _classCallCheck(this, SubHeader);
+
+	    return _possibleConstructorReturn(this, (SubHeader.__proto__ || Object.getPrototypeOf(SubHeader)).apply(this, arguments));
+	  }
+
+	  _createClass(SubHeader, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'SubHeader' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'IndividualStats' },
+	          'stats'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'ListTitleAndTools' },
+	          'this is the subheader'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'CreateList' },
+	          'Make new lists'
+	        )
+	      );
+	    }
+	  }]);
+
+	  return SubHeader;
+	}(_react.Component);
+
+	exports.default = SubHeader;
+
+/***/ },
+/* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(244);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./SubHeader.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./SubHeader.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 244 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(222)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".SubHeader {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n}\n\n.IndividualStats {\n  width: 30%;\n}\n\n.ListTitleAndTools {\n  width: 40%;\n}\n\n.CreateList {\n  width: 30%;\n}\n", ""]);
 
 	// exports
 

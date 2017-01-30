@@ -1,0 +1,17 @@
+.SubHeader {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.IndividualStats {
+  width: 30%;
+}
+
+.ListTitleAndTools {
+  width: 40%;
+}
+
+.CreateList {
+  width: 30%;
+}

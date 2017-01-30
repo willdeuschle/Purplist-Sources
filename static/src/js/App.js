@@ -12,6 +12,8 @@ import SourceTools from './SourceTools.js'
 import HeapList from './HeapList.js'
 // the SourceListColumn component
 import SourceListColumn from './SourceListColumn.js'
+// the SubHeader component
+import SubHeader from './SubHeader.js'
 
 
 // our base component
@@ -20,8 +22,8 @@ class App extends Component {
     return (
       <div className='reactive-base'>
         <Header />
-        <div className='page-content-header'>
-          hello
+        <div className='page-content-subheader'>
+          <SubHeader />
         </div>
         <div className='page-content'>
             <div className='SourceTools-wrapper content-thirds'>
