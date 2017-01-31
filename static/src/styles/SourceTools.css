@@ -27,3 +27,14 @@
   border: 1px solid #6441A5;
   border-radius: 50%;
 }
+
+#SourceTrash a {
+  display: none;
+}
+
+.garbageGhost {
+  color: red;
+  background: yellow;
+  font-size: 30px;
+  cursor: pointer;
+}

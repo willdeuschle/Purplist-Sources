@@ -8,6 +8,10 @@ import { mutationTypes } from './mutations.js'
 
 
 function HeapList({ user, refetch, loading }) {
+  function boop(stuff) {
+    console.log("hell", stuff.target)
+    stuff.target.draggable = true
+  }
   function renderHeapList() {
     if (user) {
       return user.heapList.sources.map((sourceItem) => {
@@ -17,6 +21,7 @@ function HeapList({ user, refetch, loading }) {
             target='_blank'
             key={sourceItem.id}
             className='sourceItem'
+            data-id={sourceItem.id}
           >
             <div className='sourceImgWrapper'>
               <img className='sourceImg' src={sourceItem.faviconUrl}/>
@@ -31,7 +36,7 @@ function HeapList({ user, refetch, loading }) {
   }
 
   return (
-    <div className='HeapList'>
+    <div className='HeapList' id='HeapList'>
       {renderHeapList()}
     </div>
   )

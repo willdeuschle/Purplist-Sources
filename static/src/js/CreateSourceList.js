@@ -24,7 +24,7 @@ class CreateSourceList extends Component {
         <input
           ref={node => this._input = node}
           className='new-source-list-name'
-          placeholder='Enter name of new list...'
+          placeholder='Create new list...'
         />
         <i
           onClick={this.createSourceList}

@@ -14,6 +14,7 @@ export default class SourceTools extends Component {
         <div className='delete-source SourceTool'>
           <i
             className='fa fa-trash-o SourceTools-icon delete-source'
+            id='SourceTrash'
           />
         </div>
         <div className='explain-SourceTools SourceTool'>
