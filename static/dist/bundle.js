@@ -28622,8 +28622,29 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      console.log("Mounted");
-	      function onAdd(evt) {
-	        console.log("to do something here in onAdd", evt);
+	      var sourceTrash = document.getElementById('SourceTrash');
+	      var heapList = document.getElementById('HeapList');
+	      var sourceListBlocks = document.getElementsByClassName('SourceListBlock');
+
+	      function onListAdd(evt) {
+	        console.log("to do something here in onListAdd", evt.item.attributes['data-id'].nodeValue);
+	      }
+
+	      var foo = function foo() {
+	        console.log("fek", sourceListBlocks);
+	        Array.prototype.forEach.call(sourceListBlocks, function (sourceListBlock) {
+	          return _sortablejs2.default.create(sourceListBlock, { group: 'SourceMvmt', put: ['SourceMvmt'], onAdd: onListAdd });
+	        });
+	      };
+	      //foo()
+	      setTimeout(function () {
+	        return foo();
+	      }, 500);
+
+	      function onTrash(evt) {
+	        console.log("to do something here in onTrash", evt.item.attributes['data-id'].nodeValue);
+	        // can remove from the dom
+	        sourceTrash.removeChild(evt.item);
 	        // need to delete things here
 	      }
 	      function onStart(evt) {
@@ -28633,14 +28654,12 @@
 	        console.log("what in dataTransfer", dataTransfer, dataTransfer.setDragImage, dragEl, dragEl.offsetWidth);
 	        dataTransfer.setDragImage(dragEl, dragEl.offsetWidth / 2, dragEl.offsetHeight / 2);
 	      }
-	      var sourceTrash = document.getElementById('SourceTrash');
-	      var heapList = document.getElementById('HeapList');
-	      _sortablejs2.default.create(sourceTrash, { group: 'SourceTrash', put: ['SourceTrash'], onAdd: onAdd });
+	      _sortablejs2.default.create(sourceTrash, { group: 'SourceMvmt', put: ['SourceMvmt'], onAdd: onTrash });
 	      _sortablejs2.default.create(heapList, {
 	        draggable: '.sourceItem',
 	        sort: false,
 	        animation: 100,
-	        group: 'SourceTrash',
+	        group: 'SourceMvmt',
 	        pull: true,
 	        ghostClass: 'garbageGhost',
 	        onStart: onStart,
@@ -32816,7 +32835,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'SourceListColumn' },
+	        { id: 'SourceListColumn', className: 'SourceListColumn' },
 	        this.renderSourceLists()
 	      );
 	    }
@@ -32899,7 +32918,7 @@
 
 
 	// module
-	exports.push([module.id, ".SourceListColumn {\n  width: 100%;\n  max-height: 500px;\n  overflow-y: auto;\n}\n\n.SourceListBlock {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  color: white;\n  font-weight: 200;\n  width: 200px;\n  height: 40px;\n  background: #6441A5;\n  border-radius: 3px;\n  margin-bottom: 50px;\n  margin-left: auto;\n  margin-right: auto;\n}\n", ""]);
+	exports.push([module.id, ".SourceListColumn {\n  width: 100%;\n  max-height: 500px;\n  overflow-y: auto;\n}\n\n.SourceListBlock {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  color: white;\n  font-weight: 200;\n  width: 200px;\n  height: 40px;\n  background: #6441A5;\n  border-radius: 3px;\n  margin-bottom: 50px;\n  margin-left: auto;\n  margin-right: auto;\n}\n\n.SourceListBlock a {\n  display: none;\n}\n", ""]);
 
 	// exports
 

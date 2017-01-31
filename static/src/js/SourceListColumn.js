@@ -28,7 +28,7 @@ class SourceListColumn extends Component {
 
   render() {
     return (
-      <div className='SourceListColumn'>
+      <div id='SourceListColumn' className='SourceListColumn'>
         {this.renderSourceLists()}
       </div>
     )

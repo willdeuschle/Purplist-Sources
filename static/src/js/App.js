@@ -21,8 +21,26 @@ import SubHeader from './SubHeader.js'
 class App extends Component {
   componentDidMount() {
     console.log("Mounted");
-    function onAdd(evt) {
-      console.log("to do something here in onAdd", evt)
+    const sourceTrash = document.getElementById('SourceTrash')
+    const heapList = document.getElementById('HeapList')
+    const sourceListBlocks = document.getElementsByClassName('SourceListBlock')
+
+    function onListAdd(evt) {
+      console.log("to do something here in onListAdd", evt.item.attributes['data-id'].nodeValue)
+    }
+
+    let foo = () => {
+        console.log("fek", sourceListBlocks)
+        Array.prototype.forEach.call(sourceListBlocks, (sourceListBlock) => Sortable.create(sourceListBlock, {group: 'SourceMvmt', put: ['SourceMvmt'], onAdd: onListAdd}))
+    }
+    //foo()
+    setTimeout(() => foo(), 500)
+
+
+    function onTrash(evt) {
+      console.log("to do something here in onTrash", evt.item.attributes['data-id'].nodeValue)
+      // can remove from the dom
+      sourceTrash.removeChild(evt.item)
       // need to delete things here
     }
     function onStart(evt) {
@@ -32,14 +50,12 @@ class App extends Component {
       console.log("what in dataTransfer", dataTransfer, dataTransfer.setDragImage, dragEl, dragEl.offsetWidth)
       dataTransfer.setDragImage(dragEl, (dragEl.offsetWidth/2), (dragEl.offsetHeight/2))
     }
-    const sourceTrash = document.getElementById('SourceTrash')
-    const heapList = document.getElementById('HeapList')
-    Sortable.create(sourceTrash, {group: 'SourceTrash', put: ['SourceTrash'], onAdd})
+    Sortable.create(sourceTrash, {group: 'SourceMvmt', put: ['SourceMvmt'], onAdd: onTrash})
     Sortable.create(heapList, {
       draggable: '.sourceItem',
       sort: false,
       animation: 100,
-      group: 'SourceTrash',
+      group: 'SourceMvmt',
       pull: true,
       ghostClass: 'garbageGhost',
       onStart,
