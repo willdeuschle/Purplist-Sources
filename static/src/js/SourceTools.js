@@ -13,8 +13,8 @@ export default class SourceTools extends Component {
         </div>
         <div className='delete-source SourceTool'>
           <i
-            className='fa fa-trash-o SourceTools-icon delete-source'
             id='SourceTrash'
+            className='fa fa-trash-o SourceTools-icon delete-source'
           />
         </div>
         <div className='explain-SourceTools SourceTool'>

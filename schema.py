@@ -41,7 +41,6 @@ class SourceListType(graphene.ObjectType):
     )
 
     def resolve_sources(self, args, context, info):
-        print("well what is this", Source.query.filter_by(source_list_id=self.id))
         return Source.query.filter_by(source_list_id=self.id)
 
 
@@ -145,6 +144,45 @@ class CreateSource(graphene.Mutation):
         )
 
 
+class UpdateSouce(graphene.Mutation):
+    class Input:
+        source_id = graphene.ID()
+        title = graphene.String()
+        source_list_id = graphene.ID()
+        source_url = graphene.String()
+        favicon_url = graphene.String()
+
+    # we should consider breaking this out into a Source fragment
+    # of sorts
+    id = graphene.ID()
+    user_id = graphene.ID()
+    source_list_id = graphene.ID()
+    title = graphene.String()
+    source_url = graphene.String()
+    favicon_url = graphene.String()
+
+    def mutate(self, args, context, info):
+        print("what are args", args)
+        source_id = args.pop('source_id')
+        source = Source.query.get(source_id)
+
+        for key, value in args.items():
+            setattr(source, key, value)
+
+        print("what is source now", source)
+        db.session.add(source)
+        db.session.commit()
+
+        return UpdateSouce(
+            id = source.id,
+            user_id = source.user_id,
+            source_list_id = source.source_list_id,
+            title = source.title,
+            source_url = source.source_url,
+            favicon_url = source.favicon_url,
+        )
+
+
 class UserType(graphene.ObjectType):
     id = graphene.ID(
         description='A user\'s unique id.',
@@ -227,6 +265,7 @@ class Query(graphene.ObjectType):
 
 class Mutation(graphene.ObjectType):
     create_source = CreateSource.Field()
+    update_source = UpdateSouce.Field()
     create_source_list = CreateSourceList.Field()
 
 

@@ -19,6 +19,9 @@
   margin-right: auto;
 }
 
-.SourceListBlock a {
-  display: none;
+.SourceListBlock .highlightGhost {
+  position: absolute;
+  width: 300px;
+  background: thistle;
+  border-color: #ccc;
 }

@@ -28561,10 +28561,6 @@
 
 	var _graphqlTag2 = _interopRequireDefault(_graphqlTag);
 
-	var _sortablejs = __webpack_require__(248);
-
-	var _sortablejs2 = _interopRequireDefault(_sortablejs);
-
 	__webpack_require__(220);
 
 	var _Header = __webpack_require__(224);
@@ -28587,6 +28583,10 @@
 
 	var _SubHeader2 = _interopRequireDefault(_SubHeader);
 
+	var _initializeDraggables = __webpack_require__(248);
+
+	var _initializeDraggables2 = _interopRequireDefault(_initializeDraggables);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28607,6 +28607,8 @@
 
 	// the SubHeader component
 
+	// the draggable initializing
+
 
 	// our base component
 	var App = function (_Component) {
@@ -28622,52 +28624,7 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      console.log("Mounted");
-	      var sourceTrash = document.getElementById('SourceTrash');
-	      var heapList = document.getElementById('HeapList');
-	      var sourceListBlocks = document.getElementsByClassName('SourceListBlock');
-
-	      function onListAdd(evt) {
-	        console.log("to do something here in onListAdd", evt.item.attributes['data-id'].nodeValue);
-	      }
-
-	      var foo = function foo() {
-	        console.log("fek", sourceListBlocks);
-	        Array.prototype.forEach.call(sourceListBlocks, function (sourceListBlock) {
-	          return _sortablejs2.default.create(sourceListBlock, { group: 'SourceMvmt', put: ['SourceMvmt'], onAdd: onListAdd });
-	        });
-	      };
-	      //foo()
-	      setTimeout(function () {
-	        return foo();
-	      }, 500);
-
-	      function onTrash(evt) {
-	        console.log("to do something here in onTrash", evt.item.attributes['data-id'].nodeValue);
-	        // can remove from the dom
-	        sourceTrash.removeChild(evt.item);
-	        // need to delete things here
-	      }
-	      function onStart(evt) {
-	        console.log("what have at start", evt);
-	      }
-	      function setData(dataTransfer, dragEl) {
-	        console.log("what in dataTransfer", dataTransfer, dataTransfer.setDragImage, dragEl, dragEl.offsetWidth);
-	        dataTransfer.setDragImage(dragEl, dragEl.offsetWidth / 2, dragEl.offsetHeight / 2);
-	      }
-	      _sortablejs2.default.create(sourceTrash, { group: 'SourceMvmt', put: ['SourceMvmt'], onAdd: onTrash });
-	      _sortablejs2.default.create(heapList, {
-	        draggable: '.sourceItem',
-	        sort: false,
-	        animation: 100,
-	        group: 'SourceMvmt',
-	        pull: true,
-	        ghostClass: 'garbageGhost',
-	        onStart: onStart,
-	        setData: setData,
-	        scroll: true,
-	        scrollSensitivity: 300,
-	        scrollSpeed: 10
-	      });
+	      (0, _initializeDraggables2.default)();
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
@@ -32151,8 +32108,8 @@
 	          'div',
 	          { className: 'delete-source SourceTool' },
 	          _react2.default.createElement('i', {
-	            className: 'fa fa-trash-o SourceTools-icon delete-source',
-	            id: 'SourceTrash'
+	            id: 'SourceTrash',
+	            className: 'fa fa-trash-o SourceTools-icon delete-source'
 	          })
 	        ),
 	        _react2.default.createElement(
@@ -32206,7 +32163,7 @@
 
 
 	// module
-	exports.push([module.id, ".SourceTools {\n  height: 100%;\n  display: flex;\n  flex-direction: column;\n}\n\n.SourceTool {\n  margin-bottom: 120px;\n}\n\n.delete-source, .explain-SourceTools {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n}\n\n.SourceTools-icon {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  color: #6441A5;\n  width: 24px;\n  height: 24px;\n  padding: 20px;\n  font-size: 24px;\n  border: 1px solid #6441A5;\n  border-radius: 50%;\n}\n\n#SourceTrash a {\n  display: none;\n}\n\n.garbageGhost {\n  color: red;\n  background: yellow;\n  font-size: 30px;\n  cursor: pointer;\n}\n", ""]);
+	exports.push([module.id, ".SourceTools {\n  height: 100%;\n  display: flex;\n  flex-direction: column;\n}\n\n.SourceTool {\n  margin-bottom: 120px;\n}\n\n.delete-source, .explain-SourceTools {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n}\n\n.SourceTools-icon {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  color: #6441A5;\n  width: 40px;\n  height: 40px;\n  padding: 20px;\n  font-size: 24px;\n  border: 1px solid #6441A5;\n  border-radius: 50%;\n}\n\n#SourceTrash .highlightGhost {\n  /*display: none;*/\n  position: absolute;\n  width: 300px;\n  background: salmon;\n  border-color: #ccc;\n}\n\n#SourceTrash.SourceTools-icon.highlight {\n  color: red !important;\n  border-color: red !important;\n}\n", ""]);
 
 	// exports
 
@@ -32359,10 +32316,11 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.mutationTypes = exports.createSourceList = exports.createSource = undefined;
+	exports.mutationTypes = exports.updateSourceList = exports.createSourceList = exports.createSource = undefined;
 
 	var _templateObject = _taggedTemplateLiteral(['\n  mutation createSource($cu_id: ID!, $sourceUrl: String!) {\n    createSource(userId: $cu_id, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n    }\n  }\n'], ['\n  mutation createSource($cu_id: ID!, $sourceUrl: String!) {\n    createSource(userId: $cu_id, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n    }\n  }\n']),
-	    _templateObject2 = _taggedTemplateLiteral(['\n  mutation createSourceList($cu_id: ID!, $sourceListName: String!) {\n    createSourceList(userId: $cu_id, name: $sourceListName) {\n      name,\n      id,\n      isHeap,\n    }\n  }\n'], ['\n  mutation createSourceList($cu_id: ID!, $sourceListName: String!) {\n    createSourceList(userId: $cu_id, name: $sourceListName) {\n      name,\n      id,\n      isHeap,\n    }\n  }\n']);
+	    _templateObject2 = _taggedTemplateLiteral(['\n  mutation createSourceList($cu_id: ID!, $sourceListName: String!) {\n    createSourceList(userId: $cu_id, name: $sourceListName) {\n      name,\n      id,\n      isHeap,\n    }\n  }\n'], ['\n  mutation createSourceList($cu_id: ID!, $sourceListName: String!) {\n    createSourceList(userId: $cu_id, name: $sourceListName) {\n      name,\n      id,\n      isHeap,\n    }\n  }\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  mutation updateSourceList($sourceId: ID!, sourceListId: ID!) {\n    id,\n    sourceListId,\n  }\n'], ['\n  mutation updateSourceList($sourceId: ID!, sourceListId: ID!) {\n    id,\n    sourceListId,\n  }\n']);
 
 	var _graphqlTag = __webpack_require__(218);
 
@@ -32377,10 +32335,13 @@
 
 	var createSourceList = exports.createSourceList = (0, _graphqlTag2.default)(_templateObject2);
 
+	var updateSourceList = exports.updateSourceList = (0, _graphqlTag2.default)(_templateObject3);
+
 	var mutationTypes = exports.mutationTypes = {
 	  APOLLO_MUTATION_RESULT: 'APOLLO_MUTATION_RESULT',
 	  createSource: 'createSource',
-	  createSourceList: 'createSourceList'
+	  createSourceList: 'createSourceList',
+	  updateSourceList: 'updateSourceList'
 	};
 
 /***/ },
@@ -32918,7 +32879,7 @@
 
 
 	// module
-	exports.push([module.id, ".SourceListColumn {\n  width: 100%;\n  max-height: 500px;\n  overflow-y: auto;\n}\n\n.SourceListBlock {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  color: white;\n  font-weight: 200;\n  width: 200px;\n  height: 40px;\n  background: #6441A5;\n  border-radius: 3px;\n  margin-bottom: 50px;\n  margin-left: auto;\n  margin-right: auto;\n}\n\n.SourceListBlock a {\n  display: none;\n}\n", ""]);
+	exports.push([module.id, ".SourceListColumn {\n  width: 100%;\n  max-height: 500px;\n  overflow-y: auto;\n}\n\n.SourceListBlock {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  color: white;\n  font-weight: 200;\n  width: 200px;\n  height: 40px;\n  background: #6441A5;\n  border-radius: 3px;\n  margin-bottom: 50px;\n  margin-left: auto;\n  margin-right: auto;\n}\n\n.SourceListBlock .highlightGhost {\n  position: absolute;\n  width: 300px;\n  background: thistle;\n  border-color: #ccc;\n}\n", ""]);
 
 	// exports
 
@@ -33218,6 +33179,81 @@
 
 /***/ },
 /* 248 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = initializeDraggables;
+
+	var _sortablejs = __webpack_require__(249);
+
+	var _sortablejs2 = _interopRequireDefault(_sortablejs);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function initializeDraggables() {
+	  var sourceTrash = document.getElementById('SourceTrash');
+	  var heapList = document.getElementById('HeapList');
+	  var sourceListBlocks = document.getElementsByClassName('SourceListBlock');
+
+	  function onListAdd(evt) {
+	    console.log("blarg", evt);
+	    console.log("to do something here in onListAdd", evt.item.attributes['data-id'].nodeValue);
+	    evt.to.removeChild(evt.item);
+	  }
+
+	  function createSourceListTargets() {
+	    Array.prototype.forEach.call(sourceListBlocks, function (sourceListBlock) {
+	      return _sortablejs2.default.create(sourceListBlock, { group: 'SourceMvmt', put: ['SourceMvmt'], ghostClass: 'highlightGhost', onAdd: onListAdd });
+	    });
+	  }
+	  setTimeout(createSourceListTargets, 500);
+
+	  function onTrash(evt) {
+	    console.log("to do something here in onTrash", evt.item.attributes['data-id'].nodeValue);
+	    // can remove from the dom
+	    sourceTrash.removeChild(evt.item);
+	    // need to delete things here
+	  }
+	  function onStart(evt) {
+	    console.log("what have at start", evt);
+	  }
+	  function setData(dataTransfer, dragEl) {
+	    console.log("what in dataTransfer", dataTransfer, dataTransfer.setDragImage, dragEl, dragEl.offsetWidth);
+	    dataTransfer.setDragImage(dragEl, dragEl.offsetWidth / 2, dragEl.offsetHeight / 2);
+	  }
+	  _sortablejs2.default.create(sourceTrash, { group: 'SourceMvmt', put: ['SourceMvmt'], onAdd: onTrash });
+	  _sortablejs2.default.create(heapList, {
+	    draggable: '.sourceItem',
+	    sort: false,
+	    animation: 100,
+	    group: 'SourceMvmt',
+	    pull: true,
+	    ghostClass: 'highlightGhost',
+	    onStart: onStart,
+	    setData: setData,
+	    scroll: true,
+	    scrollSensitivity: 300,
+	    scrollSpeed: 10,
+	    onMove: function onMove(evt) {
+	      console.log("what have", evt, sourceListBlocks);
+	      // highlight SourceTrash if it's getting hovered
+	      //if (SourceTrash === evt.to) {
+	      //Sortable.utils.toggleClass(evt.to, 'highlight', true);
+	      //}
+	    },
+	    onEnd: function onEnd(evt) {
+	      // remove higlighting
+	      //sourceTrash.className = sourceTrash.className.replace('highlight', '')
+	    }
+	  });
+	}
+
+/***/ },
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!

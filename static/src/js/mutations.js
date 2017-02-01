@@ -23,8 +23,16 @@ export const createSourceList = gql`
   }
 `
 
+export const updateSourceList = gql`
+  mutation updateSourceList($sourceId: ID!, sourceListId: ID!) {
+    id,
+    sourceListId,
+  }
+`
+
 export const mutationTypes = {
   APOLLO_MUTATION_RESULT: 'APOLLO_MUTATION_RESULT',
   createSource: 'createSource',
   createSourceList: 'createSourceList',
+  updateSourceList: 'updateSourceList',
 }
