@@ -9,12 +9,11 @@ export function initializeSourceListBlockDraggables(cb) {
 
   // function invoked when something added to one of the sourceListBlocks
   function onListAdd(evt) {
-    console.log("blarg", evt)
-    console.log("to do something here in onListAdd", evt.item.attributes['data-id'].value)
-    console.log("got the list id", evt.to.attributes['data-id'].value)
+    const sourceId = evt.item.attributes['data-id'].value
+    const sourceListId = evt.to.attributes['data-id'].value
     evt.to.removeChild(evt.item)
-    // invoke the callback to add the iem
-    cb()
+    // invoke the callback to add the item to the proper list
+    cb(sourceId, sourceListId)
   }
 
   // this function initializes all of the source list blocks, we wait a

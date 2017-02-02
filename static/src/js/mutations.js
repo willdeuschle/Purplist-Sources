@@ -26,12 +26,14 @@ export const createSourceList = gql`
 
 export const updateSource = gql`
   mutation updateSource($sourceData: SourceInput!) {
+    updateSource(sourceData: $sourceData) {
       id,
       title,
       faviconUrl,
       userId,
       sourceUrl,
       sourceListId,
+    }
   }
 `
 

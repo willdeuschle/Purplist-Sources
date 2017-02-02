@@ -1,9 +1,15 @@
 import React, { Component } from 'react'
-import { graphql } from 'react-apollo'
+import {
+  graphql,
+  compose,
+} from 'react-apollo'
 import update from 'immutability-helper'
 
 import { sourceListQuery } from './queries.js'
-import { mutationTypes } from './mutations.js'
+import {
+  mutationTypes,
+  updateSource,
+} from './mutations.js'
 
 import '../styles/SourceListColumn.css'
 
@@ -15,7 +21,9 @@ class SourceListColumn extends Component {
   }
 
   componentDidMount() {
-    this.props.initializeDraggables(() => console.log("in the block"))
+    this.props.initializeDraggables(
+      (sourceId, sourceListId) => this.props.updateSource(sourceId, sourceListId)
+    )
   }
 
   renderSourceLists() {
@@ -43,7 +51,8 @@ class SourceListColumn extends Component {
   }
 }
 
-const options = () => {
+// options for this components querying
+const queryOptions = () => {
   return {
     // we need this reducer for when we add new SourceLists
     reducer: (previousResult, action, variables) => {
@@ -65,13 +74,28 @@ const options = () => {
 }
 
 // to rename in the future if we like
-const props = ({ ownProps, data: { sourceLists, loading }}) => ({
+const queryProps = ({ ownProps, data: { sourceLists, loading }}) => ({
   sourceLists,
   loading,
 })
 
+
+const mutationProps = ({ mutate }) => {
+  return {
+    updateSource: (id, sourceListId) => {
+      mutate({ variables: { sourceData: { id, sourceListId }}})
+        .then((response) => console.log("what is resp", response))
+    }
+  }
+}
+
 // export the 'connected' component
-export default graphql(sourceListQuery, {
-  options,
-  props,
-})(SourceListColumn)
+export default compose(
+  graphql(sourceListQuery, {
+    options: queryOptions,
+    props: queryProps,
+  }),
+  graphql(updateSource, {
+    props: mutationProps,
+  }),
+)(SourceListColumn)

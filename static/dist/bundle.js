@@ -32336,7 +32336,7 @@
 
 	var _templateObject = _taggedTemplateLiteral(['\n  mutation createSource($cu_id: ID!, $sourceUrl: String!) {\n    createSource(userId: $cu_id, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n'], ['\n  mutation createSource($cu_id: ID!, $sourceUrl: String!) {\n    createSource(userId: $cu_id, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  mutation createSourceList($cu_id: ID!, $sourceListName: String!) {\n    createSourceList(userId: $cu_id, name: $sourceListName) {\n      name,\n      id,\n      isHeap,\n    }\n  }\n'], ['\n  mutation createSourceList($cu_id: ID!, $sourceListName: String!) {\n    createSourceList(userId: $cu_id, name: $sourceListName) {\n      name,\n      id,\n      isHeap,\n    }\n  }\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  mutation updateSource($sourceData: SourceInput!) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n  }\n'], ['\n  mutation updateSource($sourceData: SourceInput!) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n  }\n']);
+	    _templateObject3 = _taggedTemplateLiteral(['\n  mutation updateSource($sourceData: SourceInput!) {\n    updateSource(sourceData: $sourceData) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n'], ['\n  mutation updateSource($sourceData: SourceInput!) {\n    updateSource(sourceData: $sourceData) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n']);
 
 	var _graphqlTag = __webpack_require__(218);
 
@@ -32823,8 +32823,10 @@
 	  _createClass(SourceListColumn, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      this.props.initializeDraggables(function () {
-	        return console.log("in the block");
+	      var _this2 = this;
+
+	      this.props.initializeDraggables(function (sourceId, sourceListId) {
+	        return _this2.props.updateSource(sourceId, sourceListId);
 	      });
 	    }
 	  }, {
@@ -32858,7 +32860,10 @@
 	  return SourceListColumn;
 	}(_react.Component);
 
-	var options = function options() {
+	// options for this components querying
+
+
+	var queryOptions = function queryOptions() {
 	  return {
 	    // we need this reducer for when we add new SourceLists
 	    reducer: function reducer(previousResult, action, variables) {
@@ -32880,7 +32885,7 @@
 	};
 
 	// to rename in the future if we like
-	var props = function props(_ref) {
+	var queryProps = function queryProps(_ref) {
 	  var ownProps = _ref.ownProps,
 	      _ref$data = _ref.data,
 	      sourceLists = _ref$data.sourceLists,
@@ -32891,11 +32896,25 @@
 	  };
 	};
 
+	var mutationProps = function mutationProps(_ref2) {
+	  var mutate = _ref2.mutate;
+
+	  return {
+	    updateSource: function updateSource(id, sourceListId) {
+	      mutate({ variables: { sourceData: { id: id, sourceListId: sourceListId } } }).then(function (response) {
+	        return console.log("what is resp", response);
+	      });
+	    }
+	  };
+	};
+
 	// export the 'connected' component
-	exports.default = (0, _reactApollo.graphql)(_queries.sourceListQuery, {
-	  options: options,
-	  props: props
-	})(SourceListColumn);
+	exports.default = (0, _reactApollo.compose)((0, _reactApollo.graphql)(_queries.sourceListQuery, {
+	  options: queryOptions,
+	  props: queryProps
+	}), (0, _reactApollo.graphql)(_mutations.updateSource, {
+	  props: mutationProps
+	}))(SourceListColumn);
 
 /***/ },
 /* 240 */
@@ -33257,12 +33276,11 @@
 
 	  // function invoked when something added to one of the sourceListBlocks
 	  function onListAdd(evt) {
-	    console.log("blarg", evt);
-	    console.log("to do something here in onListAdd", evt.item.attributes['data-id'].value);
-	    console.log("got the list id", evt.to.attributes['data-id'].value);
+	    var sourceId = evt.item.attributes['data-id'].value;
+	    var sourceListId = evt.to.attributes['data-id'].value;
 	    evt.to.removeChild(evt.item);
-	    // invoke the callback to add the iem
-	    cb();
+	    // invoke the callback to add the item to the proper list
+	    cb(sourceId, sourceListId);
 	  }
 
 	  // this function initializes all of the source list blocks, we wait a
