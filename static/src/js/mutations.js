@@ -9,6 +9,7 @@ export const createSource = gql`
       faviconUrl,
       userId,
       sourceUrl,
+      sourceListId,
     }
   }
 `
@@ -23,10 +24,14 @@ export const createSourceList = gql`
   }
 `
 
-export const updateSourceList = gql`
-  mutation updateSourceList($sourceId: ID!, sourceListId: ID!) {
-    id,
-    sourceListId,
+export const updateSource = gql`
+  mutation updateSource($sourceData: SourceInput!) {
+      id,
+      title,
+      faviconUrl,
+      userId,
+      sourceUrl,
+      sourceListId,
   }
 `
 
@@ -34,5 +39,5 @@ export const mutationTypes = {
   APOLLO_MUTATION_RESULT: 'APOLLO_MUTATION_RESULT',
   createSource: 'createSource',
   createSourceList: 'createSourceList',
-  updateSourceList: 'updateSourceList',
+  updateSource: 'updateSource',
 }

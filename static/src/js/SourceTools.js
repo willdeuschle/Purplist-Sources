@@ -1,10 +1,16 @@
 import React, { Component } from 'react'
+import Sortable from 'sortablejs'
 
 import '../styles/SourceTools.css'
 import CreateSource from './CreateSource.js'
 
 
-export default class SourceTools extends Component {
+class SourceTools extends Component {
+  componentDidMount() {
+    console.log("what props", this.props)
+    this.props.initializeDraggables(() => console.log("hello cb"))
+  }
+
   render() {
     return (
       <div className='SourceTools'>
@@ -26,3 +32,16 @@ export default class SourceTools extends Component {
     )
   }
 }
+
+// need to pass variables with the id of the source
+//const options = () => {
+  //return {
+    //variables: {
+      //sourceData: {
+        //id,
+      //},
+    //},
+  //}
+//}
+
+export default SourceTools

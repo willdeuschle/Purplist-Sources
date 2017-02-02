@@ -15,20 +15,15 @@ import SourceListColumn from './SourceListColumn.js'
 // the SubHeader component
 import SubHeader from './SubHeader.js'
 // the draggable initializing
-import initializeDraggables from './initializeDraggables.js'
+import {
+  initializeSourceTrashDraggables,
+  initializeHeapListDraggables,
+  initializeSourceListBlockDraggables,
+} from './initializeDraggables.js'
 
 
 // our base component
 class App extends Component {
-  componentDidMount() {
-    console.log("Mounted");
-    initializeDraggables()
-  }
-
-  componentWillUnmount() {
-    console.log("werird")
-  }
-
   render() {
     return (
       <div className='reactive-base'>
@@ -38,13 +33,19 @@ class App extends Component {
         </div>
         <div className='page-content'>
             <div className='SourceTools-wrapper content-thirds'>
-              <SourceTools />
+              <SourceTools
+                initializeDraggables={initializeSourceTrashDraggables}
+              />
             </div>
             <div className='HeapList-wrapper content-thirds'>
-              <HeapList />
+              <HeapList
+                initializeDraggables={initializeHeapListDraggables}
+              />
             </div>
             <div className='SourceListColumn-wrapper content-thirds'>
-              <SourceListColumn />
+              <SourceListColumn
+                initializeDraggables={initializeSourceListBlockDraggables}
+              />
             </div>
         </div>
         <a className='logout-button' href='logout'>Logout</a>

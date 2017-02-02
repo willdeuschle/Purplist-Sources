@@ -14,11 +14,19 @@ class SourceListColumn extends Component {
     this.renderSourceLists = this.renderSourceLists.bind(this)
   }
 
+  componentDidMount() {
+    this.props.initializeDraggables(() => console.log("in the block"))
+  }
+
   renderSourceLists() {
     if (this.props.sourceLists) {
       return this.props.sourceLists.map(source_list => {
         return(
-          <div key={source_list.id} className='SourceListBlock'>
+          <div
+            key={source_list.id}
+            className='SourceListBlock'
+            data-id={source_list.id}
+          >
             {source_list.name}
           </div>
         )

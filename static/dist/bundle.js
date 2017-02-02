@@ -28585,8 +28585,6 @@
 
 	var _initializeDraggables = __webpack_require__(248);
 
-	var _initializeDraggables2 = _interopRequireDefault(_initializeDraggables);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28621,17 +28619,6 @@
 	  }
 
 	  _createClass(App, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      console.log("Mounted");
-	      (0, _initializeDraggables2.default)();
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      console.log("werird");
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -28649,17 +28636,23 @@
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'SourceTools-wrapper content-thirds' },
-	            _react2.default.createElement(_SourceTools2.default, null)
+	            _react2.default.createElement(_SourceTools2.default, {
+	              initializeDraggables: _initializeDraggables.initializeSourceTrashDraggables
+	            })
 	          ),
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'HeapList-wrapper content-thirds' },
-	            _react2.default.createElement(_HeapList2.default, null)
+	            _react2.default.createElement(_HeapList2.default, {
+	              initializeDraggables: _initializeDraggables.initializeHeapListDraggables
+	            })
 	          ),
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'SourceListColumn-wrapper content-thirds' },
-	            _react2.default.createElement(_SourceListColumn2.default, null)
+	            _react2.default.createElement(_SourceListColumn2.default, {
+	              initializeDraggables: _initializeDraggables.initializeSourceListBlockDraggables
+	            })
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -32070,6 +32063,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _sortablejs = __webpack_require__(249);
+
+	var _sortablejs2 = _interopRequireDefault(_sortablejs);
+
 	__webpack_require__(228);
 
 	var _CreateSource = __webpack_require__(230);
@@ -32094,6 +32091,14 @@
 	  }
 
 	  _createClass(SourceTools, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      console.log("what props", this.props);
+	      this.props.initializeDraggables(function () {
+	        return console.log("hello cb");
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -32125,6 +32130,17 @@
 
 	  return SourceTools;
 	}(_react.Component);
+
+	// need to pass variables with the id of the source
+	//const options = () => {
+	//return {
+	//variables: {
+	//sourceData: {
+	//id,
+	//},
+	//},
+	//}
+	//}
 
 	exports.default = SourceTools;
 
@@ -32316,11 +32332,11 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.mutationTypes = exports.updateSourceList = exports.createSourceList = exports.createSource = undefined;
+	exports.mutationTypes = exports.updateSource = exports.createSourceList = exports.createSource = undefined;
 
-	var _templateObject = _taggedTemplateLiteral(['\n  mutation createSource($cu_id: ID!, $sourceUrl: String!) {\n    createSource(userId: $cu_id, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n    }\n  }\n'], ['\n  mutation createSource($cu_id: ID!, $sourceUrl: String!) {\n    createSource(userId: $cu_id, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n    }\n  }\n']),
+	var _templateObject = _taggedTemplateLiteral(['\n  mutation createSource($cu_id: ID!, $sourceUrl: String!) {\n    createSource(userId: $cu_id, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n'], ['\n  mutation createSource($cu_id: ID!, $sourceUrl: String!) {\n    createSource(userId: $cu_id, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  mutation createSourceList($cu_id: ID!, $sourceListName: String!) {\n    createSourceList(userId: $cu_id, name: $sourceListName) {\n      name,\n      id,\n      isHeap,\n    }\n  }\n'], ['\n  mutation createSourceList($cu_id: ID!, $sourceListName: String!) {\n    createSourceList(userId: $cu_id, name: $sourceListName) {\n      name,\n      id,\n      isHeap,\n    }\n  }\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  mutation updateSourceList($sourceId: ID!, sourceListId: ID!) {\n    id,\n    sourceListId,\n  }\n'], ['\n  mutation updateSourceList($sourceId: ID!, sourceListId: ID!) {\n    id,\n    sourceListId,\n  }\n']);
+	    _templateObject3 = _taggedTemplateLiteral(['\n  mutation updateSource($sourceData: SourceInput!) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n  }\n'], ['\n  mutation updateSource($sourceData: SourceInput!) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n  }\n']);
 
 	var _graphqlTag = __webpack_require__(218);
 
@@ -32335,13 +32351,13 @@
 
 	var createSourceList = exports.createSourceList = (0, _graphqlTag2.default)(_templateObject2);
 
-	var updateSourceList = exports.updateSourceList = (0, _graphqlTag2.default)(_templateObject3);
+	var updateSource = exports.updateSource = (0, _graphqlTag2.default)(_templateObject3);
 
 	var mutationTypes = exports.mutationTypes = {
 	  APOLLO_MUTATION_RESULT: 'APOLLO_MUTATION_RESULT',
 	  createSource: 'createSource',
 	  createSourceList: 'createSourceList',
-	  updateSourceList: 'updateSourceList'
+	  updateSource: 'updateSource'
 	};
 
 /***/ },
@@ -32353,6 +32369,8 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(2);
 
@@ -32372,50 +32390,74 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function HeapList(_ref) {
-	  var user = _ref.user,
-	      refetch = _ref.refetch,
-	      loading = _ref.loading;
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	  function boop(stuff) {
-	    console.log("hell", stuff.target);
-	    stuff.target.draggable = true;
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var HeapList = function (_React$Component) {
+	  _inherits(HeapList, _React$Component);
+
+	  function HeapList() {
+	    _classCallCheck(this, HeapList);
+
+	    var _this = _possibleConstructorReturn(this, (HeapList.__proto__ || Object.getPrototypeOf(HeapList)).call(this));
+
+	    _this.renderHeapList = _this.renderHeapList.bind(_this);
+	    return _this;
 	  }
-	  function renderHeapList() {
-	    if (user) {
-	      return user.heapList.sources.map(function (sourceItem) {
-	        return _react2.default.createElement(
-	          'a',
-	          {
-	            href: sourceItem.sourceUrl,
-	            target: '_blank',
-	            key: sourceItem.id,
-	            className: 'sourceItem',
-	            'data-id': sourceItem.id
-	          },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'sourceImgWrapper' },
-	            _react2.default.createElement('img', { className: 'sourceImg', src: sourceItem.faviconUrl })
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'sourceTxtWrapper' },
-	            sourceItem.title
-	          )
-	        );
-	      });
+
+	  _createClass(HeapList, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.props.initializeDraggables();
 	    }
-	  }
+	  }, {
+	    key: 'renderHeapList',
+	    value: function renderHeapList() {
+	      if (this.props.user) {
+	        return this.props.user.heapList.sources.map(function (sourceItem) {
+	          return _react2.default.createElement(
+	            'a',
+	            {
+	              href: sourceItem.sourceUrl,
+	              target: '_blank',
+	              key: sourceItem.id,
+	              className: 'sourceItem',
+	              'data-id': sourceItem.id
+	            },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'sourceImgWrapper' },
+	              _react2.default.createElement('img', { className: 'sourceImg', src: sourceItem.faviconUrl })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'sourceTxtWrapper' },
+	              sourceItem.title
+	            )
+	          );
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'HeapList', id: 'HeapList' },
+	        this.renderHeapList()
+	      );
+	    }
+	  }]);
 
-	  return _react2.default.createElement(
-	    'div',
-	    { className: 'HeapList', id: 'HeapList' },
-	    renderHeapList()
-	  );
-	}
+	  return HeapList;
+	}(_react2.default.Component);
 
 	// the variables we want to use with the query
+
+
 	var options = function options() {
 	  return {
 	    // we need this reducer for when we add new sources
@@ -32443,11 +32485,11 @@
 	};
 
 	// potentially rename our props in the future
-	var props = function props(_ref2) {
-	  var ownProps = _ref2.ownProps,
-	      _ref2$data = _ref2.data,
-	      user = _ref2$data.user,
-	      loading = _ref2$data.loading;
+	var props = function props(_ref) {
+	  var ownProps = _ref.ownProps,
+	      _ref$data = _ref.data,
+	      user = _ref$data.user,
+	      loading = _ref$data.loading;
 	  return {
 	    user: user,
 	    loading: loading
@@ -32779,13 +32821,24 @@
 	  }
 
 	  _createClass(SourceListColumn, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.props.initializeDraggables(function () {
+	        return console.log("in the block");
+	      });
+	    }
+	  }, {
 	    key: 'renderSourceLists',
 	    value: function renderSourceLists() {
 	      if (this.props.sourceLists) {
 	        return this.props.sourceLists.map(function (source_list) {
 	          return _react2.default.createElement(
 	            'div',
-	            { key: source_list.id, className: 'SourceListBlock' },
+	            {
+	              key: source_list.id,
+	              className: 'SourceListBlock',
+	              'data-id': source_list.id
+	            },
 	            source_list.name
 	          );
 	        });
@@ -33186,7 +33239,9 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.default = initializeDraggables;
+	exports.initializeSourceListBlockDraggables = initializeSourceListBlockDraggables;
+	exports.initializeHeapListDraggables = initializeHeapListDraggables;
+	exports.initializeSourceTrashDraggables = initializeSourceTrashDraggables;
 
 	var _sortablejs = __webpack_require__(249);
 
@@ -33194,38 +33249,57 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	function initializeDraggables() {
-	  var sourceTrash = document.getElementById('SourceTrash');
-	  var heapList = document.getElementById('HeapList');
+	// the initializing function takes a callback to execute when something is
+	// dropped into one of the source blocks
+	function initializeSourceListBlockDraggables(cb) {
+	  // get the sourceListBlocks from the dom
 	  var sourceListBlocks = document.getElementsByClassName('SourceListBlock');
 
+	  // function invoked when something added to one of the sourceListBlocks
 	  function onListAdd(evt) {
 	    console.log("blarg", evt);
-	    console.log("to do something here in onListAdd", evt.item.attributes['data-id'].nodeValue);
+	    console.log("to do something here in onListAdd", evt.item.attributes['data-id'].value);
+	    console.log("got the list id", evt.to.attributes['data-id'].value);
 	    evt.to.removeChild(evt.item);
+	    // invoke the callback to add the iem
+	    cb();
 	  }
 
+	  // this function initializes all of the source list blocks, we wait a
+	  // moment to invoke it so they are all rendered (is this still necessary?)
+	  // creating a sortable with the group of 'SourceMvmt', allowing things
+	  // of the group 'SourceMvmt' to be put in it, specifying the function
+	  // to call when something is added, and specifying the ghost class for
+	  // the draggable
 	  function createSourceListTargets() {
 	    Array.prototype.forEach.call(sourceListBlocks, function (sourceListBlock) {
-	      return _sortablejs2.default.create(sourceListBlock, { group: 'SourceMvmt', put: ['SourceMvmt'], ghostClass: 'highlightGhost', onAdd: onListAdd });
+	      return _sortablejs2.default.create(sourceListBlock, {
+	        group: 'SourceMvmt',
+	        put: ['SourceMvmt'],
+	        ghostClass: 'highlightGhost',
+	        onAdd: onListAdd
+	      });
 	    });
 	  }
-	  setTimeout(createSourceListTargets, 500);
 
-	  function onTrash(evt) {
-	    console.log("to do something here in onTrash", evt.item.attributes['data-id'].nodeValue);
-	    // can remove from the dom
-	    sourceTrash.removeChild(evt.item);
-	    // need to delete things here
-	  }
-	  function onStart(evt) {
-	    console.log("what have at start", evt);
-	  }
+	  setTimeout(createSourceListTargets, 500);
+	}
+
+	function initializeHeapListDraggables(cb) {
+	  // grab the HeapList from the dom
+	  var heapList = document.getElementById('HeapList');
+
+	  // this functions sets the draggable image as well as where our
+	  // cursor will be dragging that image from (set to the middle)
 	  function setData(dataTransfer, dragEl) {
 	    console.log("what in dataTransfer", dataTransfer, dataTransfer.setDragImage, dragEl, dragEl.offsetWidth);
 	    dataTransfer.setDragImage(dragEl, dragEl.offsetWidth / 2, dragEl.offsetHeight / 2);
 	  }
-	  _sortablejs2.default.create(sourceTrash, { group: 'SourceMvmt', put: ['SourceMvmt'], onAdd: onTrash });
+
+	  // specify things about this draggable, such as the items within the
+	  // HeapList that are actually draggable, the fact that we dont want to
+	  // sort, our animation speed, ghost class for the draggable, setting the
+	  // draggable image with setData and more
 	  _sortablejs2.default.create(heapList, {
 	    draggable: '.sourceItem',
 	    sort: false,
@@ -33233,22 +33307,35 @@
 	    group: 'SourceMvmt',
 	    pull: true,
 	    ghostClass: 'highlightGhost',
-	    onStart: onStart,
 	    setData: setData,
 	    scroll: true,
 	    scrollSensitivity: 300,
-	    scrollSpeed: 10,
-	    onMove: function onMove(evt) {
-	      console.log("what have", evt, sourceListBlocks);
-	      // highlight SourceTrash if it's getting hovered
-	      //if (SourceTrash === evt.to) {
-	      //Sortable.utils.toggleClass(evt.to, 'highlight', true);
-	      //}
-	    },
-	    onEnd: function onEnd(evt) {
-	      // remove higlighting
-	      //sourceTrash.className = sourceTrash.className.replace('highlight', '')
-	    }
+	    scrollSpeed: 10
+	  });
+	}
+
+	// the initializing function also takes a callback to invoke when we add
+	// something to the trash
+	function initializeSourceTrashDraggables(cb) {
+	  // grab the relevant component
+	  var sourceTrash = document.getElementById('SourceTrash');
+
+	  // to call when something is dropped in trash
+	  function onTrash(evt) {
+	    console.log("to do something here in onTrash", evt.item.attributes['data-id'].nodeValue);
+	    console.log("foobar");
+	    // can remove from the dom
+	    sourceTrash.removeChild(evt.item);
+	    // need to delete things here, use the callback
+	    cb();
+	  }
+	  // creates sourceTrash dom element as a 'draggable', and specifies that
+	  // things of group 'SourceMvmt' can put things into it. in reality
+	  // the trash will only be accepting things and will not be moved itself
+	  _sortablejs2.default.create(sourceTrash, {
+	    group: 'SourceMvmt',
+	    put: ['SourceMvmt'],
+	    onAdd: onTrash
 	  });
 	}
 

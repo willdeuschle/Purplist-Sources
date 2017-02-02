@@ -7,14 +7,19 @@ import { heapListQuery } from './queries.js'
 import { mutationTypes } from './mutations.js'
 
 
-function HeapList({ user, refetch, loading }) {
-  function boop(stuff) {
-    console.log("hell", stuff.target)
-    stuff.target.draggable = true
+class HeapList extends React.Component {
+  constructor() {
+    super()
+    this.renderHeapList = this.renderHeapList.bind(this)
   }
-  function renderHeapList() {
-    if (user) {
-      return user.heapList.sources.map((sourceItem) => {
+
+  componentDidMount() {
+    this.props.initializeDraggables()
+  }
+
+  renderHeapList() {
+    if (this.props.user) {
+      return this.props.user.heapList.sources.map((sourceItem) => {
         return (
           <a
             href={sourceItem.sourceUrl}
@@ -35,11 +40,13 @@ function HeapList({ user, refetch, loading }) {
     }
   }
 
-  return (
-    <div className='HeapList' id='HeapList'>
-      {renderHeapList()}
-    </div>
-  )
+  render() {
+    return (
+      <div className='HeapList' id='HeapList'>
+        {this.renderHeapList()}
+      </div>
+    )
+  }
 }
 
 // the variables we want to use with the query

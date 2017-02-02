@@ -8,9 +8,12 @@ from models import User, Source, SourceList
 from app import db
 
 
-class SourceType(graphene.ObjectType):
+class SourceFields(graphene.AbstractType):
     id = graphene.ID(
         description='A source\'s unique id.',
+    )
+    user_id = graphene.ID(
+        description='The id of the associated user.',
     )
     title = graphene.String(
         description='The title of a source.',
@@ -21,7 +24,15 @@ class SourceType(graphene.ObjectType):
     favicon_url = graphene.String(
         description='The icon for a source.',
     )
+    source_list_id = graphene.ID(
+        description='The id of the associated source list',
+    )
 
+class SourceType(graphene.ObjectType, SourceFields):
+    pass
+
+class SourceInput(graphene.InputObjectType, SourceFields):
+    pass
 
 class SourceListType(graphene.ObjectType):
     id = graphene.ID(
@@ -79,20 +90,17 @@ class CreateSourceList(graphene.Mutation):
         )
 
 
-class CreateSource(graphene.Mutation):
+class CreateSource(graphene.Mutation, SourceFields):
     class Input:
+        # source_data = SourceInput()
         user_id = graphene.ID()
         source_url = graphene.String()
         # eventually we will want to support adding to different lists
         # source_list_id = graphene.Int()
 
-    id = graphene.ID()
-    user_id = graphene.ID()
-    title = graphene.String()
-    source_url = graphene.String()
-    favicon_url = graphene.String()
-
     def mutate(self, args, context, info):
+        # first get the SourceInput as source_data
+        # source_data = args.get('source_data')
         print("WE ARE HERE")
         # must be given a user_id, and source_url
         user_id = args.get('user_id')
@@ -137,6 +145,7 @@ class CreateSource(graphene.Mutation):
 
         return CreateSource(
             user_id=new_source.user_id,
+            source_list_id=new_source.source_list_id,
             title=new_source.title,
             source_url=new_source.source_url,
             favicon_url=new_source.favicon_url,
@@ -144,36 +153,31 @@ class CreateSource(graphene.Mutation):
         )
 
 
-class UpdateSouce(graphene.Mutation):
+class UpdateSource(graphene.Mutation, SourceFields):
     class Input:
-        source_id = graphene.ID()
-        title = graphene.String()
-        source_list_id = graphene.ID()
-        source_url = graphene.String()
-        favicon_url = graphene.String()
+        source_data = SourceInput()
+        # source_id = graphene.ID()
+        # title = graphene.String()
+        # source_list_id = graphene.ID()
+        # source_url = graphene.String()
+        # favicon_url = graphene.String()
 
-    # we should consider breaking this out into a Source fragment
-    # of sorts
-    id = graphene.ID()
-    user_id = graphene.ID()
-    source_list_id = graphene.ID()
-    title = graphene.String()
-    source_url = graphene.String()
-    favicon_url = graphene.String()
 
     def mutate(self, args, context, info):
+        # first get the SourceInput as source_data
+        source_data = args.get('source_data')
         print("what are args", args)
-        source_id = args.pop('source_id')
-        source = Source.query.get(source_id)
+        id = source_data.pop('id')
+        source = Source.query.get(id)
 
-        for key, value in args.items():
+        for key, value in source_data.items():
             setattr(source, key, value)
 
         print("what is source now", source)
         db.session.add(source)
         db.session.commit()
 
-        return UpdateSouce(
+        return UpdateSource(
             id = source.id,
             user_id = source.user_id,
             source_list_id = source.source_list_id,
@@ -265,7 +269,7 @@ class Query(graphene.ObjectType):
 
 class Mutation(graphene.ObjectType):
     create_source = CreateSource.Field()
-    update_source = UpdateSouce.Field()
+    update_source = UpdateSource.Field()
     create_source_list = CreateSourceList.Field()
 
 
