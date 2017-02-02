@@ -18,6 +18,7 @@ class HeapList extends React.Component {
   }
 
   renderHeapList() {
+    console.log("wut", this.props)
     if (this.props.user) {
       return this.props.user.heapList.sources.map((sourceItem) => {
         return (
@@ -52,7 +53,7 @@ class HeapList extends React.Component {
 // the variables we want to use with the query
 const options = () => {
   return {
-    // we need this reducer for when we add new sources
+    // we need this reducer for when we add new sources or update sources
     reducer: (previousResult, action, variables) => {
       if (action.type === mutationTypes.APOLLO_MUTATION_RESULT && action.operationName === mutationTypes.createSource) {
         console.log("what know", previousResult, action, variables)
@@ -61,11 +62,29 @@ const options = () => {
           user: {
             heapList: {
               sources: {
-                $unshift: [action.result.data.createSource],
+                $unshift: [],
               },
             },
           },
         });
+      } else if (action.type === mutationTypes.APOLLO_MUTATION_RESULT && action.operationName === mutationTypes.updateSource) {
+        // need to filter out the removed object actually!
+        // add it back if need be
+        // want to reintegrate it if part of our current list
+        // NOTE: could eventually merge the first and second case together,
+        // but for now we're going to leave them separate until we make a firmer
+        // decision on how using multiple lists will go
+        if (action.result.data.updateSource.sourceListId === previousResult.user.heapList.id) {
+          return update(previousResult, {
+            user: {
+              heapList: {
+                sources: {
+                  $unshift: [action.result.data.updateSource],
+                },
+              },
+            },
+          });
+        }
       }
       // if this isn't a special case, return the previous result
       return previousResult

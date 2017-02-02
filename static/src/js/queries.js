@@ -17,6 +17,7 @@ export const heapListQuery = gql`
     user(userId: $cu_id) {
       name,
       heapList {
+        id,
         name,
         sources {
           ...SourceInfoFragment,

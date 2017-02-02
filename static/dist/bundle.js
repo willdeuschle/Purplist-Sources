@@ -32428,6 +32428,7 @@
 	  }, {
 	    key: 'renderHeapList',
 	    value: function renderHeapList() {
+	      console.log("wut", this.props);
 	      if (this.props.user) {
 	        return this.props.user.heapList.sources.map(function (sourceItem) {
 	          return _react2.default.createElement(
@@ -32472,7 +32473,7 @@
 
 	var options = function options() {
 	  return {
-	    // we need this reducer for when we add new sources
+	    // we need this reducer for when we add new sources or update sources
 	    reducer: function reducer(previousResult, action, variables) {
 	      if (action.type === _mutations.mutationTypes.APOLLO_MUTATION_RESULT && action.operationName === _mutations.mutationTypes.createSource) {
 	        console.log("what know", previousResult, action, variables);
@@ -32481,11 +32482,29 @@
 	          user: {
 	            heapList: {
 	              sources: {
-	                $unshift: [action.result.data.createSource]
+	                $unshift: []
 	              }
 	            }
 	          }
 	        });
+	      } else if (action.type === _mutations.mutationTypes.APOLLO_MUTATION_RESULT && action.operationName === _mutations.mutationTypes.updateSource) {
+	        // need to filter out the removed object actually!
+	        // add it back if need be
+	        // want to reintegrate it if part of our current list
+	        // NOTE: could eventually merge the first and second case together,
+	        // but for now we're going to leave them separate until we make a firmer
+	        // decision on how using multiple lists will go
+	        if (action.result.data.updateSource.sourceListId === previousResult.user.heapList.id) {
+	          return (0, _immutabilityHelper2.default)(previousResult, {
+	            user: {
+	              heapList: {
+	                sources: {
+	                  $unshift: [action.result.data.updateSource]
+	                }
+	              }
+	            }
+	          });
+	        }
 	      }
 	      // if this isn't a special case, return the previous result
 	      return previousResult;
@@ -32756,7 +32775,7 @@
 	exports.queryTypes = exports.userQuery = exports.sourceListQuery = exports.heapListQuery = exports.SourceInfoFragment = undefined;
 
 	var _templateObject = _taggedTemplateLiteral(['\n    fragment SourceInfoFragment on SourceType {\n      id,\n      title,\n      sourceUrl,\n      faviconUrl,\n  },\n'], ['\n    fragment SourceInfoFragment on SourceType {\n      id,\n      title,\n      sourceUrl,\n      faviconUrl,\n  },\n']),
-	    _templateObject2 = _taggedTemplateLiteral(['\n  query heapListQuery($cu_id: ID!) {\n    user(userId: $cu_id) {\n      name,\n      heapList {\n        name,\n        sources {\n          ...SourceInfoFragment,\n        },\n      },\n    },\n  }\n  ', ',\n'], ['\n  query heapListQuery($cu_id: ID!) {\n    user(userId: $cu_id) {\n      name,\n      heapList {\n        name,\n        sources {\n          ...SourceInfoFragment,\n        },\n      },\n    },\n  }\n  ', ',\n']),
+	    _templateObject2 = _taggedTemplateLiteral(['\n  query heapListQuery($cu_id: ID!) {\n    user(userId: $cu_id) {\n      name,\n      heapList {\n        id,\n        name,\n        sources {\n          ...SourceInfoFragment,\n        },\n      },\n    },\n  }\n  ', ',\n'], ['\n  query heapListQuery($cu_id: ID!) {\n    user(userId: $cu_id) {\n      name,\n      heapList {\n        id,\n        name,\n        sources {\n          ...SourceInfoFragment,\n        },\n      },\n    },\n  }\n  ', ',\n']),
 	    _templateObject3 = _taggedTemplateLiteral(['\n  query sourceListQuery($cu_id: ID!) {\n    sourceLists(userId: $cu_id) {\n      id,\n      name,\n      isHeap,\n    },\n  }\n'], ['\n  query sourceListQuery($cu_id: ID!) {\n    sourceLists(userId: $cu_id) {\n      id,\n      name,\n      isHeap,\n    },\n  }\n']),
 	    _templateObject4 = _taggedTemplateLiteral(['\n  query userQuery($cu_id: ID!) {\n    user(userId: $cu_id) {\n      name,\n    },\n  }\n'], ['\n  query userQuery($cu_id: ID!) {\n    user(userId: $cu_id) {\n      name,\n    },\n  }\n']);
 
@@ -34864,7 +34883,7 @@
 
 
 	// module
-	exports.push([module.id, ".SourceListBlock {\n  position: relative;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  color: white;\n  font-weight: 200;\n  width: 200px;\n  height: 50px;\n  background: #6441A5;\n  border-radius: 3px;\n  margin-bottom: 50px;\n  margin-left: auto;\n  margin-right: auto;\n}\n\n.SourceListBlock .list-name {\n  position: absolute;\n}\n\n.SourceListBlock .highlightGhost {\n  position: relative;\n  overflow: visible;\n  width: 300px;\n  background: thistle;\n  border-color: #ccc;\n  z-index: 100;\n}\n", ""]);
+	exports.push([module.id, ".SourceListBlock {\n  position: relative;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  color: white;\n  font-weight: 200;\n  width: 200px;\n  height: 50px;\n  background: #6441A5;\n  border-radius: 3px;\n  margin-bottom: 50px;\n  margin-left: auto;\n  margin-right: auto;\n}\n\n.SourceListBlock .list-name {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n}\n\n.SourceListBlock .highlightGhost {\n  position: relative;\n  overflow: visible;\n  width: 300px;\n  background: thistle;\n  border-color: #ccc;\n  z-index: 100;\n}\n", ""]);
 
 	// exports
 
