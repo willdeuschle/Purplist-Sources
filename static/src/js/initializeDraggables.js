@@ -1,14 +1,13 @@
 import Sortable from 'sortablejs'
 
 
-// the initializing function takes a callback to execute when something is
-// dropped into one of the source blocks
-export function initializeSourceListBlockDraggables(cb) {
-  // get the sourceListBlocks from the dom
-  const sourceListBlocks = document.getElementsByClassName('SourceListBlock')
-
+// the initializing function takes and id so that we know where in
+// the dom to access each source block as well as a callback
+// to execute when something is dropped into one of the source blocks
+export function initializeSourceListBlockDraggables(blockId, cb) {
   // function invoked when something added to one of the sourceListBlocks
   function onListAdd(evt) {
+    console.log("well what have", evt)
     const sourceId = evt.item.attributes['data-id'].value
     const sourceListId = evt.to.attributes['data-id'].value
     evt.to.removeChild(evt.item)
@@ -16,28 +15,24 @@ export function initializeSourceListBlockDraggables(cb) {
     cb(sourceId, sourceListId)
   }
 
-  // this function initializes all of the source list blocks, we wait a
-  // moment to invoke it so they are all rendered (is this still necessary?)
+  // start by getting the block from the dom, we are passed
+  // the id so we know what to look for
+  const sourceListBlock = document.getElementById(blockId)
+
+  // this function initializes each SourceListBlock
   // creating a sortable with the group of 'SourceMvmt', allowing things
   // of the group 'SourceMvmt' to be put in it, specifying the function
   // to call when something is added, and specifying the ghost class for
   // the draggable
-  function createSourceListTargets() {
-    Array.prototype.forEach.call(
-      sourceListBlocks,
-      (sourceListBlock) => Sortable.create(
-        sourceListBlock,
-        {
-          group: 'SourceMvmt',
-          put: ['SourceMvmt'],
-          ghostClass: 'highlightGhost',
-          onAdd: onListAdd
-        }
-      )
-    )
-  }
-
-  setTimeout(createSourceListTargets, 500)
+  Sortable.create(
+    sourceListBlock,
+    {
+      group: 'SourceMvmt',
+      put: ['SourceMvmt'],
+      ghostClass: 'highlightGhost',
+      onAdd: onListAdd
+    }
+  )
 }
 
 
@@ -79,12 +74,11 @@ export function initializeSourceTrashDraggables(cb) {
 
   // to call when something is dropped in trash
   function onTrash(evt) {
-    console.log("to do something here in onTrash", evt.item.attributes['data-id'].nodeValue)
-    console.log("foobar")
+    const sourceId = evt.item.attributes['data-id'].value
     // can remove from the dom
     sourceTrash.removeChild(evt.item)
-    // need to delete things here, use the callback
-    cb()
+    // now delete using the callback
+    cb(sourceId)
   }
   // creates sourceTrash dom element as a 'draggable', and specifies that
   // things of group 'SourceMvmt' can put things into it. in reality

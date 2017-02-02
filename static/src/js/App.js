@@ -18,7 +18,6 @@ import SubHeader from './SubHeader.js'
 import {
   initializeSourceTrashDraggables,
   initializeHeapListDraggables,
-  initializeSourceListBlockDraggables,
 } from './initializeDraggables.js'
 
 
@@ -43,9 +42,7 @@ class App extends Component {
               />
             </div>
             <div className='SourceListColumn-wrapper content-thirds'>
-              <SourceListColumn
-                initializeDraggables={initializeSourceListBlockDraggables}
-              />
+              <SourceListColumn />
             </div>
         </div>
         <a className='logout-button' href='logout'>Logout</a>

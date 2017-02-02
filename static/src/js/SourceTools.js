@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 import Sortable from 'sortablejs'
+import { graphql } from 'react-apollo'
 
 import '../styles/SourceTools.css'
 import CreateSource from './CreateSource.js'
+import { deleteSource } from './mutations.js'
 
 
 class SourceTools extends Component {
   componentDidMount() {
     console.log("what props", this.props)
-    this.props.initializeDraggables(() => console.log("hello cb"))
+    this.props.initializeDraggables((id) => this.props.deleteSource(id))
   }
 
   render() {
@@ -34,14 +36,13 @@ class SourceTools extends Component {
 }
 
 // need to pass variables with the id of the source
-//const options = () => {
-  //return {
-    //variables: {
-      //sourceData: {
-        //id,
-      //},
-    //},
-  //}
-//}
+const props = ({ mutate }) => {
+  return {
+    deleteSource: (id) => {
+      mutate({ variables: { id }})
+        .then((response) => console.log("deleted this object", response))
+    }
+  }
+}
 
-export default SourceTools
+export default graphql(deleteSource, { props })(SourceTools)

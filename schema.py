@@ -153,6 +153,23 @@ class CreateSource(graphene.Mutation, SourceFields):
         )
 
 
+# eventually it might be a good idea to change this to archiving
+# instead of deleting
+class DeleteSource(graphene.Mutation, SourceFields):
+    class Input:
+        # we only need the id to delete something
+        id = graphene.ID()
+
+    def mutate(self, args, context, info):
+        id = args.get('id')
+        source = Source.query.get(id)
+        db.session.delete(source)
+        db.session.commit()
+
+        return source
+
+
+
 class UpdateSource(graphene.Mutation, SourceFields):
     class Input:
         source_data = SourceInput()
@@ -269,6 +286,7 @@ class Query(graphene.ObjectType):
 
 class Mutation(graphene.ObjectType):
     create_source = CreateSource.Field()
+    delete_source = DeleteSource.Field()
     update_source = UpdateSource.Field()
     create_source_list = CreateSourceList.Field()
 

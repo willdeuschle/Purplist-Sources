@@ -5,11 +5,13 @@ import {
 } from 'react-apollo'
 import update from 'immutability-helper'
 
+import SourceListBlock from './SourceListBlock.js'
 import { sourceListQuery } from './queries.js'
 import {
   mutationTypes,
   updateSource,
 } from './mutations.js'
+import { initializeSourceListBlockDraggables } from './initializeDraggables.js'
 
 import '../styles/SourceListColumn.css'
 
@@ -20,23 +22,16 @@ class SourceListColumn extends Component {
     this.renderSourceLists = this.renderSourceLists.bind(this)
   }
 
-  componentDidMount() {
-    this.props.initializeDraggables(
-      (sourceId, sourceListId) => this.props.updateSource(sourceId, sourceListId)
-    )
-  }
-
+  // render each source list with the dnd initializing function it needs
   renderSourceLists() {
     if (this.props.sourceLists) {
-      return this.props.sourceLists.map(source_list => {
+      return this.props.sourceLists.map(sourceList => {
         return(
-          <div
-            key={source_list.id}
-            className='SourceListBlock'
-            data-id={source_list.id}
-          >
-            {source_list.name}
-          </div>
+          <SourceListBlock
+            key={sourceList.id}
+            sourceList={sourceList}
+            initializeDraggables={initializeSourceListBlockDraggables}
+          />
         )
       })
     }
@@ -79,23 +74,10 @@ const queryProps = ({ ownProps, data: { sourceLists, loading }}) => ({
   loading,
 })
 
-
-const mutationProps = ({ mutate }) => {
-  return {
-    updateSource: (id, sourceListId) => {
-      mutate({ variables: { sourceData: { id, sourceListId }}})
-        .then((response) => console.log("what is resp", response))
-    }
-  }
-}
-
-// export the 'connected' component
+// no longer need to compose, leaving it here as an example for now
 export default compose(
   graphql(sourceListQuery, {
     options: queryOptions,
     props: queryProps,
-  }),
-  graphql(updateSource, {
-    props: mutationProps,
   }),
 )(SourceListColumn)

@@ -28650,9 +28650,7 @@
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'SourceListColumn-wrapper content-thirds' },
-	            _react2.default.createElement(_SourceListColumn2.default, {
-	              initializeDraggables: _initializeDraggables.initializeSourceListBlockDraggables
-	            })
+	            _react2.default.createElement(_SourceListColumn2.default, null)
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -32067,11 +32065,15 @@
 
 	var _sortablejs2 = _interopRequireDefault(_sortablejs);
 
+	var _reactApollo = __webpack_require__(208);
+
 	__webpack_require__(228);
 
 	var _CreateSource = __webpack_require__(230);
 
 	var _CreateSource2 = _interopRequireDefault(_CreateSource);
+
+	var _mutations = __webpack_require__(233);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32093,9 +32095,11 @@
 	  _createClass(SourceTools, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      var _this2 = this;
+
 	      console.log("what props", this.props);
-	      this.props.initializeDraggables(function () {
-	        return console.log("hello cb");
+	      this.props.initializeDraggables(function (id) {
+	        return _this2.props.deleteSource(id);
 	      });
 	    }
 	  }, {
@@ -32132,17 +32136,21 @@
 	}(_react.Component);
 
 	// need to pass variables with the id of the source
-	//const options = () => {
-	//return {
-	//variables: {
-	//sourceData: {
-	//id,
-	//},
-	//},
-	//}
-	//}
 
-	exports.default = SourceTools;
+
+	var props = function props(_ref) {
+	  var mutate = _ref.mutate;
+
+	  return {
+	    deleteSource: function deleteSource(id) {
+	      mutate({ variables: { id: id } }).then(function (response) {
+	        return console.log("deleted this object", response);
+	      });
+	    }
+	  };
+	};
+
+	exports.default = (0, _reactApollo.graphql)(_mutations.deleteSource, { props: props })(SourceTools);
 
 /***/ },
 /* 228 */
@@ -32332,11 +32340,12 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.mutationTypes = exports.updateSource = exports.createSourceList = exports.createSource = undefined;
+	exports.mutationTypes = exports.deleteSource = exports.updateSource = exports.createSourceList = exports.createSource = undefined;
 
 	var _templateObject = _taggedTemplateLiteral(['\n  mutation createSource($cu_id: ID!, $sourceUrl: String!) {\n    createSource(userId: $cu_id, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n'], ['\n  mutation createSource($cu_id: ID!, $sourceUrl: String!) {\n    createSource(userId: $cu_id, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  mutation createSourceList($cu_id: ID!, $sourceListName: String!) {\n    createSourceList(userId: $cu_id, name: $sourceListName) {\n      name,\n      id,\n      isHeap,\n    }\n  }\n'], ['\n  mutation createSourceList($cu_id: ID!, $sourceListName: String!) {\n    createSourceList(userId: $cu_id, name: $sourceListName) {\n      name,\n      id,\n      isHeap,\n    }\n  }\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  mutation updateSource($sourceData: SourceInput!) {\n    updateSource(sourceData: $sourceData) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n'], ['\n  mutation updateSource($sourceData: SourceInput!) {\n    updateSource(sourceData: $sourceData) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n']);
+	    _templateObject3 = _taggedTemplateLiteral(['\n  mutation updateSource($sourceData: SourceInput!) {\n    updateSource(sourceData: $sourceData) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n'], ['\n  mutation updateSource($sourceData: SourceInput!) {\n    updateSource(sourceData: $sourceData) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n']),
+	    _templateObject4 = _taggedTemplateLiteral(['\n  mutation deleteSource($id: ID!) {\n    deleteSource(id: $id) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n'], ['\n  mutation deleteSource($id: ID!) {\n    deleteSource(id: $id) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n']);
 
 	var _graphqlTag = __webpack_require__(218);
 
@@ -32353,11 +32362,14 @@
 
 	var updateSource = exports.updateSource = (0, _graphqlTag2.default)(_templateObject3);
 
+	var deleteSource = exports.deleteSource = (0, _graphqlTag2.default)(_templateObject4);
+
 	var mutationTypes = exports.mutationTypes = {
 	  APOLLO_MUTATION_RESULT: 'APOLLO_MUTATION_RESULT',
 	  createSource: 'createSource',
 	  createSourceList: 'createSourceList',
-	  updateSource: 'updateSource'
+	  updateSource: 'updateSource',
+	  deleteSource: 'deleteSource'
 	};
 
 /***/ },
@@ -32794,9 +32806,15 @@
 
 	var _immutabilityHelper2 = _interopRequireDefault(_immutabilityHelper);
 
+	var _SourceListBlock = __webpack_require__(250);
+
+	var _SourceListBlock2 = _interopRequireDefault(_SourceListBlock);
+
 	var _queries = __webpack_require__(238);
 
 	var _mutations = __webpack_require__(233);
+
+	var _initializeDraggables = __webpack_require__(248);
 
 	__webpack_require__(240);
 
@@ -32820,29 +32838,19 @@
 	    return _this;
 	  }
 
-	  _createClass(SourceListColumn, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _this2 = this;
+	  // render each source list with the dnd initializing function it needs
 
-	      this.props.initializeDraggables(function (sourceId, sourceListId) {
-	        return _this2.props.updateSource(sourceId, sourceListId);
-	      });
-	    }
-	  }, {
+
+	  _createClass(SourceListColumn, [{
 	    key: 'renderSourceLists',
 	    value: function renderSourceLists() {
 	      if (this.props.sourceLists) {
-	        return this.props.sourceLists.map(function (source_list) {
-	          return _react2.default.createElement(
-	            'div',
-	            {
-	              key: source_list.id,
-	              className: 'SourceListBlock',
-	              'data-id': source_list.id
-	            },
-	            source_list.name
-	          );
+	        return this.props.sourceLists.map(function (sourceList) {
+	          return _react2.default.createElement(_SourceListBlock2.default, {
+	            key: sourceList.id,
+	            sourceList: sourceList,
+	            initializeDraggables: _initializeDraggables.initializeSourceListBlockDraggables
+	          });
 	        });
 	      }
 	    }
@@ -32896,24 +32904,10 @@
 	  };
 	};
 
-	var mutationProps = function mutationProps(_ref2) {
-	  var mutate = _ref2.mutate;
-
-	  return {
-	    updateSource: function updateSource(id, sourceListId) {
-	      mutate({ variables: { sourceData: { id: id, sourceListId: sourceListId } } }).then(function (response) {
-	        return console.log("what is resp", response);
-	      });
-	    }
-	  };
-	};
-
-	// export the 'connected' component
+	// no longer need to compose, leaving it here as an example for now
 	exports.default = (0, _reactApollo.compose)((0, _reactApollo.graphql)(_queries.sourceListQuery, {
 	  options: queryOptions,
 	  props: queryProps
-	}), (0, _reactApollo.graphql)(_mutations.updateSource, {
-	  props: mutationProps
 	}))(SourceListColumn);
 
 /***/ },
@@ -32951,7 +32945,7 @@
 
 
 	// module
-	exports.push([module.id, ".SourceListColumn {\n  width: 100%;\n  max-height: 500px;\n  overflow-y: auto;\n}\n\n.SourceListBlock {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  color: white;\n  font-weight: 200;\n  width: 200px;\n  height: 40px;\n  background: #6441A5;\n  border-radius: 3px;\n  margin-bottom: 50px;\n  margin-left: auto;\n  margin-right: auto;\n}\n\n.SourceListBlock .highlightGhost {\n  position: absolute;\n  width: 300px;\n  background: thistle;\n  border-color: #ccc;\n}\n", ""]);
+	exports.push([module.id, ".SourceListColumn {\n  width: 100%;\n  max-height: 500px;\n  overflow-y: auto;\n}\n", ""]);
 
 	// exports
 
@@ -33268,14 +33262,13 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// the initializing function takes a callback to execute when something is
-	// dropped into one of the source blocks
-	function initializeSourceListBlockDraggables(cb) {
-	  // get the sourceListBlocks from the dom
-	  var sourceListBlocks = document.getElementsByClassName('SourceListBlock');
-
+	// the initializing function takes and id so that we know where in
+	// the dom to access each source block as well as a callback
+	// to execute when something is dropped into one of the source blocks
+	function initializeSourceListBlockDraggables(blockId, cb) {
 	  // function invoked when something added to one of the sourceListBlocks
 	  function onListAdd(evt) {
+	    console.log("well what have", evt);
 	    var sourceId = evt.item.attributes['data-id'].value;
 	    var sourceListId = evt.to.attributes['data-id'].value;
 	    evt.to.removeChild(evt.item);
@@ -33283,24 +33276,21 @@
 	    cb(sourceId, sourceListId);
 	  }
 
-	  // this function initializes all of the source list blocks, we wait a
-	  // moment to invoke it so they are all rendered (is this still necessary?)
+	  // start by getting the block from the dom, we are passed
+	  // the id so we know what to look for
+	  var sourceListBlock = document.getElementById(blockId);
+
+	  // this function initializes each SourceListBlock
 	  // creating a sortable with the group of 'SourceMvmt', allowing things
 	  // of the group 'SourceMvmt' to be put in it, specifying the function
 	  // to call when something is added, and specifying the ghost class for
 	  // the draggable
-	  function createSourceListTargets() {
-	    Array.prototype.forEach.call(sourceListBlocks, function (sourceListBlock) {
-	      return _sortablejs2.default.create(sourceListBlock, {
-	        group: 'SourceMvmt',
-	        put: ['SourceMvmt'],
-	        ghostClass: 'highlightGhost',
-	        onAdd: onListAdd
-	      });
-	    });
-	  }
-
-	  setTimeout(createSourceListTargets, 500);
+	  _sortablejs2.default.create(sourceListBlock, {
+	    group: 'SourceMvmt',
+	    put: ['SourceMvmt'],
+	    ghostClass: 'highlightGhost',
+	    onAdd: onListAdd
+	  });
 	}
 
 	function initializeHeapListDraggables(cb) {
@@ -33340,12 +33330,11 @@
 
 	  // to call when something is dropped in trash
 	  function onTrash(evt) {
-	    console.log("to do something here in onTrash", evt.item.attributes['data-id'].nodeValue);
-	    console.log("foobar");
+	    var sourceId = evt.item.attributes['data-id'].value;
 	    // can remove from the dom
 	    sourceTrash.removeChild(evt.item);
-	    // need to delete things here, use the callback
-	    cb();
+	    // now delete using the callback
+	    cb(sourceId);
 	  }
 	  // creates sourceTrash dom element as a 'draggable', and specifies that
 	  // things of group 'SourceMvmt' can put things into it. in reality
@@ -34747,6 +34736,137 @@
 		Sortable.version = '1.5.0-rc1';
 		return Sortable;
 	});
+
+
+/***/ },
+/* 250 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactApollo = __webpack_require__(208);
+
+	var _mutations = __webpack_require__(233);
+
+	__webpack_require__(251);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SourceListBlock = function (_React$Component) {
+	  _inherits(SourceListBlock, _React$Component);
+
+	  function SourceListBlock() {
+	    _classCallCheck(this, SourceListBlock);
+
+	    return _possibleConstructorReturn(this, (SourceListBlock.__proto__ || Object.getPrototypeOf(SourceListBlock)).apply(this, arguments));
+	  }
+
+	  _createClass(SourceListBlock, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _this2 = this;
+
+	      // initialize our draggable by passing the id of our component as well
+	      // as the function to execute when something is dropped into it
+	      this.props.initializeDraggables(this._myId, function (sourceId, sourceListId) {
+	        return _this2.props.updateSource(sourceId, sourceListId);
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      // establish a unique id to pass to the draggable initializing function
+	      this._myId = 'SourceListBlock-' + this.props.sourceList.id;
+
+	      return _react2.default.createElement(
+	        'div',
+	        {
+	          id: this._myId,
+	          key: this.props.sourceList.id,
+	          className: 'SourceListBlock',
+	          'data-id': this.props.sourceList.id
+	        },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'list-name' },
+	          this.props.sourceList.name
+	        )
+	      );
+	    }
+	  }]);
+
+	  return SourceListBlock;
+	}(_react2.default.Component);
+
+	var props = function props(_ref) {
+	  var mutate = _ref.mutate;
+
+	  return {
+	    updateSource: function updateSource(id, sourceListId) {
+	      mutate({ variables: { sourceData: { id: id, sourceListId: sourceListId } } }).then(function (response) {
+	        return console.log("what is resp", response);
+	      });
+	    }
+	  };
+	};
+
+	// export the 'connected' component
+	exports.default = (0, _reactApollo.graphql)(_mutations.updateSource, { props: props })(SourceListBlock);
+
+/***/ },
+/* 251 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(252);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./SourceListBlock.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./SourceListBlock.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 252 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(222)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".SourceListBlock {\n  position: relative;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  color: white;\n  font-weight: 200;\n  width: 200px;\n  height: 50px;\n  background: #6441A5;\n  border-radius: 3px;\n  margin-bottom: 50px;\n  margin-left: auto;\n  margin-right: auto;\n}\n\n.SourceListBlock .list-name {\n  position: absolute;\n}\n\n.SourceListBlock .highlightGhost {\n  position: relative;\n  overflow: visible;\n  width: 300px;\n  background: thistle;\n  border-color: #ccc;\n  z-index: 100;\n}\n", ""]);
+
+	// exports
 
 
 /***/ }
