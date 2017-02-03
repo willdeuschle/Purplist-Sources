@@ -27,8 +27,10 @@ export function initializeSourceListBlockDraggables(blockId, cb) {
   Sortable.create(
     sourceListBlock,
     {
-      group: 'SourceMvmt',
-      put: ['SourceMvmt'],
+      group: {
+        name: 'SourceMvmt',
+        put: ['SourceMvmt'],
+      },
       ghostClass: 'highlightGhost',
       onAdd: onListAdd
     }
@@ -55,13 +57,17 @@ export function initializeHeapListDraggables(cb) {
     draggable: '.sourceItem',
     sort: false,
     animation: 100,
-    group: 'SourceMvmt',
-    pull: true,
+    group: {
+      name: 'SourceMvmt',
+      put: false,
+      pull: true,
+    },
     ghostClass: 'highlightGhost',
     setData,
     scroll: true,
     scrollSensitivity: 300,
     scrollSpeed: 10,
+    onMove: (evt, originalEvt) => {console.log("maybe here", evt, originalEvt)},
   })
 }
 
@@ -86,8 +92,11 @@ export function initializeSourceTrashDraggables(cb) {
   Sortable.create(
     sourceTrash,
     {
-      group: 'SourceMvmt',
-      put: ['SourceMvmt'],
+      group: {
+        name: 'SourceMvmt',
+        put: ['SourceMvmt'],
+      },
+      onMove: (evt, originalEvt) => {console.log("maybe here", evt, originalEvt)},
       onAdd: onTrash,
     }
   )

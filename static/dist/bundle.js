@@ -28571,19 +28571,19 @@
 
 	var _SourceTools2 = _interopRequireDefault(_SourceTools);
 
-	var _HeapList = __webpack_require__(234);
+	var _HeapList = __webpack_require__(235);
 
 	var _HeapList2 = _interopRequireDefault(_HeapList);
 
-	var _SourceListColumn = __webpack_require__(239);
+	var _SourceListColumn = __webpack_require__(240);
 
 	var _SourceListColumn2 = _interopRequireDefault(_SourceListColumn);
 
-	var _SubHeader = __webpack_require__(242);
+	var _SubHeader = __webpack_require__(247);
 
 	var _SubHeader2 = _interopRequireDefault(_SubHeader);
 
-	var _initializeDraggables = __webpack_require__(248);
+	var _initializeDraggables = __webpack_require__(244);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32061,19 +32061,19 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _sortablejs = __webpack_require__(249);
+	var _sortablejs = __webpack_require__(228);
 
 	var _sortablejs2 = _interopRequireDefault(_sortablejs);
 
 	var _reactApollo = __webpack_require__(208);
 
-	__webpack_require__(228);
+	__webpack_require__(229);
 
-	var _CreateSource = __webpack_require__(230);
+	var _CreateSource = __webpack_require__(231);
 
 	var _CreateSource2 = _interopRequireDefault(_CreateSource);
 
-	var _mutations = __webpack_require__(233);
+	var _mutations = __webpack_require__(234);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32154,1219 +32154,6 @@
 
 /***/ },
 /* 228 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(229);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(223)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./SourceTools.css", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./SourceTools.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 229 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(222)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".SourceTools {\n  height: 100%;\n  display: flex;\n  flex-direction: column;\n}\n\n.SourceTool {\n  margin-bottom: 120px;\n}\n\n.delete-source, .explain-SourceTools {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n}\n\n.SourceTools-icon {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  color: #6441A5;\n  width: 40px;\n  height: 40px;\n  padding: 20px;\n  font-size: 24px;\n  border: 1px solid #6441A5;\n  border-radius: 50%;\n}\n\n#SourceTrash .highlightGhost {\n  /*display: none;*/\n  position: absolute;\n  width: 300px;\n  background: salmon;\n  border-color: #ccc;\n}\n\n#SourceTrash.SourceTools-icon.highlight {\n  color: red !important;\n  border-color: red !important;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 230 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactApollo = __webpack_require__(208);
-
-	__webpack_require__(231);
-
-	var _mutations = __webpack_require__(233);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var CreateSource = function (_Component) {
-	  _inherits(CreateSource, _Component);
-
-	  function CreateSource() {
-	    _classCallCheck(this, CreateSource);
-
-	    var _this = _possibleConstructorReturn(this, (CreateSource.__proto__ || Object.getPrototypeOf(CreateSource)).call(this));
-
-	    _this.state = {
-	      inputVisible: false
-	    };
-	    _this.createSource = _this.createSource.bind(_this);
-	    return _this;
-	  }
-
-	  _createClass(CreateSource, [{
-	    key: 'createSource',
-	    value: function createSource() {
-	      if (this._input.value) {
-	        this.props.createSource(this._input.value);
-	        this._input.value = '';
-	      }
-	    }
-
-	    // need to style this still
-
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'CreateSource' },
-	        _react2.default.createElement('input', {
-	          ref: function ref(node) {
-	            return _this2._input = node;
-	          },
-	          className: 'new-source-url',
-	          placeholder: 'Add new source url here...'
-	        }),
-	        _react2.default.createElement('i', {
-	          onClick: this.createSource,
-	          className: 'fa fa-plus create-new-source'
-	        })
-	      );
-	    }
-	  }]);
-
-	  return CreateSource;
-	}(_react.Component);
-
-	// configure our mutation so that we can call it with a single argument
-
-
-	var props = function props(_ref) {
-	  var mutate = _ref.mutate;
-
-	  return {
-	    createSource: function createSource(sourceUrl) {
-	      mutate({ variables: { cu_id: window.cu_id, sourceUrl: sourceUrl } }).then(function (resp) {
-	        return console.log("what is resp", resp);
-	      });
-	    }
-	  };
-	};
-
-	exports.default = (0, _reactApollo.graphql)(_mutations.createSource, { props: props })(CreateSource);
-
-/***/ },
-/* 231 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(232);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(223)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./CreateSource.css", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./CreateSource.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 232 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(222)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".CreateSource {\n  display: flex;\n  justify-content: center;\n}\n\n.new-source-url {\n  width: 50%;\n  border-radius: 3px;\n  height: 24px;\n  border: 1px solid #6441A5;\n  margin-right: 10px;\n  padding-left: 10px;\n  outline: none;\n}\n\n.create-new-source {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  width: 24px;\n  height: 24px;\n  font-size: 16px;\n  border-radius: 50%;\n  color: #6441A5;\n  border: 1px solid #6441A5;\n  cursor: pointer;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 233 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.mutationTypes = exports.deleteSource = exports.updateSource = exports.createSourceList = exports.createSource = undefined;
-
-	var _templateObject = _taggedTemplateLiteral(['\n  mutation createSource($cu_id: ID!, $sourceUrl: String!) {\n    createSource(userId: $cu_id, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n'], ['\n  mutation createSource($cu_id: ID!, $sourceUrl: String!) {\n    createSource(userId: $cu_id, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n']),
-	    _templateObject2 = _taggedTemplateLiteral(['\n  mutation createSourceList($cu_id: ID!, $sourceListName: String!) {\n    createSourceList(userId: $cu_id, name: $sourceListName) {\n      name,\n      id,\n      isHeap,\n    }\n  }\n'], ['\n  mutation createSourceList($cu_id: ID!, $sourceListName: String!) {\n    createSourceList(userId: $cu_id, name: $sourceListName) {\n      name,\n      id,\n      isHeap,\n    }\n  }\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  mutation updateSource($sourceData: SourceInput!) {\n    updateSource(sourceData: $sourceData) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n'], ['\n  mutation updateSource($sourceData: SourceInput!) {\n    updateSource(sourceData: $sourceData) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n']),
-	    _templateObject4 = _taggedTemplateLiteral(['\n  mutation deleteSource($id: ID!) {\n    deleteSource(id: $id) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n'], ['\n  mutation deleteSource($id: ID!) {\n    deleteSource(id: $id) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n']);
-
-	var _graphqlTag = __webpack_require__(218);
-
-	var _graphqlTag2 = _interopRequireDefault(_graphqlTag);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-	// mutation to execute to add a source by its url
-	var createSource = exports.createSource = (0, _graphqlTag2.default)(_templateObject);
-
-	var createSourceList = exports.createSourceList = (0, _graphqlTag2.default)(_templateObject2);
-
-	var updateSource = exports.updateSource = (0, _graphqlTag2.default)(_templateObject3);
-
-	var deleteSource = exports.deleteSource = (0, _graphqlTag2.default)(_templateObject4);
-
-	var mutationTypes = exports.mutationTypes = {
-	  APOLLO_MUTATION_RESULT: 'APOLLO_MUTATION_RESULT',
-	  createSource: 'createSource',
-	  createSourceList: 'createSourceList',
-	  updateSource: 'updateSource',
-	  deleteSource: 'deleteSource'
-	};
-
-/***/ },
-/* 234 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactApollo = __webpack_require__(208);
-
-	var _immutabilityHelper = __webpack_require__(235);
-
-	var _immutabilityHelper2 = _interopRequireDefault(_immutabilityHelper);
-
-	__webpack_require__(236);
-
-	var _queries = __webpack_require__(238);
-
-	var _mutations = __webpack_require__(233);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var HeapList = function (_React$Component) {
-	  _inherits(HeapList, _React$Component);
-
-	  function HeapList() {
-	    _classCallCheck(this, HeapList);
-
-	    var _this = _possibleConstructorReturn(this, (HeapList.__proto__ || Object.getPrototypeOf(HeapList)).call(this));
-
-	    _this.renderHeapList = _this.renderHeapList.bind(_this);
-	    return _this;
-	  }
-
-	  _createClass(HeapList, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.props.initializeDraggables();
-	    }
-	  }, {
-	    key: 'renderHeapList',
-	    value: function renderHeapList() {
-	      console.log("wut", this.props);
-	      if (this.props.user) {
-	        return this.props.user.heapList.sources.map(function (sourceItem) {
-	          return _react2.default.createElement(
-	            'a',
-	            {
-	              href: sourceItem.sourceUrl,
-	              target: '_blank',
-	              key: sourceItem.id,
-	              className: 'sourceItem',
-	              'data-id': sourceItem.id
-	            },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'sourceImgWrapper' },
-	              _react2.default.createElement('img', { className: 'sourceImg', src: sourceItem.faviconUrl })
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'sourceTxtWrapper' },
-	              sourceItem.title
-	            )
-	          );
-	        });
-	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'HeapList', id: 'HeapList' },
-	        this.renderHeapList()
-	      );
-	    }
-	  }]);
-
-	  return HeapList;
-	}(_react2.default.Component);
-
-	// the variables we want to use with the query
-
-
-	var options = function options() {
-	  return {
-	    // we need this reducer for when we add new sources or update sources
-	    reducer: function reducer(previousResult, action, variables) {
-	      if (action.type === _mutations.mutationTypes.APOLLO_MUTATION_RESULT && action.operationName === _mutations.mutationTypes.createSource) {
-	        console.log("what know", previousResult, action, variables);
-	        // this is merging the new source into our current list of sources
-	        return (0, _immutabilityHelper2.default)(previousResult, {
-	          user: {
-	            heapList: {
-	              sources: {
-	                $unshift: []
-	              }
-	            }
-	          }
-	        });
-	      } else if (action.type === _mutations.mutationTypes.APOLLO_MUTATION_RESULT && action.operationName === _mutations.mutationTypes.updateSource) {
-	        // need to filter out the removed object actually!
-	        // add it back if need be
-	        // want to reintegrate it if part of our current list
-	        // NOTE: could eventually merge the first and second case together,
-	        // but for now we're going to leave them separate until we make a firmer
-	        // decision on how using multiple lists will go
-	        if (action.result.data.updateSource.sourceListId === previousResult.user.heapList.id) {
-	          return (0, _immutabilityHelper2.default)(previousResult, {
-	            user: {
-	              heapList: {
-	                sources: {
-	                  $unshift: [action.result.data.updateSource]
-	                }
-	              }
-	            }
-	          });
-	        }
-	      }
-	      // if this isn't a special case, return the previous result
-	      return previousResult;
-	    },
-	    variables: {
-	      cu_id: window.cu_id
-	    }
-	  };
-	};
-
-	// potentially rename our props in the future
-	var props = function props(_ref) {
-	  var ownProps = _ref.ownProps,
-	      _ref$data = _ref.data,
-	      user = _ref$data.user,
-	      loading = _ref$data.loading;
-	  return {
-	    user: user,
-	    loading: loading
-	  };
-	};
-
-	// export the 'connected' component
-	exports.default = (0, _reactApollo.graphql)(_queries.heapListQuery, {
-	  options: options,
-	  props: props
-	})(HeapList);
-
-/***/ },
-/* 235 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var invariant = __webpack_require__(210);
-
-	var hasOwnProperty = Object.prototype.hasOwnProperty;
-	var splice = Array.prototype.splice;
-
-	var assign = Object.assign || function assign(target, source) {
-	  var keys = getAllKeys(source);
-	  for (var i = 0; i < keys.length; i++) {
-	    var key = keys[i];
-	    if (hasOwnProperty.call(source, key)) {
-	      target[key] = source[key];
-	    }
-	  }
-	  return target;
-	}
-
-	var getAllKeys = typeof Object.getOwnPropertySymbols === 'function' ?
-	  function(obj) { return Object.keys(obj).concat(Object.getOwnPropertySymbols(obj)) } :
-	  function(obj) { return Object.keys(obj) }
-	;
-
-	function copy(object) {
-	  if (object instanceof Array) {
-	    return object.slice();
-	  } else if (object && typeof object === 'object') {
-	    return assign(new object.constructor(), object);
-	  } else {
-	    return object;
-	  }
-	}
-
-
-	function newContext() {
-	  var commands = assign({}, defaultCommands);
-	  update.extend = function(directive, fn) {
-	    commands[directive] = fn;
-	  }
-
-	  return update;
-
-	  function update(object, spec) {
-	    invariant(
-	      !Array.isArray(spec),
-	      'update(): You provided an invalid spec to update(). The spec may ' +
-	      'not contain an array except as the value of $set, $push, $unshift, ' +
-	      '$splice or any custom command allowing an array value.'
-	    );
-
-	    invariant(
-	      typeof spec === 'object' && spec !== null,
-	      'update(): You provided an invalid spec to update(). The spec and ' +
-	      'every included key path must be plain objects containing one of the ' +
-	      'following commands: %s.',
-	      Object.keys(commands).join(', ')
-	    );
-
-	    var nextObject = object;
-	    var specKeys = getAllKeys(spec)
-	    var index, key;
-	    for (index = 0; index < specKeys.length; index++) {
-	      var key = specKeys[index];
-	      if (hasOwnProperty.call(commands, key)) {
-	        nextObject = commands[key](spec[key], nextObject, spec, object);
-	      } else {
-	        var nextValueForKey = update(object[key], spec[key]);
-	        if (nextValueForKey !== nextObject[key]) {
-	          if (nextObject === object) {
-	            nextObject = copy(object);
-	          }
-	          nextObject[key] = nextValueForKey;
-	        }
-	      }
-	    }
-	    return nextObject;
-	  }
-
-	}
-
-	var defaultCommands = {
-	  $push: function(value, original, spec) {
-	    invariantPushAndUnshift(original, spec, '$push');
-	    return original.concat(value);
-	  },
-	  $unshift: function(value, original, spec) {
-	    invariantPushAndUnshift(original, spec, '$unshift');
-	    return value.concat(original);
-	  },
-	  $splice: function(value, nextObject, spec, object) {
-	    var originalValue = nextObject === object ? copy(object) : nextObject;
-	    invariantSplices(originalValue, spec);
-	    value.forEach(function(args) {
-	      invariantSplice(args);
-	      splice.apply(originalValue, args);
-	    });
-	    return originalValue;
-	  },
-	  $set: function(value, original, spec) {
-	    invariantSet(spec);
-	    return value;
-	  },
-	  $merge: function(value, nextObject, spec, object) {
-	    var originalValue = nextObject === object ? copy(object) : nextObject;
-	    invariantMerge(originalValue, value);
-	    getAllKeys(value).forEach(function(key) {
-	      originalValue[key] = value[key];
-	    });
-	    return originalValue;
-	  },
-	  $apply: function(value, original) {
-	    invariantApply(value);
-	    return value(original);
-	  }
-	};
-
-
-
-	module.exports = newContext();
-	module.exports.newContext = newContext;
-
-
-	// invariants
-
-	function invariantPushAndUnshift(value, spec, command) {
-	  invariant(
-	    Array.isArray(value),
-	    'update(): expected target of %s to be an array; got %s.',
-	    command,
-	    value
-	  );
-	  var specValue = spec[command];
-	  invariant(
-	    Array.isArray(specValue),
-	    'update(): expected spec of %s to be an array; got %s. ' +
-	    'Did you forget to wrap your parameter in an array?',
-	    command,
-	    specValue
-	  );
-	}
-
-	function invariantSplices(value, spec) {
-	  invariant(
-	    Array.isArray(value),
-	    'Expected $splice target to be an array; got %s',
-	    value
-	  );
-	  invariantSplice(spec['$splice']);
-	}
-
-	function invariantSplice(value) {
-	  invariant(
-	    Array.isArray(value),
-	    'update(): expected spec of $splice to be an array of arrays; got %s. ' +
-	    'Did you forget to wrap your parameters in an array?',
-	    value
-	  );
-	}
-
-	function invariantApply(fn) {
-	  invariant(
-	    typeof fn === 'function',
-	    'update(): expected spec of $apply to be a function; got %s.',
-	    fn
-	  );
-	}
-
-	function invariantSet(spec) {
-	  invariant(
-	    Object.keys(spec).length === 1,
-	    'Cannot have more than one key in an object with $set'
-	  );
-	}
-
-	function invariantMerge(target, specValue) {
-	  invariant(
-	    specValue && typeof specValue === 'object',
-	    'update(): $merge expects a spec of type \'object\'; got %s',
-	    specValue
-	  );
-	  invariant(
-	    target && typeof target === 'object',
-	    'update(): $merge expects a target of type \'object\'; got %s',
-	    target
-	  );
-	}
-
-
-/***/ },
-/* 236 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(237);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(223)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./HeapList.css", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./HeapList.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 237 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(222)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".HeapList {\n  padding: 0px 15px;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  height: 85vh;\n}\n\n.sourceItem {\n  width: 100%;\n  height: 25px;\n  min-height: 25px;\n  overflow-y: auto;\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 13px;\n  border: 1px solid #f0f0f0;\n  font-weight: 400;\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  text-decoration: none;\n  padding: 5px 10px;\n  border-radius: 3px;\n  color: rgba(0,0,0,.6);\n  background: rgba(255,255,255,.97);\n  cursor: pointer;\n}\n\n.sourceItem:hover {\n    color: rgba(0,0,0,.8);\n    border-color: rgba(0,0,0,.15);\n    background: #fff;\n}\n\n.sourceImgWrapper {\n  position: absolute;\n  left: 10px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n.sourceImg {\n  width: 25px;\n}\n\n.sourceTxtWrapper {\n  /*this margin left accounts for the size of the image (25px) so there is */\n  /*no unwanted overlap as well as the 10px padding around the whole item */\n  /* so there is equal space from edge to image and image to text */\n  margin-left: calc(25px + 10px);\n  width: 80%;\n  white-space: nowrap;\n  overflow-x: hidden;\n  text-overflow: ellipsis;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 238 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.queryTypes = exports.userQuery = exports.sourceListQuery = exports.heapListQuery = exports.SourceInfoFragment = undefined;
-
-	var _templateObject = _taggedTemplateLiteral(['\n    fragment SourceInfoFragment on SourceType {\n      id,\n      title,\n      sourceUrl,\n      faviconUrl,\n  },\n'], ['\n    fragment SourceInfoFragment on SourceType {\n      id,\n      title,\n      sourceUrl,\n      faviconUrl,\n  },\n']),
-	    _templateObject2 = _taggedTemplateLiteral(['\n  query heapListQuery($cu_id: ID!) {\n    user(userId: $cu_id) {\n      name,\n      heapList {\n        id,\n        name,\n        sources {\n          ...SourceInfoFragment,\n        },\n      },\n    },\n  }\n  ', ',\n'], ['\n  query heapListQuery($cu_id: ID!) {\n    user(userId: $cu_id) {\n      name,\n      heapList {\n        id,\n        name,\n        sources {\n          ...SourceInfoFragment,\n        },\n      },\n    },\n  }\n  ', ',\n']),
-	    _templateObject3 = _taggedTemplateLiteral(['\n  query sourceListQuery($cu_id: ID!) {\n    sourceLists(userId: $cu_id) {\n      id,\n      name,\n      isHeap,\n    },\n  }\n'], ['\n  query sourceListQuery($cu_id: ID!) {\n    sourceLists(userId: $cu_id) {\n      id,\n      name,\n      isHeap,\n    },\n  }\n']),
-	    _templateObject4 = _taggedTemplateLiteral(['\n  query userQuery($cu_id: ID!) {\n    user(userId: $cu_id) {\n      name,\n    },\n  }\n'], ['\n  query userQuery($cu_id: ID!) {\n    user(userId: $cu_id) {\n      name,\n    },\n  }\n']);
-
-	var _graphqlTag = __webpack_require__(218);
-
-	var _graphqlTag2 = _interopRequireDefault(_graphqlTag);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
-
-	// fragment for the sources
-	var SourceInfoFragment = exports.SourceInfoFragment = {
-	  source_info: (0, _graphqlTag2.default)(_templateObject) };
-
-	// grab data necessary for the HeapList component
-	var heapListQuery = exports.heapListQuery = (0, _graphqlTag2.default)(_templateObject2, SourceInfoFragment.source_info);
-
-	var sourceListQuery = exports.sourceListQuery = (0, _graphqlTag2.default)(_templateObject3);
-
-	var userQuery = exports.userQuery = (0, _graphqlTag2.default)(_templateObject4);
-
-	var queryTypes = exports.queryTypes = {
-	  heapListQuery: 'heapListQuery',
-	  sourceListQuery: 'sourceListQuery'
-	};
-
-/***/ },
-/* 239 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactApollo = __webpack_require__(208);
-
-	var _immutabilityHelper = __webpack_require__(235);
-
-	var _immutabilityHelper2 = _interopRequireDefault(_immutabilityHelper);
-
-	var _SourceListBlock = __webpack_require__(250);
-
-	var _SourceListBlock2 = _interopRequireDefault(_SourceListBlock);
-
-	var _queries = __webpack_require__(238);
-
-	var _mutations = __webpack_require__(233);
-
-	var _initializeDraggables = __webpack_require__(248);
-
-	__webpack_require__(240);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var SourceListColumn = function (_Component) {
-	  _inherits(SourceListColumn, _Component);
-
-	  function SourceListColumn() {
-	    _classCallCheck(this, SourceListColumn);
-
-	    var _this = _possibleConstructorReturn(this, (SourceListColumn.__proto__ || Object.getPrototypeOf(SourceListColumn)).call(this));
-
-	    _this.renderSourceLists = _this.renderSourceLists.bind(_this);
-	    return _this;
-	  }
-
-	  // render each source list with the dnd initializing function it needs
-
-
-	  _createClass(SourceListColumn, [{
-	    key: 'renderSourceLists',
-	    value: function renderSourceLists() {
-	      if (this.props.sourceLists) {
-	        return this.props.sourceLists.map(function (sourceList) {
-	          return _react2.default.createElement(_SourceListBlock2.default, {
-	            key: sourceList.id,
-	            sourceList: sourceList,
-	            initializeDraggables: _initializeDraggables.initializeSourceListBlockDraggables
-	          });
-	        });
-	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { id: 'SourceListColumn', className: 'SourceListColumn' },
-	        this.renderSourceLists()
-	      );
-	    }
-	  }]);
-
-	  return SourceListColumn;
-	}(_react.Component);
-
-	// options for this components querying
-
-
-	var queryOptions = function queryOptions() {
-	  return {
-	    // we need this reducer for when we add new SourceLists
-	    reducer: function reducer(previousResult, action, variables) {
-	      if (action.type === _mutations.mutationTypes.APOLLO_MUTATION_RESULT && action.operationName === _mutations.mutationTypes.createSourceList) {
-	        console.log("in the mutation", previousResult, action);
-	        return (0, _immutabilityHelper2.default)(previousResult, {
-	          sourceLists: {
-	            $push: [action.result.data.createSourceList]
-	          }
-	        });
-	      }
-	      // return previous result if not doing anything special
-	      return previousResult;
-	    },
-	    variables: {
-	      cu_id: window.cu_id
-	    }
-	  };
-	};
-
-	// to rename in the future if we like
-	var queryProps = function queryProps(_ref) {
-	  var ownProps = _ref.ownProps,
-	      _ref$data = _ref.data,
-	      sourceLists = _ref$data.sourceLists,
-	      loading = _ref$data.loading;
-	  return {
-	    sourceLists: sourceLists,
-	    loading: loading
-	  };
-	};
-
-	// no longer need to compose, leaving it here as an example for now
-	exports.default = (0, _reactApollo.compose)((0, _reactApollo.graphql)(_queries.sourceListQuery, {
-	  options: queryOptions,
-	  props: queryProps
-	}))(SourceListColumn);
-
-/***/ },
-/* 240 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(241);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(223)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./SourceListColumn.css", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./SourceListColumn.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 241 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(222)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".SourceListColumn {\n  width: 100%;\n  max-height: 500px;\n  overflow-y: auto;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 242 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactApollo = __webpack_require__(208);
-
-	var _queries = __webpack_require__(238);
-
-	var _CreateSourceList = __webpack_require__(243);
-
-	var _CreateSourceList2 = _interopRequireDefault(_CreateSourceList);
-
-	__webpack_require__(246);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var SubHeader = function (_Component) {
-	  _inherits(SubHeader, _Component);
-
-	  function SubHeader() {
-	    _classCallCheck(this, SubHeader);
-
-	    var _this = _possibleConstructorReturn(this, (SubHeader.__proto__ || Object.getPrototypeOf(SubHeader)).call(this));
-
-	    _this.renderListTitle = _this.renderListTitle.bind(_this);
-	    return _this;
-	  }
-
-	  _createClass(SubHeader, [{
-	    key: 'renderListTitle',
-	    value: function renderListTitle() {
-	      if (this.props.user) {
-	        return _react2.default.createElement(
-	          'div',
-	          { className: 'ListTitle' },
-	          this.props.user.name,
-	          '\'s Heap',
-	          _react2.default.createElement('hr', null),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'ListTitle-button-row' },
-	            _react2.default.createElement('i', { className: 'fa fa-info ListTitleControl' }),
-	            _react2.default.createElement('i', { className: 'fa fa-download ListTitleControl' }),
-	            _react2.default.createElement('i', { className: 'fa fa-envelope-o ListTitleControl' }),
-	            _react2.default.createElement('i', { className: 'fa fa-trash-o ListTitleControl' })
-	          )
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'SubHeader' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'IndividualStats' },
-	          'stats'
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'ListTitleAndTools' },
-	          this.renderListTitle()
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'CreateSourceList-wrapper' },
-	          _react2.default.createElement(_CreateSourceList2.default, null)
-	        )
-	      );
-	    }
-	  }]);
-
-	  return SubHeader;
-	}(_react.Component);
-
-	// could eventually rename these if we wished
-
-
-	var props = function props(_ref) {
-	  var ownProps = _ref.ownProps,
-	      _ref$data = _ref.data,
-	      user = _ref$data.user,
-	      loading = _ref$data.loading;
-	  return {
-	    user: user,
-	    loading: loading
-	  };
-	};
-
-	var options = function options() {
-	  return {
-	    variables: {
-	      cu_id: window.cu_id
-	    }
-	  };
-	};
-
-	exports.default = (0, _reactApollo.graphql)(_queries.userQuery, {
-	  options: options,
-	  props: props
-	})(SubHeader);
-
-/***/ },
-/* 243 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactApollo = __webpack_require__(208);
-
-	var _mutations = __webpack_require__(233);
-
-	__webpack_require__(244);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var CreateSourceList = function (_Component) {
-	  _inherits(CreateSourceList, _Component);
-
-	  function CreateSourceList() {
-	    _classCallCheck(this, CreateSourceList);
-
-	    var _this = _possibleConstructorReturn(this, (CreateSourceList.__proto__ || Object.getPrototypeOf(CreateSourceList)).call(this));
-
-	    _this.createSourceList = _this.createSourceList.bind(_this);
-	    return _this;
-	  }
-
-	  _createClass(CreateSourceList, [{
-	    key: 'createSourceList',
-	    value: function createSourceList() {
-	      console.log("what have");
-	      if (this._input.value) {
-	        this.props.createSourceList(this._input.value);
-	        this._input.value = '';
-	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'CreateSourceList' },
-	        _react2.default.createElement('input', {
-	          ref: function ref(node) {
-	            return _this2._input = node;
-	          },
-	          className: 'new-source-list-name',
-	          placeholder: 'Create new list...'
-	        }),
-	        _react2.default.createElement('i', {
-	          onClick: this.createSourceList,
-	          className: 'fa fa-plus create-new-source-list'
-	        })
-	      );
-	    }
-	  }]);
-
-	  return CreateSourceList;
-	}(_react.Component);
-
-	var props = function props(_ref) {
-	  var mutate = _ref.mutate;
-
-	  return {
-	    createSourceList: function createSourceList(sourceListName) {
-	      mutate({ variables: { cu_id: window.cu_id, sourceListName: sourceListName } }).then(function (resp) {
-	        return console.log("what did we create", resp);
-	      });
-	    }
-	  };
-	};
-
-	exports.default = (0, _reactApollo.graphql)(_mutations.createSourceList, { props: props })(CreateSourceList);
-
-/***/ },
-/* 244 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(245);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(223)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./CreateSourceList.css", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./CreateSourceList.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 245 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(222)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".CreateSourceList {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  width: 100%;\n}\n\n.CreateSourceList .new-source-list-name {\n  width: 220px;\n  border-radius: 3px;\n  height: 24px;\n  border: 1px solid #6441A5;\n  margin-right: 10px;\n  padding-left: 10px;\n  outline: none;\n}\n\n.CreateSourceList .create-new-source-list {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  width: 24px;\n  height: 24px;\n  font-size: 16px;\n  border-radius: 50%;\n  color: #6441A5;\n  border: 1px solid #6441A5;\n  cursor: pointer;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 246 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(247);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(223)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./SubHeader.css", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./SubHeader.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 247 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(222)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".SubHeader {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n}\n\n.IndividualStats {\n  width: 30%;\n}\n\n.ListTitleAndTools {\n  width: 40%;\n  text-align: center;\n}\n\n.ListTitle {\n  margin-top: 15px;\n  font-weight: bold;\n  color: rgba(0,0,0,0.6);\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  font-size: 20px;\n}\n\n.ListTitle hr {\n  margin: 5px 30px;\n}\n\n.ListTitle-button-row {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n}\n\n.ListTitleControl {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  color: #6441A5;\n  font-size: 14px;\n  margin: 0px 5px;\n  width: 25px;\n  height: 25px;\n  border: 1px solid #6441A5;\n  border-radius: 50%;\n  cursor: pointer;\n}\n\n.CreateSourceList-wrapper {\n  width: 30%;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: flex-end;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 248 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.initializeSourceListBlockDraggables = initializeSourceListBlockDraggables;
-	exports.initializeHeapListDraggables = initializeHeapListDraggables;
-	exports.initializeSourceTrashDraggables = initializeSourceTrashDraggables;
-
-	var _sortablejs = __webpack_require__(249);
-
-	var _sortablejs2 = _interopRequireDefault(_sortablejs);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	// the initializing function takes and id so that we know where in
-	// the dom to access each source block as well as a callback
-	// to execute when something is dropped into one of the source blocks
-	function initializeSourceListBlockDraggables(blockId, cb) {
-	  // function invoked when something added to one of the sourceListBlocks
-	  function onListAdd(evt) {
-	    console.log("well what have", evt);
-	    var sourceId = evt.item.attributes['data-id'].value;
-	    var sourceListId = evt.to.attributes['data-id'].value;
-	    evt.to.removeChild(evt.item);
-	    // invoke the callback to add the item to the proper list
-	    cb(sourceId, sourceListId);
-	  }
-
-	  // start by getting the block from the dom, we are passed
-	  // the id so we know what to look for
-	  var sourceListBlock = document.getElementById(blockId);
-
-	  // this function initializes each SourceListBlock
-	  // creating a sortable with the group of 'SourceMvmt', allowing things
-	  // of the group 'SourceMvmt' to be put in it, specifying the function
-	  // to call when something is added, and specifying the ghost class for
-	  // the draggable
-	  _sortablejs2.default.create(sourceListBlock, {
-	    group: 'SourceMvmt',
-	    put: ['SourceMvmt'],
-	    ghostClass: 'highlightGhost',
-	    onAdd: onListAdd
-	  });
-	}
-
-	function initializeHeapListDraggables(cb) {
-	  // grab the HeapList from the dom
-	  var heapList = document.getElementById('HeapList');
-
-	  // this functions sets the draggable image as well as where our
-	  // cursor will be dragging that image from (set to the middle)
-	  function setData(dataTransfer, dragEl) {
-	    console.log("what in dataTransfer", dataTransfer, dataTransfer.setDragImage, dragEl, dragEl.offsetWidth);
-	    dataTransfer.setDragImage(dragEl, dragEl.offsetWidth / 2, dragEl.offsetHeight / 2);
-	  }
-
-	  // specify things about this draggable, such as the items within the
-	  // HeapList that are actually draggable, the fact that we dont want to
-	  // sort, our animation speed, ghost class for the draggable, setting the
-	  // draggable image with setData and more
-	  _sortablejs2.default.create(heapList, {
-	    draggable: '.sourceItem',
-	    sort: false,
-	    animation: 100,
-	    group: 'SourceMvmt',
-	    pull: true,
-	    ghostClass: 'highlightGhost',
-	    setData: setData,
-	    scroll: true,
-	    scrollSensitivity: 300,
-	    scrollSpeed: 10
-	  });
-	}
-
-	// the initializing function also takes a callback to invoke when we add
-	// something to the trash
-	function initializeSourceTrashDraggables(cb) {
-	  // grab the relevant component
-	  var sourceTrash = document.getElementById('SourceTrash');
-
-	  // to call when something is dropped in trash
-	  function onTrash(evt) {
-	    var sourceId = evt.item.attributes['data-id'].value;
-	    // can remove from the dom
-	    sourceTrash.removeChild(evt.item);
-	    // now delete using the callback
-	    cb(sourceId);
-	  }
-	  // creates sourceTrash dom element as a 'draggable', and specifies that
-	  // things of group 'SourceMvmt' can put things into it. in reality
-	  // the trash will only be accepting things and will not be moved itself
-	  _sortablejs2.default.create(sourceTrash, {
-	    group: 'SourceMvmt',
-	    put: ['SourceMvmt'],
-	    onAdd: onTrash
-	  });
-	}
-
-/***/ },
-/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/**!
@@ -34758,7 +33545,47 @@
 
 
 /***/ },
-/* 250 */
+/* 229 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(230);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./SourceTools.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./SourceTools.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 230 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(222)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".SourceTools {\n  height: 100%;\n  display: flex;\n  flex-direction: column;\n}\n\n.SourceTool {\n  margin-bottom: 120px;\n}\n\n.delete-source, .explain-SourceTools {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n}\n\n.SourceTools-icon {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  color: #6441A5;\n  width: 40px;\n  height: 40px;\n  padding: 20px;\n  font-size: 24px;\n  border: 1px solid #6441A5;\n  border-radius: 50%;\n}\n\n#SourceTrash .highlightGhost {\n  /*display: none;*/\n  position: absolute;\n  width: 300px;\n  background: salmon;\n  border-color: #ccc;\n}\n\n#SourceTrash.SourceTools-icon.highlight {\n  color: red !important;\n  border-color: red !important;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34775,9 +33602,717 @@
 
 	var _reactApollo = __webpack_require__(208);
 
-	var _mutations = __webpack_require__(233);
+	__webpack_require__(232);
 
-	__webpack_require__(251);
+	var _mutations = __webpack_require__(234);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var CreateSource = function (_Component) {
+	  _inherits(CreateSource, _Component);
+
+	  function CreateSource() {
+	    _classCallCheck(this, CreateSource);
+
+	    var _this = _possibleConstructorReturn(this, (CreateSource.__proto__ || Object.getPrototypeOf(CreateSource)).call(this));
+
+	    _this.state = {
+	      inputVisible: false
+	    };
+	    _this.createSource = _this.createSource.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(CreateSource, [{
+	    key: 'createSource',
+	    value: function createSource() {
+	      if (this._input.value) {
+	        this.props.createSource(this._input.value);
+	        this._input.value = '';
+	      }
+	    }
+
+	    // need to style this still
+
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'CreateSource' },
+	        _react2.default.createElement('input', {
+	          ref: function ref(node) {
+	            return _this2._input = node;
+	          },
+	          className: 'new-source-url',
+	          placeholder: 'Add new source url here...'
+	        }),
+	        _react2.default.createElement('i', {
+	          onClick: this.createSource,
+	          className: 'fa fa-plus create-new-source'
+	        })
+	      );
+	    }
+	  }]);
+
+	  return CreateSource;
+	}(_react.Component);
+
+	// configure our mutation so that we can call it with a single argument
+
+
+	var props = function props(_ref) {
+	  var mutate = _ref.mutate;
+
+	  return {
+	    createSource: function createSource(sourceUrl) {
+	      mutate({ variables: { cu_id: window.cu_id, sourceUrl: sourceUrl } }).then(function (resp) {
+	        return console.log("what is resp", resp);
+	      });
+	    }
+	  };
+	};
+
+	exports.default = (0, _reactApollo.graphql)(_mutations.createSource, { props: props })(CreateSource);
+
+/***/ },
+/* 232 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(233);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./CreateSource.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./CreateSource.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 233 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(222)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".CreateSource {\n  display: flex;\n  justify-content: center;\n}\n\n.new-source-url {\n  width: 50%;\n  border-radius: 3px;\n  height: 24px;\n  border: 1px solid #6441A5;\n  margin-right: 10px;\n  padding-left: 10px;\n  outline: none;\n}\n\n.create-new-source {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  width: 24px;\n  height: 24px;\n  font-size: 16px;\n  border-radius: 50%;\n  color: #6441A5;\n  border: 1px solid #6441A5;\n  cursor: pointer;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 234 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.mutationTypes = exports.deleteSource = exports.updateSource = exports.createSourceList = exports.createSource = undefined;
+
+	var _templateObject = _taggedTemplateLiteral(['\n  mutation createSource($cu_id: ID!, $sourceUrl: String!) {\n    createSource(userId: $cu_id, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n'], ['\n  mutation createSource($cu_id: ID!, $sourceUrl: String!) {\n    createSource(userId: $cu_id, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n']),
+	    _templateObject2 = _taggedTemplateLiteral(['\n  mutation createSourceList($cu_id: ID!, $sourceListName: String!) {\n    createSourceList(userId: $cu_id, name: $sourceListName) {\n      name,\n      id,\n      isHeap,\n    }\n  }\n'], ['\n  mutation createSourceList($cu_id: ID!, $sourceListName: String!) {\n    createSourceList(userId: $cu_id, name: $sourceListName) {\n      name,\n      id,\n      isHeap,\n    }\n  }\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  mutation updateSource($sourceData: SourceInput!) {\n    updateSource(sourceData: $sourceData) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n'], ['\n  mutation updateSource($sourceData: SourceInput!) {\n    updateSource(sourceData: $sourceData) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n']),
+	    _templateObject4 = _taggedTemplateLiteral(['\n  mutation deleteSource($id: ID!) {\n    deleteSource(id: $id) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n'], ['\n  mutation deleteSource($id: ID!) {\n    deleteSource(id: $id) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n']);
+
+	var _graphqlTag = __webpack_require__(218);
+
+	var _graphqlTag2 = _interopRequireDefault(_graphqlTag);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+	// mutation to execute to add a source by its url
+	var createSource = exports.createSource = (0, _graphqlTag2.default)(_templateObject);
+
+	var createSourceList = exports.createSourceList = (0, _graphqlTag2.default)(_templateObject2);
+
+	var updateSource = exports.updateSource = (0, _graphqlTag2.default)(_templateObject3);
+
+	var deleteSource = exports.deleteSource = (0, _graphqlTag2.default)(_templateObject4);
+
+	var mutationTypes = exports.mutationTypes = {
+	  APOLLO_MUTATION_RESULT: 'APOLLO_MUTATION_RESULT',
+	  createSource: 'createSource',
+	  createSourceList: 'createSourceList',
+	  updateSource: 'updateSource',
+	  deleteSource: 'deleteSource'
+	};
+
+/***/ },
+/* 235 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactApollo = __webpack_require__(208);
+
+	var _immutabilityHelper = __webpack_require__(236);
+
+	var _immutabilityHelper2 = _interopRequireDefault(_immutabilityHelper);
+
+	__webpack_require__(237);
+
+	var _queries = __webpack_require__(239);
+
+	var _mutations = __webpack_require__(234);
+
+	var _SourceListReducer = __webpack_require__(253);
+
+	var _SourceListReducer2 = _interopRequireDefault(_SourceListReducer);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var HeapList = function (_React$Component) {
+	  _inherits(HeapList, _React$Component);
+
+	  function HeapList() {
+	    _classCallCheck(this, HeapList);
+
+	    var _this = _possibleConstructorReturn(this, (HeapList.__proto__ || Object.getPrototypeOf(HeapList)).call(this));
+
+	    _this.renderHeapList = _this.renderHeapList.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(HeapList, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.props.initializeDraggables();
+	    }
+	  }, {
+	    key: 'renderHeapList',
+	    value: function renderHeapList() {
+	      console.log("wut", this.props);
+	      if (this.props.user) {
+	        return this.props.user.heapList.sources.map(function (sourceItem) {
+	          console.log("this is an item", sourceItem);
+	          return _react2.default.createElement(
+	            'a',
+	            {
+	              href: sourceItem.sourceUrl,
+	              target: '_blank',
+	              key: sourceItem.id,
+	              className: 'sourceItem',
+	              'data-id': sourceItem.id
+	            },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'sourceImgWrapper' },
+	              _react2.default.createElement('img', { className: 'sourceImg', src: sourceItem.faviconUrl })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'sourceTxtWrapper' },
+	              sourceItem.title
+	            )
+	          );
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'HeapList', id: 'HeapList' },
+	        this.renderHeapList()
+	      );
+	    }
+	  }]);
+
+	  return HeapList;
+	}(_react2.default.Component);
+
+	// the variables we want to use with the query
+
+
+	var options = function options() {
+	  return {
+	    // we need this reducer for when we add, delete, or update sources
+	    reducer: _SourceListReducer2.default,
+	    variables: {
+	      cu_id: window.cu_id
+	    }
+	  };
+	};
+
+	// potentially rename our props in the future
+	var props = function props(_ref) {
+	  var ownProps = _ref.ownProps,
+	      _ref$data = _ref.data,
+	      user = _ref$data.user,
+	      loading = _ref$data.loading;
+	  return {
+	    user: user,
+	    loading: loading
+	  };
+	};
+
+	// export the 'connected' component
+	exports.default = (0, _reactApollo.graphql)(_queries.heapListQuery, {
+	  options: options,
+	  props: props
+	})(HeapList);
+
+/***/ },
+/* 236 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var invariant = __webpack_require__(210);
+
+	var hasOwnProperty = Object.prototype.hasOwnProperty;
+	var splice = Array.prototype.splice;
+
+	var assign = Object.assign || function assign(target, source) {
+	  var keys = getAllKeys(source);
+	  for (var i = 0; i < keys.length; i++) {
+	    var key = keys[i];
+	    if (hasOwnProperty.call(source, key)) {
+	      target[key] = source[key];
+	    }
+	  }
+	  return target;
+	}
+
+	var getAllKeys = typeof Object.getOwnPropertySymbols === 'function' ?
+	  function(obj) { return Object.keys(obj).concat(Object.getOwnPropertySymbols(obj)) } :
+	  function(obj) { return Object.keys(obj) }
+	;
+
+	function copy(object) {
+	  if (object instanceof Array) {
+	    return object.slice();
+	  } else if (object && typeof object === 'object') {
+	    return assign(new object.constructor(), object);
+	  } else {
+	    return object;
+	  }
+	}
+
+
+	function newContext() {
+	  var commands = assign({}, defaultCommands);
+	  update.extend = function(directive, fn) {
+	    commands[directive] = fn;
+	  }
+
+	  return update;
+
+	  function update(object, spec) {
+	    invariant(
+	      !Array.isArray(spec),
+	      'update(): You provided an invalid spec to update(). The spec may ' +
+	      'not contain an array except as the value of $set, $push, $unshift, ' +
+	      '$splice or any custom command allowing an array value.'
+	    );
+
+	    invariant(
+	      typeof spec === 'object' && spec !== null,
+	      'update(): You provided an invalid spec to update(). The spec and ' +
+	      'every included key path must be plain objects containing one of the ' +
+	      'following commands: %s.',
+	      Object.keys(commands).join(', ')
+	    );
+
+	    var nextObject = object;
+	    var specKeys = getAllKeys(spec)
+	    var index, key;
+	    for (index = 0; index < specKeys.length; index++) {
+	      var key = specKeys[index];
+	      if (hasOwnProperty.call(commands, key)) {
+	        nextObject = commands[key](spec[key], nextObject, spec, object);
+	      } else {
+	        var nextValueForKey = update(object[key], spec[key]);
+	        if (nextValueForKey !== nextObject[key]) {
+	          if (nextObject === object) {
+	            nextObject = copy(object);
+	          }
+	          nextObject[key] = nextValueForKey;
+	        }
+	      }
+	    }
+	    return nextObject;
+	  }
+
+	}
+
+	var defaultCommands = {
+	  $push: function(value, original, spec) {
+	    invariantPushAndUnshift(original, spec, '$push');
+	    return original.concat(value);
+	  },
+	  $unshift: function(value, original, spec) {
+	    invariantPushAndUnshift(original, spec, '$unshift');
+	    return value.concat(original);
+	  },
+	  $splice: function(value, nextObject, spec, object) {
+	    var originalValue = nextObject === object ? copy(object) : nextObject;
+	    invariantSplices(originalValue, spec);
+	    value.forEach(function(args) {
+	      invariantSplice(args);
+	      splice.apply(originalValue, args);
+	    });
+	    return originalValue;
+	  },
+	  $set: function(value, original, spec) {
+	    invariantSet(spec);
+	    return value;
+	  },
+	  $merge: function(value, nextObject, spec, object) {
+	    var originalValue = nextObject === object ? copy(object) : nextObject;
+	    invariantMerge(originalValue, value);
+	    getAllKeys(value).forEach(function(key) {
+	      originalValue[key] = value[key];
+	    });
+	    return originalValue;
+	  },
+	  $apply: function(value, original) {
+	    invariantApply(value);
+	    return value(original);
+	  }
+	};
+
+
+
+	module.exports = newContext();
+	module.exports.newContext = newContext;
+
+
+	// invariants
+
+	function invariantPushAndUnshift(value, spec, command) {
+	  invariant(
+	    Array.isArray(value),
+	    'update(): expected target of %s to be an array; got %s.',
+	    command,
+	    value
+	  );
+	  var specValue = spec[command];
+	  invariant(
+	    Array.isArray(specValue),
+	    'update(): expected spec of %s to be an array; got %s. ' +
+	    'Did you forget to wrap your parameter in an array?',
+	    command,
+	    specValue
+	  );
+	}
+
+	function invariantSplices(value, spec) {
+	  invariant(
+	    Array.isArray(value),
+	    'Expected $splice target to be an array; got %s',
+	    value
+	  );
+	  invariantSplice(spec['$splice']);
+	}
+
+	function invariantSplice(value) {
+	  invariant(
+	    Array.isArray(value),
+	    'update(): expected spec of $splice to be an array of arrays; got %s. ' +
+	    'Did you forget to wrap your parameters in an array?',
+	    value
+	  );
+	}
+
+	function invariantApply(fn) {
+	  invariant(
+	    typeof fn === 'function',
+	    'update(): expected spec of $apply to be a function; got %s.',
+	    fn
+	  );
+	}
+
+	function invariantSet(spec) {
+	  invariant(
+	    Object.keys(spec).length === 1,
+	    'Cannot have more than one key in an object with $set'
+	  );
+	}
+
+	function invariantMerge(target, specValue) {
+	  invariant(
+	    specValue && typeof specValue === 'object',
+	    'update(): $merge expects a spec of type \'object\'; got %s',
+	    specValue
+	  );
+	  invariant(
+	    target && typeof target === 'object',
+	    'update(): $merge expects a target of type \'object\'; got %s',
+	    target
+	  );
+	}
+
+
+/***/ },
+/* 237 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(238);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./HeapList.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./HeapList.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 238 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(222)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".HeapList {\n  padding: 0px 15px;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  height: 85vh;\n}\n\n.sourceItem {\n  width: 100%;\n  height: 25px;\n  min-height: 25px;\n  overflow-y: auto;\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 13px;\n  border: 1px solid #f0f0f0;\n  font-weight: 400;\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  text-decoration: none;\n  padding: 5px 10px;\n  border-radius: 3px;\n  color: rgba(0,0,0,.6);\n  background: rgba(255,255,255,.97);\n  cursor: pointer;\n}\n\n.sourceItem:hover {\n    color: rgba(0,0,0,.8);\n    border-color: rgba(0,0,0,.15);\n    background: #fff;\n}\n\n.sourceImgWrapper {\n  position: absolute;\n  left: 10px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n.sourceImg {\n  width: 25px;\n}\n\n.sourceTxtWrapper {\n  /*this margin left accounts for the size of the image (25px) so there is */\n  /*no unwanted overlap as well as the 10px padding around the whole item */\n  /* so there is equal space from edge to image and image to text */\n  margin-left: calc(25px + 10px);\n  width: 80%;\n  white-space: nowrap;\n  overflow-x: hidden;\n  text-overflow: ellipsis;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.queryTypes = exports.userQuery = exports.sourceListQuery = exports.heapListQuery = exports.SourceInfoFragment = undefined;
+
+	var _templateObject = _taggedTemplateLiteral(['\n    fragment SourceInfoFragment on SourceType {\n      id,\n      title,\n      sourceUrl,\n      faviconUrl,\n  },\n'], ['\n    fragment SourceInfoFragment on SourceType {\n      id,\n      title,\n      sourceUrl,\n      faviconUrl,\n  },\n']),
+	    _templateObject2 = _taggedTemplateLiteral(['\n  query heapListQuery($cu_id: ID!) {\n    user(userId: $cu_id) {\n      name,\n      heapList {\n        id,\n        name,\n        sources {\n          ...SourceInfoFragment,\n        },\n      },\n    },\n  }\n  ', ',\n'], ['\n  query heapListQuery($cu_id: ID!) {\n    user(userId: $cu_id) {\n      name,\n      heapList {\n        id,\n        name,\n        sources {\n          ...SourceInfoFragment,\n        },\n      },\n    },\n  }\n  ', ',\n']),
+	    _templateObject3 = _taggedTemplateLiteral(['\n  query sourceListQuery($cu_id: ID!) {\n    sourceLists(userId: $cu_id) {\n      id,\n      name,\n      isHeap,\n    },\n  }\n'], ['\n  query sourceListQuery($cu_id: ID!) {\n    sourceLists(userId: $cu_id) {\n      id,\n      name,\n      isHeap,\n    },\n  }\n']),
+	    _templateObject4 = _taggedTemplateLiteral(['\n  query userQuery($cu_id: ID!) {\n    user(userId: $cu_id) {\n      name,\n    },\n  }\n'], ['\n  query userQuery($cu_id: ID!) {\n    user(userId: $cu_id) {\n      name,\n    },\n  }\n']);
+
+	var _graphqlTag = __webpack_require__(218);
+
+	var _graphqlTag2 = _interopRequireDefault(_graphqlTag);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+	// fragment for the sources
+	var SourceInfoFragment = exports.SourceInfoFragment = {
+	  source_info: (0, _graphqlTag2.default)(_templateObject) };
+
+	// grab data necessary for the HeapList component
+	var heapListQuery = exports.heapListQuery = (0, _graphqlTag2.default)(_templateObject2, SourceInfoFragment.source_info);
+
+	var sourceListQuery = exports.sourceListQuery = (0, _graphqlTag2.default)(_templateObject3);
+
+	var userQuery = exports.userQuery = (0, _graphqlTag2.default)(_templateObject4);
+
+	var queryTypes = exports.queryTypes = {
+	  heapListQuery: 'heapListQuery',
+	  sourceListQuery: 'sourceListQuery'
+	};
+
+/***/ },
+/* 240 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactApollo = __webpack_require__(208);
+
+	var _immutabilityHelper = __webpack_require__(236);
+
+	var _immutabilityHelper2 = _interopRequireDefault(_immutabilityHelper);
+
+	var _SourceListBlock = __webpack_require__(241);
+
+	var _SourceListBlock2 = _interopRequireDefault(_SourceListBlock);
+
+	var _queries = __webpack_require__(239);
+
+	var _mutations = __webpack_require__(234);
+
+	var _initializeDraggables = __webpack_require__(244);
+
+	__webpack_require__(245);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SourceListColumn = function (_Component) {
+	  _inherits(SourceListColumn, _Component);
+
+	  function SourceListColumn() {
+	    _classCallCheck(this, SourceListColumn);
+
+	    var _this = _possibleConstructorReturn(this, (SourceListColumn.__proto__ || Object.getPrototypeOf(SourceListColumn)).call(this));
+
+	    _this.renderSourceLists = _this.renderSourceLists.bind(_this);
+	    return _this;
+	  }
+
+	  // render each source list with the dnd initializing function it needs
+
+
+	  _createClass(SourceListColumn, [{
+	    key: 'renderSourceLists',
+	    value: function renderSourceLists() {
+	      if (this.props.sourceLists) {
+	        return this.props.sourceLists.map(function (sourceList) {
+	          return _react2.default.createElement(_SourceListBlock2.default, {
+	            key: sourceList.id,
+	            sourceList: sourceList,
+	            initializeDraggables: _initializeDraggables.initializeSourceListBlockDraggables
+	          });
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { id: 'SourceListColumn', className: 'SourceListColumn' },
+	        this.renderSourceLists()
+	      );
+	    }
+	  }]);
+
+	  return SourceListColumn;
+	}(_react.Component);
+
+	// options for this components querying
+
+
+	var queryOptions = function queryOptions() {
+	  return {
+	    // we need this reducer for when we add new SourceLists
+	    reducer: function reducer(previousResult, action, variables) {
+	      if (action.type === _mutations.mutationTypes.APOLLO_MUTATION_RESULT && action.operationName === _mutations.mutationTypes.createSourceList) {
+	        console.log("in the mutation", previousResult, action);
+	        return (0, _immutabilityHelper2.default)(previousResult, {
+	          sourceLists: {
+	            $push: [action.result.data.createSourceList]
+	          }
+	        });
+	      }
+	      // return previous result if not doing anything special
+	      return previousResult;
+	    },
+	    variables: {
+	      cu_id: window.cu_id
+	    }
+	  };
+	};
+
+	// to rename in the future if we like
+	var queryProps = function queryProps(_ref) {
+	  var ownProps = _ref.ownProps,
+	      _ref$data = _ref.data,
+	      sourceLists = _ref$data.sourceLists,
+	      loading = _ref$data.loading;
+	  return {
+	    sourceLists: sourceLists,
+	    loading: loading
+	  };
+	};
+
+	// no longer need to compose, leaving it here as an example for now
+	exports.default = (0, _reactApollo.compose)((0, _reactApollo.graphql)(_queries.sourceListQuery, {
+	  options: queryOptions,
+	  props: queryProps
+	}))(SourceListColumn);
+
+/***/ },
+/* 241 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactApollo = __webpack_require__(208);
+
+	var _mutations = __webpack_require__(234);
+
+	__webpack_require__(242);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -34849,13 +34384,13 @@
 	exports.default = (0, _reactApollo.graphql)(_mutations.updateSource, { props: props })(SourceListBlock);
 
 /***/ },
-/* 251 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(252);
+	var content = __webpack_require__(243);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(223)(content, {});
@@ -34875,7 +34410,7 @@
 	}
 
 /***/ },
-/* 252 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(222)();
@@ -34887,6 +34422,526 @@
 
 	// exports
 
+
+/***/ },
+/* 244 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.initializeSourceListBlockDraggables = initializeSourceListBlockDraggables;
+	exports.initializeHeapListDraggables = initializeHeapListDraggables;
+	exports.initializeSourceTrashDraggables = initializeSourceTrashDraggables;
+
+	var _sortablejs = __webpack_require__(228);
+
+	var _sortablejs2 = _interopRequireDefault(_sortablejs);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	// the initializing function takes and id so that we know where in
+	// the dom to access each source block as well as a callback
+	// to execute when something is dropped into one of the source blocks
+	function initializeSourceListBlockDraggables(blockId, cb) {
+	  // function invoked when something added to one of the sourceListBlocks
+	  function onListAdd(evt) {
+	    console.log("well what have", evt);
+	    var sourceId = evt.item.attributes['data-id'].value;
+	    var sourceListId = evt.to.attributes['data-id'].value;
+	    evt.to.removeChild(evt.item);
+	    // invoke the callback to add the item to the proper list
+	    cb(sourceId, sourceListId);
+	  }
+
+	  // start by getting the block from the dom, we are passed
+	  // the id so we know what to look for
+	  var sourceListBlock = document.getElementById(blockId);
+
+	  // this function initializes each SourceListBlock
+	  // creating a sortable with the group of 'SourceMvmt', allowing things
+	  // of the group 'SourceMvmt' to be put in it, specifying the function
+	  // to call when something is added, and specifying the ghost class for
+	  // the draggable
+	  _sortablejs2.default.create(sourceListBlock, {
+	    group: {
+	      name: 'SourceMvmt',
+	      put: ['SourceMvmt']
+	    },
+	    ghostClass: 'highlightGhost',
+	    onAdd: onListAdd
+	  });
+	}
+
+	function initializeHeapListDraggables(cb) {
+	  // grab the HeapList from the dom
+	  var heapList = document.getElementById('HeapList');
+
+	  // this functions sets the draggable image as well as where our
+	  // cursor will be dragging that image from (set to the middle)
+	  function setData(dataTransfer, dragEl) {
+	    console.log("what in dataTransfer", dataTransfer, dataTransfer.setDragImage, dragEl, dragEl.offsetWidth);
+	    dataTransfer.setDragImage(dragEl, dragEl.offsetWidth / 2, dragEl.offsetHeight / 2);
+	  }
+
+	  // specify things about this draggable, such as the items within the
+	  // HeapList that are actually draggable, the fact that we dont want to
+	  // sort, our animation speed, ghost class for the draggable, setting the
+	  // draggable image with setData and more
+	  _sortablejs2.default.create(heapList, {
+	    draggable: '.sourceItem',
+	    sort: false,
+	    animation: 100,
+	    group: {
+	      name: 'SourceMvmt',
+	      put: false,
+	      pull: true
+	    },
+	    ghostClass: 'highlightGhost',
+	    setData: setData,
+	    scroll: true,
+	    scrollSensitivity: 300,
+	    scrollSpeed: 10,
+	    onMove: function onMove(evt, originalEvt) {
+	      console.log("maybe here", evt, originalEvt);
+	    }
+	  });
+	}
+
+	// the initializing function also takes a callback to invoke when we add
+	// something to the trash
+	function initializeSourceTrashDraggables(cb) {
+	  // grab the relevant component
+	  var sourceTrash = document.getElementById('SourceTrash');
+
+	  // to call when something is dropped in trash
+	  function onTrash(evt) {
+	    var sourceId = evt.item.attributes['data-id'].value;
+	    // can remove from the dom
+	    sourceTrash.removeChild(evt.item);
+	    // now delete using the callback
+	    cb(sourceId);
+	  }
+	  // creates sourceTrash dom element as a 'draggable', and specifies that
+	  // things of group 'SourceMvmt' can put things into it. in reality
+	  // the trash will only be accepting things and will not be moved itself
+	  _sortablejs2.default.create(sourceTrash, {
+	    group: {
+	      name: 'SourceMvmt',
+	      put: ['SourceMvmt']
+	    },
+	    onMove: function onMove(evt, originalEvt) {
+	      console.log("maybe here", evt, originalEvt);
+	    },
+	    onAdd: onTrash
+	  });
+	}
+
+/***/ },
+/* 245 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(246);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./SourceListColumn.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./SourceListColumn.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 246 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(222)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".SourceListColumn {\n  width: 100%;\n  max-height: 500px;\n  overflow-y: auto;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 247 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactApollo = __webpack_require__(208);
+
+	var _queries = __webpack_require__(239);
+
+	var _CreateSourceList = __webpack_require__(248);
+
+	var _CreateSourceList2 = _interopRequireDefault(_CreateSourceList);
+
+	__webpack_require__(251);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SubHeader = function (_Component) {
+	  _inherits(SubHeader, _Component);
+
+	  function SubHeader() {
+	    _classCallCheck(this, SubHeader);
+
+	    var _this = _possibleConstructorReturn(this, (SubHeader.__proto__ || Object.getPrototypeOf(SubHeader)).call(this));
+
+	    _this.renderListTitle = _this.renderListTitle.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(SubHeader, [{
+	    key: 'renderListTitle',
+	    value: function renderListTitle() {
+	      if (this.props.user) {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'ListTitle' },
+	          this.props.user.name,
+	          '\'s Heap',
+	          _react2.default.createElement('hr', null),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'ListTitle-button-row' },
+	            _react2.default.createElement('i', { className: 'fa fa-info ListTitleControl' }),
+	            _react2.default.createElement('i', { className: 'fa fa-download ListTitleControl' }),
+	            _react2.default.createElement('i', { className: 'fa fa-envelope-o ListTitleControl' }),
+	            _react2.default.createElement('i', { className: 'fa fa-trash-o ListTitleControl' })
+	          )
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'SubHeader' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'IndividualStats' },
+	          'stats'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'ListTitleAndTools' },
+	          this.renderListTitle()
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'CreateSourceList-wrapper' },
+	          _react2.default.createElement(_CreateSourceList2.default, null)
+	        )
+	      );
+	    }
+	  }]);
+
+	  return SubHeader;
+	}(_react.Component);
+
+	// could eventually rename these if we wished
+
+
+	var props = function props(_ref) {
+	  var ownProps = _ref.ownProps,
+	      _ref$data = _ref.data,
+	      user = _ref$data.user,
+	      loading = _ref$data.loading;
+	  return {
+	    user: user,
+	    loading: loading
+	  };
+	};
+
+	var options = function options() {
+	  return {
+	    variables: {
+	      cu_id: window.cu_id
+	    }
+	  };
+	};
+
+	exports.default = (0, _reactApollo.graphql)(_queries.userQuery, {
+	  options: options,
+	  props: props
+	})(SubHeader);
+
+/***/ },
+/* 248 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactApollo = __webpack_require__(208);
+
+	var _mutations = __webpack_require__(234);
+
+	__webpack_require__(249);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var CreateSourceList = function (_Component) {
+	  _inherits(CreateSourceList, _Component);
+
+	  function CreateSourceList() {
+	    _classCallCheck(this, CreateSourceList);
+
+	    var _this = _possibleConstructorReturn(this, (CreateSourceList.__proto__ || Object.getPrototypeOf(CreateSourceList)).call(this));
+
+	    _this.createSourceList = _this.createSourceList.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(CreateSourceList, [{
+	    key: 'createSourceList',
+	    value: function createSourceList() {
+	      console.log("what have");
+	      if (this._input.value) {
+	        this.props.createSourceList(this._input.value);
+	        this._input.value = '';
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'CreateSourceList' },
+	        _react2.default.createElement('input', {
+	          ref: function ref(node) {
+	            return _this2._input = node;
+	          },
+	          className: 'new-source-list-name',
+	          placeholder: 'Create new list...'
+	        }),
+	        _react2.default.createElement('i', {
+	          onClick: this.createSourceList,
+	          className: 'fa fa-plus create-new-source-list'
+	        })
+	      );
+	    }
+	  }]);
+
+	  return CreateSourceList;
+	}(_react.Component);
+
+	var props = function props(_ref) {
+	  var mutate = _ref.mutate;
+
+	  return {
+	    createSourceList: function createSourceList(sourceListName) {
+	      mutate({ variables: { cu_id: window.cu_id, sourceListName: sourceListName } }).then(function (resp) {
+	        return console.log("what did we create", resp);
+	      });
+	    }
+	  };
+	};
+
+	exports.default = (0, _reactApollo.graphql)(_mutations.createSourceList, { props: props })(CreateSourceList);
+
+/***/ },
+/* 249 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(250);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./CreateSourceList.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./CreateSourceList.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 250 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(222)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".CreateSourceList {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  width: 100%;\n}\n\n.CreateSourceList .new-source-list-name {\n  width: 220px;\n  border-radius: 3px;\n  height: 24px;\n  border: 1px solid #6441A5;\n  margin-right: 10px;\n  padding-left: 10px;\n  outline: none;\n}\n\n.CreateSourceList .create-new-source-list {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  width: 24px;\n  height: 24px;\n  font-size: 16px;\n  border-radius: 50%;\n  color: #6441A5;\n  border: 1px solid #6441A5;\n  cursor: pointer;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 251 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(252);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(223)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./SubHeader.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./SubHeader.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 252 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(222)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".SubHeader {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n}\n\n.IndividualStats {\n  width: 30%;\n}\n\n.ListTitleAndTools {\n  width: 40%;\n  text-align: center;\n}\n\n.ListTitle {\n  margin-top: 15px;\n  font-weight: bold;\n  color: rgba(0,0,0,0.6);\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  font-size: 20px;\n}\n\n.ListTitle hr {\n  margin: 5px 30px;\n}\n\n.ListTitle-button-row {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n}\n\n.ListTitleControl {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  color: #6441A5;\n  font-size: 14px;\n  margin: 0px 5px;\n  width: 25px;\n  height: 25px;\n  border: 1px solid #6441A5;\n  border-radius: 50%;\n  cursor: pointer;\n}\n\n.CreateSourceList-wrapper {\n  width: 30%;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: flex-end;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 253 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = SourceListReducer;
+
+	var _immutabilityHelper = __webpack_require__(236);
+
+	var _immutabilityHelper2 = _interopRequireDefault(_immutabilityHelper);
+
+	var _mutations = __webpack_require__(234);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function SourceListReducer(previousResult, action, variables) {
+	  console.log("what have now", previousResult);
+	  // if we are mutating, want to update what is stored
+	  if (action.type === _mutations.mutationTypes.APOLLO_MUTATION_RESULT) {
+	    switch (action.operationName) {
+	      case _mutations.mutationTypes.createSource:
+	        // adding a source
+	        return (0, _immutabilityHelper2.default)(previousResult, {
+	          user: {
+	            heapList: {
+	              sources: {
+	                $unshift: [action.result.data.createSource]
+	              }
+	            }
+	          }
+	        });
+	      case _mutations.mutationTypes.updateSource:
+	        // changing a current source
+	        // need to update whatever is currently in the store
+	        return (0, _immutabilityHelper2.default)(previousResult, {
+	          user: {
+	            heapList: {
+	              sources: {
+	                $unshift: [action.result.data.updateSource]
+	              }
+	            }
+	          }
+	        });
+	      case _mutations.mutationTypes.deleteSource:
+	        // need to do something for deleting a source
+	        console.log("diong this ish", previousResult, action, variables);
+	        return (0, _immutabilityHelper2.default)(previousResult, {
+	          user: {
+	            heapList: {
+	              sources: {
+	                $apply: function $apply(currentArr) {
+	                  return currentArr.filter(function (source) {
+	                    return source.id != action.result.data.deleteSource.id;
+	                  });
+	                }
+	              }
+	            }
+	          }
+	        });
+	      default:
+	        return previousResult;
+	    }
+	  }
+	  // otherwise we can just return the previous result
+	  return previousResult;
+	}
 
 /***/ }
 /******/ ]);
