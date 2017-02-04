@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
 import gql from 'graphql-tag'
+// trying react dnd instead
+import { DragDropContext } from 'react-dnd'
+import HTML5Backend from 'react-dnd-html5-backend'
 
 // styling for this component
 import '../styles/App.css'
@@ -15,10 +18,10 @@ import SourceListColumn from './SourceListColumn.js'
 // the SubHeader component
 import SubHeader from './SubHeader.js'
 // the draggable initializing
-import {
-  initializeSourceTrashDraggables,
-  initializeHeapListDraggables,
-} from './initializeDraggables.js'
+//import {
+  //initializeSourceTrashDraggables,
+  //initializeHeapListDraggables,
+//} from './initializeDraggables.js'
 
 
 // our base component
@@ -32,14 +35,10 @@ class App extends Component {
         </div>
         <div className='page-content'>
             <div className='SourceTools-wrapper content-thirds'>
-              <SourceTools
-                initializeDraggables={initializeSourceTrashDraggables}
-              />
+              <SourceTools />
             </div>
             <div className='HeapList-wrapper content-thirds'>
-              <HeapList
-                initializeDraggables={initializeHeapListDraggables}
-              />
+              <HeapList />
             </div>
             <div className='SourceListColumn-wrapper content-thirds'>
               <SourceListColumn />
@@ -51,5 +50,4 @@ class App extends Component {
   }
 }
 
-export default App
-
+export default DragDropContext(HTML5Backend)(App)

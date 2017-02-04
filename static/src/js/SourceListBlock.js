@@ -9,10 +9,10 @@ class SourceListBlock extends React.Component {
   componentDidMount() {
     // initialize our draggable by passing the id of our component as well
     // as the function to execute when something is dropped into it
-    this.props.initializeDraggables(
-      this._myId,
-      (sourceId, sourceListId) => this.props.updateSource(sourceId, sourceListId)
-    )
+    //this.props.initializeDraggables(
+      //this._myId,
+      //(sourceId, sourceListId) => this.props.updateSource(sourceId, sourceListId)
+    //)
   }
 
   render() {

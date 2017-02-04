@@ -27,16 +27,3 @@
   border: 1px solid #6441A5;
   border-radius: 50%;
 }
-
-#SourceTrash .highlightGhost {
-  /*display: none;*/
-  position: absolute;
-  width: 300px;
-  background: salmon;
-  border-color: #ccc;
-}
-
-#SourceTrash.SourceTools-icon.highlight {
-  color: red !important;
-  border-color: red !important;
-}

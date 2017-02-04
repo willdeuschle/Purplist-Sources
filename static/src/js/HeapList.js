@@ -6,6 +6,7 @@ import '../styles/HeapList.css'
 import { heapListQuery } from './queries.js'
 import { mutationTypes } from './mutations.js'
 import SourceListReducer from './reducers/SourceListReducer.js'
+import SourceItem from './SourceItem.js'
 
 
 class HeapList extends React.Component {
@@ -15,31 +16,15 @@ class HeapList extends React.Component {
   }
 
   componentDidMount() {
-    this.props.initializeDraggables()
+    //this.props.initializeDraggables()
   }
 
   renderHeapList() {
-    console.log("wut", this.props)
+    console.log("heap list props", this.props)
     if (this.props.user) {
-      return this.props.user.heapList.sources.map((sourceItem) => {
-        console.log("this is an item", sourceItem)
-        return (
-          <a
-            href={sourceItem.sourceUrl}
-            target='_blank'
-            key={sourceItem.id}
-            className='sourceItem'
-            data-id={sourceItem.id}
-          >
-            <div className='sourceImgWrapper'>
-              <img className='sourceImg' src={sourceItem.faviconUrl}/>
-            </div>
-            <div className='sourceTxtWrapper'>
-              {sourceItem.title}
-            </div>
-          </a>
-        )
-      })
+      return this.props.user.heapList.sources.map(
+        (sourceItem) => <SourceItem key={sourceItem.id} sourceItem={sourceItem} />
+      )
     }
   }
 
