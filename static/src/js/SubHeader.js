@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
-import { graphql } from 'react-apollo'
-
-import { userQuery } from './queries.js'
-import CreateSourceList from './CreateSourceList.js'
 
 import '../styles/SubHeader.css'
+import CreateSourceList from './CreateSourceList.js'
 
 
 class SubHeader extends Component {
@@ -47,21 +44,4 @@ class SubHeader extends Component {
   }
 }
 
-// could eventually rename these if we wished
-const props = ({ ownProps, data: { user, loading }}) => ({
-  user,
-  loading,
-})
-
-const options = () => {
-  return {
-    variables: {
-      cu_id: window.cu_id,
-    },
-  }
-}
-
-export default graphql(userQuery, {
-  options,
-  props,
-})(SubHeader)
+export default SubHeader

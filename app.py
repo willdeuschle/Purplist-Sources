@@ -63,7 +63,7 @@ def unauthorized():
 def authorize(provider):
     # redirect if they are already logged in
     if not current_user.is_anonymous:
-        return redirect(url_for('index'))
+        return redirect(url_for('index', username=current_user.username))
     # get the kind of provider selected
     oauth = OAuthSignIn.get_provider(provider)
     # use their authorize method
@@ -74,7 +74,7 @@ def authorize(provider):
 def oauth_callback(provider):
     # check to see if the user is logged in
     if not current_user.is_anonymous:
-        return redirect(url_for('index'))
+        return redirect(url_for('index', username=current_user.username))
     oauth = OAuthSignIn.get_provider(provider)
     social_id, name, email = oauth.callback()
     if social_id is None:
@@ -94,7 +94,7 @@ def oauth_callback(provider):
         db.session.commit()
     # the 'True' tells our login manager to remember the user
     login_user(user, True)
-    return redirect(url_for('index'))
+    return redirect(url_for('index', username=user.username))
 
 # this is the landing page, don't need to be logged in to get here
 @app.route('/login', methods=['GET', 'POST'])
@@ -109,9 +109,9 @@ def logout():
     return redirect(url_for('login'))
 
 # this is the index page
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/<username>/', methods=['GET', 'POST'])
 @login_required
-def index():
+def index(username):
     return render_template('index.html')
 
 

@@ -1,7 +1,4 @@
 {% extends 'base.html' %}
 {% block content  %}
-    <script type='text/javascript'>
-        window.cu_id = {{current_user.id}}
-    </script>
     <script type='text/javascript' src="{{ url_for('static', filename='bundle.js') }}"></script>
 {% endblock  %}

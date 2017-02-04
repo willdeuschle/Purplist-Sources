@@ -208,6 +208,9 @@ class UserType(graphene.ObjectType):
     id = graphene.ID(
         description='A user\'s unique id.',
     )
+    username = graphene.String(
+        description='A user\'s username',
+    )
     name = graphene.String(
         description='A user\'s name',
     )
@@ -248,8 +251,15 @@ class Query(graphene.ObjectType):
         UserType,
         # this is an argument to the user root field on Query
         user_id=graphene.ID(),
-        name=graphene.String(),
+        username=graphene.String(),
         description='A user',
+    )
+
+    source_list = graphene.Field(
+        SourceListType,
+        user_id=graphene.ID(),
+        source_list_id=graphene.ID(),
+        description='An individual source list',
     )
 
     source_lists = graphene.List(
@@ -267,13 +277,40 @@ class Query(graphene.ObjectType):
     )
 
     def resolve_user(self, args, context, info):
-        name = args.get('name', None)
-        if name:
-            return User.query.filter_by(name=name).first()
-        else:
-            user_id = args.get('user_id')
+        print("we in this bi")
+        username = args.get('username', None)
+        if username:
+            print("here we are", username)
+            user = User.query.filter_by(username=username).first()
+            print("who is uesr", user)
+            return user
+        # going to maintain this for a little while but hopefully get
+        # rid of it eventually
+        user_id = args.get('user_id', None)
+        if user_id:
             return User.query.get(user_id)
+        # name = args.get('name', None)
+        # if name:
+            # return User.query.filter_by(name=name).first()
+        # else:
+            # user_id = args.get('user_id')
+            # return User.query.get(user_id)
 
+    # this is meant to resolve only a single source list at a time
+    def resolve_source_list(self, args, context, info):
+        user_id = args.get('user_id')
+        source_list_id = args.get('source_list_id', None)
+        print("we are trying", user_id)
+        # dont need to pass the user id here but might as well be safe
+        if source_list_id:
+            return SourceList.query.filter_by(user_id=user_id,
+                                              id=source_list_id) \
+                                              .first()
+        # if we don't pass a specific list id just return the heap
+        return SourceList.query.filter_by(user_id=user_id,
+                                          is_heap=True).first()
+
+    # this is meant to resolve all of the source lists of a user
     def resolve_source_lists(self, args, context, info):
         print("we are here", args, SourceList.query.filter_by(user_id=args['user_id']))
         user_id = args.get('user_id')

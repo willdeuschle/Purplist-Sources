@@ -35,10 +35,10 @@ class CreateSourceList extends Component {
   }
 }
 
-const props = ({ mutate }) => {
+const props = ({ ownProps, mutate }) => {
   return ({
     createSourceList: (sourceListName) => {
-      mutate({ variables: { cu_id: window.cu_id, sourceListName, }})
+      mutate({ variables: { userId: ownProps.userId, sourceListName, }})
         .then((resp) => console.log("what did we create", resp))
     }
   })

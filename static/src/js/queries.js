@@ -11,26 +11,35 @@ export const SourceInfoFragment = {
   },
 `}
 
-// grab data necessary for the HeapList component
-export const heapListQuery = gql`
-  query heapListQuery($cu_id: ID!) {
-    user(userId: $cu_id) {
+
+// grab the user we are currently viewing
+export const userQuery = gql`
+  query userQuery($username: String!) {
+    user(username: $username) {
+      username,
       name,
-      heapList {
-        id,
-        name,
-        sources {
-          ...SourceInfoFragment,
-        },
+      id,
+    },
+  }
+`
+
+// grab info for a given source list
+export const sourceListQuery = gql`
+  query sourceListQuery($userId: ID!, $sourceListId: ID) {
+    sourceList(userId: $userId, sourceListId: $sourceListId) {
+      id,
+      sources {
+        ...SourceInfoFragment,
       },
     },
   }
   ${SourceInfoFragment.source_info},
 `
 
-export const sourceListQuery = gql`
-  query sourceListQuery($cu_id: ID!) {
-    sourceLists(userId: $cu_id) {
+// grab all of a users source lists
+export const sourceListsQuery = gql`
+  query sourceListsQuery($userId: ID!) {
+    sourceLists(userId: $userId) {
       id,
       name,
       isHeap,
@@ -38,15 +47,8 @@ export const sourceListQuery = gql`
   }
 `
 
-export const userQuery = gql`
-  query userQuery($cu_id: ID!) {
-    user(userId: $cu_id) {
-      name,
-    },
-  }
-`
-
 export const queryTypes = {
-  heapListQuery: 'heapListQuery',
+  userQuery: 'userQuery',
   sourceListQuery: 'sourceListQuery',
+  sourceListsQuery: 'sourceListsQuery',
 }

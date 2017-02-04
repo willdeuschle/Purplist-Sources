@@ -2,8 +2,8 @@ import gql from 'graphql-tag'
 
 // mutation to execute to add a source by its url
 export const createSource = gql`
-  mutation createSource($cu_id: ID!, $sourceUrl: String!) {
-    createSource(userId: $cu_id, sourceUrl: $sourceUrl) {
+  mutation createSource($userId: ID!, $sourceUrl: String!) {
+    createSource(userId: $userId, sourceUrl: $sourceUrl) {
       id,
       title,
       faviconUrl,
@@ -15,8 +15,8 @@ export const createSource = gql`
 `
 
 export const createSourceList = gql`
-  mutation createSourceList($cu_id: ID!, $sourceListName: String!) {
-    createSourceList(userId: $cu_id, name: $sourceListName) {
+  mutation createSourceList($userId: ID!, $sourceListName: String!) {
+    createSourceList(userId: $userId, name: $sourceListName) {
       name,
       id,
       isHeap,

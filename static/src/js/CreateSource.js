@@ -41,10 +41,10 @@ class CreateSource extends Component {
 }
 
 // configure our mutation so that we can call it with a single argument
-const props = ({ mutate }) => {
+const props = ({ ownProps, mutate }) => {
   return ({
     createSource: (sourceUrl) => {
-      mutate({ variables: { cu_id: window.cu_id, sourceUrl, }})
+      mutate({ variables: { userId: ownProps.userId, sourceUrl, }})
         .then((resp) => console.log("what is resp", resp))
     },
   })

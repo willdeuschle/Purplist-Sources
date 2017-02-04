@@ -36,7 +36,7 @@
   width: 30%;
 }
 
-.HeapList-wrapper {
+.SourceList-wrapper {
     overflow: auto;
     width: 40%;
     min-width: 200px;

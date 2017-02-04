@@ -6,7 +6,7 @@ import {
 import update from 'immutability-helper'
 
 import SourceListBlock from './SourceListBlock.js'
-import { sourceListQuery } from './queries.js'
+import { sourceListsQuery } from './queries.js'
 import {
   mutationTypes,
   updateSource,
@@ -45,7 +45,7 @@ class SourceListColumn extends Component {
 }
 
 // options for this components querying
-const queryOptions = () => {
+const queryOptions = (ownProps) => {
   return {
     // we need this reducer for when we add new SourceLists
     reducer: (previousResult, action, variables) => {
@@ -61,7 +61,7 @@ const queryOptions = () => {
       return previousResult
     },
     variables: {
-      cu_id: window.cu_id,
+      userId: ownProps.userId,
     },
   }
 }
@@ -74,7 +74,7 @@ const queryProps = ({ ownProps, data: { sourceLists, loading }}) => ({
 
 // no longer need to compose, leaving it here as an example for now
 export default compose(
-  graphql(sourceListQuery, {
+  graphql(sourceListsQuery, {
     options: queryOptions,
     props: queryProps,
   }),
