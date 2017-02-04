@@ -11,7 +11,6 @@ import {
   mutationTypes,
   updateSource,
 } from './mutations.js'
-import { initializeSourceListBlockDraggables } from './initializeDraggables.js'
 
 import '../styles/SourceListColumn.css'
 
@@ -30,7 +29,6 @@ class SourceListColumn extends Component {
           <SourceListBlock
             key={sourceList.id}
             sourceList={sourceList}
-            initializeDraggables={initializeSourceListBlockDraggables}
           />
         )
       })

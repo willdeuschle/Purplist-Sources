@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { DragSource } from 'react-dnd'
 
-import { sourceSource, sourceCollect } from './DragNDrop.js'
-import ItemTypes from './ItemTypes'
+import { sourceSource, sourceCollect, ItemTypes } from './DragNDrop.js'
 
 
 class SourceItem extends Component {

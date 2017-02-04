@@ -19,24 +19,27 @@ export default function SourceListReducer (previousResult, action, variables) {
         });
       case mutationTypes.updateSource:
         // changing a current source
-        // need to update whatever is currently in the store
+        // if it was just added to the same list return the previous result
+        if (action.result.data.updateSource.sourceListId === previousResult.user.heapList.id) {
+          return previousResult
+        }
+        // otherwise filter it out of the currently displayed list
         return update(previousResult, {
           user: {
             heapList: {
               sources: {
-                $unshift: [action.result.data.updateSource],
+                $apply: currentArr => currentArr.filter(source => source.id != action.result.data.updateSource.id)
               },
             },
           },
         });
       case mutationTypes.deleteSource:
         // need to do something for deleting a source
-        console.log("diong this ish", previousResult, action, variables)
         return update(previousResult, {
           user: {
             heapList: {
               sources: {
-                $apply: (currentArr) => currentArr.filter((source) => source.id != action.result.data.deleteSource.id)
+                $apply: currentArr => currentArr.filter(source => source.id != action.result.data.deleteSource.id)
               },
             },
           },

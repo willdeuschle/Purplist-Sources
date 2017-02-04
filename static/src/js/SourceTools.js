@@ -7,11 +7,6 @@ import SourceTrash from './SourceTrash.js'
 
 
 class SourceTools extends Component {
-  componentDidMount() {
-    console.log("what props", this.props)
-    //this.props.initializeDraggables((id) => this.props.deleteSource(id))
-  }
-
   render() {
     return (
       <div className='SourceTools'>

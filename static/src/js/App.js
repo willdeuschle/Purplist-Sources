@@ -17,11 +17,6 @@ import HeapList from './HeapList.js'
 import SourceListColumn from './SourceListColumn.js'
 // the SubHeader component
 import SubHeader from './SubHeader.js'
-// the draggable initializing
-//import {
-  //initializeSourceTrashDraggables,
-  //initializeHeapListDraggables,
-//} from './initializeDraggables.js'
 
 
 // our base component

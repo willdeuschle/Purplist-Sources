@@ -1,30 +1,18 @@
 import React from 'react'
 import { graphql } from 'react-apollo'
+import { DropTarget } from 'react-dnd'
 
-import { updateSource } from './mutations.js'
 import '../styles/SourceListBlock.css'
+import { updateSource } from './mutations.js'
+import { listTarget, listCollect, ItemTypes } from './DragNDrop.js'
 
 
 class SourceListBlock extends React.Component {
-  componentDidMount() {
-    // initialize our draggable by passing the id of our component as well
-    // as the function to execute when something is dropped into it
-    //this.props.initializeDraggables(
-      //this._myId,
-      //(sourceId, sourceListId) => this.props.updateSource(sourceId, sourceListId)
-    //)
-  }
-
   render() {
-    // establish a unique id to pass to the draggable initializing function
-    this._myId = `SourceListBlock-${this.props.sourceList.id}`
-
-    return (
+    return this.props.connectDropTarget(
       <div
-        id={this._myId}
         key={this.props.sourceList.id}
         className='SourceListBlock'
-        data-id={this.props.sourceList.id}
       >
         <div className='list-name'>
           {this.props.sourceList.name}
@@ -46,4 +34,4 @@ const props = ({ mutate }) => {
 
 
 // export the 'connected' component
-export default graphql(updateSource, { props })(SourceListBlock)
+export default graphql(updateSource, { props })(DropTarget(ItemTypes.SOURCE, listTarget, listCollect)(SourceListBlock))

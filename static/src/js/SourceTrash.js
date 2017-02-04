@@ -5,8 +5,7 @@ import classNames from 'classnames'
 
 import '../styles/SourceTrash.css'
 import { deleteSource } from './mutations.js'
-import ItemTypes from './ItemTypes'
-import { trashTarget, trashCollect } from './DragNDrop.js'
+import { trashTarget, trashCollect, ItemTypes } from './DragNDrop.js'
 
 
 class SourceTrash extends Component {
