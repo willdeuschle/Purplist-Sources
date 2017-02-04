@@ -40587,6 +40587,10 @@
 
 	var _reactDnd = __webpack_require__(220);
 
+	var _classnames = __webpack_require__(412);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
 	__webpack_require__(395);
 
 	var _mutations = __webpack_require__(386);
@@ -40617,7 +40621,10 @@
 	        'div',
 	        {
 	          key: this.props.sourceList.id,
-	          className: 'SourceListBlock'
+	          className: (0, _classnames2.default)({
+	            'SourceListBlock': true,
+	            'highlight': this.props.isOver
+	          })
 	        },
 	        _react2.default.createElement(
 	          'div',
@@ -40681,7 +40688,7 @@
 
 
 	// module
-	exports.push([module.id, ".SourceListBlock {\n  position: relative;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  color: white;\n  font-weight: 200;\n  width: 200px;\n  height: 50px;\n  background: #6441A5;\n  border-radius: 3px;\n  margin-bottom: 50px;\n  margin-left: auto;\n  margin-right: auto;\n}\n\n.SourceListBlock .list-name {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n}\n\n.SourceListBlock .highlightGhost {\n  position: relative;\n  overflow: visible;\n  width: 300px;\n  background: thistle;\n  border-color: #ccc;\n  z-index: 100;\n}\n", ""]);
+	exports.push([module.id, ".SourceListBlock {\n  position: relative;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  color: white;\n  font-weight: 200;\n  width: 200px;\n  height: 60px;\n  background: #6441A5;\n  border-radius: 3px;\n  margin-bottom: 50px;\n  margin-left: auto;\n  margin-right: auto;\n}\n\n.SourceListBlock .list-name {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n}\n\n.SourceListBlock.highlight {\n  background: thistle;\n}\n", ""]);
 
 	// exports
 

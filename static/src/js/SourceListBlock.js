@@ -1,6 +1,7 @@
 import React from 'react'
 import { graphql } from 'react-apollo'
 import { DropTarget } from 'react-dnd'
+import classNames from 'classnames'
 
 import '../styles/SourceListBlock.css'
 import { updateSource } from './mutations.js'
@@ -12,7 +13,10 @@ class SourceListBlock extends React.Component {
     return this.props.connectDropTarget(
       <div
         key={this.props.sourceList.id}
-        className='SourceListBlock'
+        className={classNames({
+          'SourceListBlock': true,
+          'highlight': this.props.isOver,
+        })}
       >
         <div className='list-name'>
           {this.props.sourceList.name}
