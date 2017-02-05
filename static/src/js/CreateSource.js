@@ -9,9 +9,6 @@ import { createSource } from './mutations.js'
 class CreateSource extends Component {
   constructor() {
     super()
-    this.state = {
-      inputVisible: false,
-    }
     this.createSource = this.createSource.bind(this)
   }
 

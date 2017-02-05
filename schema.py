@@ -235,6 +235,14 @@ class UserType(graphene.ObjectType):
         user_id=graphene.ID(),
         description='The heap list for a user',
     )
+    # number of sources for a user
+    num_sources = graphene.Int(
+        description='Total number of sources a user has',
+    )
+    # number of source lists for a user
+    num_source_lists = graphene.Int(
+        description='Total number of source lists a user has',
+    )
 
     def resolve_sources(self, args, context, info):
         return Source.query.filter_by(user_id=self.id)
@@ -244,6 +252,12 @@ class UserType(graphene.ObjectType):
 
     def resolve_heap_list(self, args, context, info):
         return SourceList.query.filter_by(user_id=self.id, is_heap=True).first()
+
+    def resolve_num_sources(self, args, context, info):
+        return Source.query.filter_by(user_id=self.id).count()
+
+    def resolve_num_source_lists(self, args, context, info):
+        return SourceList.query.filter_by(user_id=self.id).count()
 
 
 class Query(graphene.ObjectType):
@@ -303,16 +317,13 @@ class Query(graphene.ObjectType):
         print("we are trying", user_id)
         # dont need to pass the user id here but might as well be safe
         if source_list_id:
-            return SourceList.query.filter_by(user_id=user_id,
-                                              id=source_list_id) \
-                                              .first()
+            return SourceList.query.filter_by(user_id=user_id, id=source_list_id).first()
         # if we don't pass a specific list id just return the heap
-        return SourceList.query.filter_by(user_id=user_id,
-                                          is_heap=True).first()
+        return SourceList.query.filter_by(user_id=user_id, is_heap=True).first()
 
     # this is meant to resolve all of the source lists of a user
     def resolve_source_lists(self, args, context, info):
-        print("we are here", args, SourceList.query.filter_by(user_id=args['user_id']))
+        # print("we are here", args, SourceList.query.filter_by(user_id=args['user_id']))
         user_id = args.get('user_id')
         return SourceList.query.filter_by(user_id=user_id)
 

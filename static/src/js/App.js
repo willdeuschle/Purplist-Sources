@@ -24,48 +24,32 @@ import SubHeader from './SubHeader.js'
 // our base component
 class App extends Component {
   render() {
-    console.log("what have", this.props)
-    if (this.props.user) {
-      return (
-        <div className='reactive-base'>
-          <Header />
-          <div className='page-content-subheader'>
-            <SubHeader user={this.props.user} />
-          </div>
-          <div className='page-content'>
-              <div className='SourceTools-wrapper content-thirds'>
-                <SourceTools userId={this.props.user.id} />
-              </div>
-              <div className='SourceList-wrapper content-thirds'>
-                <SourceList userId={this.props.user.id} />
-              </div>
-              <div className='SourceListColumn-wrapper content-thirds'>
-                <SourceListColumn userId={this.props.user.id} />
-              </div>
-          </div>
-          <a className='logout-button' href='logout'>Logout</a>
-        </div>
-      )
-    } else {
-      return null
-    }
+    return (
+      <div className='reactive-base'>
+        <Header />
+        {this.props.children}
+        <a className='logout-button' href='/logout'>Logout</a>
+      </div>
+    )
   }
 }
 
-const options = (ownProps) => {
-  return {
-    variables: {
-      username: ownProps.params.username,
-    }
-  }
-}
+//const options = (ownProps) => {
+  //return {
+    //variables: {
+      //username: ownProps.params.username,
+    //}
+  //}
+//}
 
-const props = ({ ownProps, data: { user, loading }}) => ({
-  user,
-  loading,
-})
+//const props = ({ ownProps, data: { user, loading }}) => ({
+  //user,
+  //loading,
+//})
 
-export default graphql(userQuery, {
-  options,
-  props,
-})(DragDropContext(HTML5Backend)(App))
+//export default graphql(userQuery, {
+  //options,
+  //props,
+//})(DragDropContext(HTML5Backend)(App))
+//
+export default DragDropContext(HTML5Backend)(App)

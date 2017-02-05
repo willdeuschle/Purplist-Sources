@@ -41,7 +41,7 @@ const options = (ownProps) => {
     reducer: SourceListReducer,
     variables: {
       userId: ownProps.userId,
-      sourceListId: null,
+      sourceListId: ownProps.sourceListId,
     },
   }
 }

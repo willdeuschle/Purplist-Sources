@@ -29,6 +29,7 @@ class SourceListColumn extends Component {
           <SourceListBlock
             key={sourceList.id}
             sourceList={sourceList}
+            username={this.props.username}
           />
         )
       })

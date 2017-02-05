@@ -17,8 +17,22 @@ export const userQuery = gql`
   query userQuery($username: String!) {
     user(username: $username) {
       username,
-      name,
       id,
+    },
+  }
+`
+
+// grab info related to the user and the current source list
+export const currentUserDataQuery = gql`
+  query currentUserDataQuery($userId: ID!, $sourceListId: ID) {
+    user(userId: $userId) {
+      name,
+      numSources,
+      numSourceLists,
+    },
+    sourceList(userId: $userId, sourceListId: $sourceListId) {
+      name,
+      isHeap,
     },
   }
 `

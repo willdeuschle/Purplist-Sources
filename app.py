@@ -110,8 +110,9 @@ def logout():
 
 # this is the index page
 @app.route('/<username>/', methods=['GET', 'POST'])
+@app.route('/<username>/<sourceListId>/', methods=['GET', 'POST'])
 @login_required
-def index(username):
+def index(username, sourceListId=None):
     return render_template('index.html')
 
 
