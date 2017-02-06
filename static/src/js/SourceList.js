@@ -5,7 +5,7 @@ import update from 'immutability-helper'
 import '../styles/SourceList.css'
 import { sourceListQuery } from './queries.js'
 import { mutationTypes } from './mutations.js'
-import SourceListReducer from './reducers/SourceListReducer.js'
+import { sourceListReducer } from './reducers.js'
 import SourceItem from './SourceItem.js'
 
 
@@ -38,7 +38,7 @@ const options = (ownProps) => {
   console.log("what info", ownProps)
   return {
     // we need this reducer for when we add, delete, or update sources
-    reducer: SourceListReducer,
+    reducer: sourceListReducer,
     variables: {
       userId: ownProps.userId,
       sourceListId: ownProps.sourceListId,

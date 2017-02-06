@@ -79,7 +79,14 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var client = new _apolloClient2.default();
+	var networkInterface = new _apolloClient.createNetworkInterface({
+	  uri: '/graphql',
+	  opts: {
+	    credentials: 'same-origin'
+	  }
+	});
+
+	var client = new _apolloClient2.default({ networkInterface: networkInterface });
 
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactApollo.ApolloProvider,
@@ -28569,41 +28576,17 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactApollo = __webpack_require__(208);
-
-	var _graphqlTag = __webpack_require__(218);
-
-	var _graphqlTag2 = _interopRequireDefault(_graphqlTag);
-
 	var _reactDnd = __webpack_require__(220);
 
 	var _reactDndHtml5Backend = __webpack_require__(340);
 
 	var _reactDndHtml5Backend2 = _interopRequireDefault(_reactDndHtml5Backend);
 
-	var _queries = __webpack_require__(391);
-
 	__webpack_require__(372);
 
 	var _Header = __webpack_require__(376);
 
 	var _Header2 = _interopRequireDefault(_Header);
-
-	var _SourceTools = __webpack_require__(379);
-
-	var _SourceTools2 = _interopRequireDefault(_SourceTools);
-
-	var _SourceList = __webpack_require__(466);
-
-	var _SourceList2 = _interopRequireDefault(_SourceList);
-
-	var _SourceListColumn = __webpack_require__(393);
-
-	var _SourceListColumn2 = _interopRequireDefault(_SourceListColumn);
-
-	var _SubHeader = __webpack_require__(400);
-
-	var _SubHeader2 = _interopRequireDefault(_SubHeader);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28612,22 +28595,10 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	// trying react dnd instead
-
-
-	// data for this component
 
 	// styling for this component
 
 	// the Header for the page
-
-	// the SourceTools component
-
-	// the SourceList component
-
-	// the SourceListColumn component
-
-	// the SubHeader component
 
 
 	// our base component
@@ -28659,26 +28630,6 @@
 
 	  return App;
 	}(_react.Component);
-
-	//const options = (ownProps) => {
-	//return {
-	//variables: {
-	//username: ownProps.params.username,
-	//}
-	//}
-	//}
-
-	//const props = ({ ownProps, data: { user, loading }}) => ({
-	//user,
-	//loading,
-	//})
-
-	//export default graphql(userQuery, {
-	//options,
-	//props,
-	//})(DragDropContext(HTML5Backend)(App))
-	//
-
 
 	exports.default = (0, _reactDnd.DragDropContext)(_reactDndHtml5Backend2.default)(App);
 
@@ -39293,7 +39244,7 @@
 
 
 	// module
-	exports.push([module.id, ".reactive-base {\n  width: 100%;\n  /*background: #fafafa;*/\n}\n\n.reactive-base .logout-button {\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  padding: 5px;\n  font-size: 12px;\n  margin: 10px;\n  font-weight: 200;\n  border-radius: 4px;\n  text-decoration: none;\n  cursor: pointer;\n  background: #6441A5;\n  color: white;\n}\n\n.logout-button:hover {\n  background: #8B008B;\n}\n\n.page-content-subheader {\n  height: 100px; \n}\n\n.page-content {\n  display: flex;\n  flex-direction: row;\n  /*height: 500px;*/\n}\n\n.SourceTools-wrapper {\n  width: 30%;\n}\n\n.SourceList-wrapper {\n    overflow: auto;\n    width: 40%;\n    min-width: 200px;\n}\n\n.SourceListColumn-wrapper {\n  width: 30%;\n}\n", ""]);
+	exports.push([module.id, ".reactive-base {\n  width: 100%;\n  /*background: #fafafa;*/\n}\n\n.reactive-base .logout-button {\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  padding: 5px;\n  font-size: 12px;\n  margin: 10px;\n  font-weight: 200;\n  border-radius: 4px;\n  text-decoration: none;\n  cursor: pointer;\n  background: #6441A5;\n  color: white;\n}\n\n.logout-button:hover {\n  background: #8B008B;\n}\n", ""]);
 
 	// exports
 
@@ -39756,7 +39707,7 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'delete-source SourceTool' },
-	          _react2.default.createElement(_SourceTrash2.default, null)
+	          _react2.default.createElement(_SourceTrash2.default, { userId: this.props.userId })
 	        ),
 	        _react2.default.createElement(
 	          'div',
@@ -39966,7 +39917,7 @@
 	var _templateObject = _taggedTemplateLiteral(['\n  mutation createSource($userId: ID!, $sourceUrl: String!) {\n    createSource(userId: $userId, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n'], ['\n  mutation createSource($userId: ID!, $sourceUrl: String!) {\n    createSource(userId: $userId, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  mutation createSourceList($userId: ID!, $sourceListName: String!) {\n    createSourceList(userId: $userId, name: $sourceListName) {\n      name,\n      id,\n      isHeap,\n    }\n  }\n'], ['\n  mutation createSourceList($userId: ID!, $sourceListName: String!) {\n    createSourceList(userId: $userId, name: $sourceListName) {\n      name,\n      id,\n      isHeap,\n    }\n  }\n']),
 	    _templateObject3 = _taggedTemplateLiteral(['\n  mutation updateSource($sourceData: SourceInput!) {\n    updateSource(sourceData: $sourceData) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n'], ['\n  mutation updateSource($sourceData: SourceInput!) {\n    updateSource(sourceData: $sourceData) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n']),
-	    _templateObject4 = _taggedTemplateLiteral(['\n  mutation deleteSource($id: ID!) {\n    deleteSource(id: $id) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n'], ['\n  mutation deleteSource($id: ID!) {\n    deleteSource(id: $id) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n']);
+	    _templateObject4 = _taggedTemplateLiteral(['\n  mutation deleteSource($userId: ID!, $id: ID!) {\n    deleteSource(userId: $userId, id: $id) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n'], ['\n  mutation deleteSource($userId: ID!, $id: ID!) {\n    deleteSource(userId: $userId, id: $id) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n']);
 
 	var _graphqlTag = __webpack_require__(218);
 
@@ -40234,79 +40185,7 @@
 	};
 
 /***/ },
-/* 392 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = SourceListReducer;
-
-	var _immutabilityHelper = __webpack_require__(388);
-
-	var _immutabilityHelper2 = _interopRequireDefault(_immutabilityHelper);
-
-	var _mutations = __webpack_require__(386);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function SourceListReducer(previousResult, action, variables) {
-	  console.log("what have now", previousResult);
-	  // if we are mutating, want to update what is stored
-	  if (action.type === _mutations.mutationTypes.APOLLO_MUTATION_RESULT) {
-	    switch (action.operationName) {
-	      case _mutations.mutationTypes.createSource:
-	        // adding a source
-	        return (0, _immutabilityHelper2.default)(previousResult, {
-	          sourceList: {
-	            sources: {
-	              $unshift: [action.result.data.createSource]
-	            }
-	          }
-	        });
-	      case _mutations.mutationTypes.updateSource:
-	        // changing a current source
-	        // if it was just added to the same list return the previous result
-	        console.log("hm", action, previousResult);
-	        if (action.result.data.updateSource.sourceListId === previousResult.sourceList.id) {
-	          return previousResult;
-	        }
-	        // otherwise filter it out of the currently displayed list
-	        return (0, _immutabilityHelper2.default)(previousResult, {
-	          sourceList: {
-	            sources: {
-	              $apply: function $apply(currentArr) {
-	                return currentArr.filter(function (source) {
-	                  return source.id != action.result.data.updateSource.id;
-	                });
-	              }
-	            }
-	          }
-	        });
-	      case _mutations.mutationTypes.deleteSource:
-	        // need to do something for deleting a source
-	        return (0, _immutabilityHelper2.default)(previousResult, {
-	          sourceList: {
-	            sources: {
-	              $apply: function $apply(currentArr) {
-	                return currentArr.filter(function (source) {
-	                  return source.id != action.result.data.deleteSource.id;
-	                });
-	              }
-	            }
-	          }
-	        });
-	      default:
-	        return previousResult;
-	    }
-	  }
-	  // otherwise we can just return the previous result
-	  return previousResult;
-	}
-
-/***/ },
+/* 392 */,
 /* 393 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -40324,17 +40203,13 @@
 
 	var _reactApollo = __webpack_require__(208);
 
-	var _immutabilityHelper = __webpack_require__(388);
-
-	var _immutabilityHelper2 = _interopRequireDefault(_immutabilityHelper);
-
 	var _SourceListBlock = __webpack_require__(394);
 
 	var _SourceListBlock2 = _interopRequireDefault(_SourceListBlock);
 
 	var _queries = __webpack_require__(391);
 
-	var _mutations = __webpack_require__(386);
+	var _reducers = __webpack_require__(470);
 
 	__webpack_require__(398);
 
@@ -40396,18 +40271,7 @@
 	var queryOptions = function queryOptions(ownProps) {
 	  return {
 	    // we need this reducer for when we add new SourceLists
-	    reducer: function reducer(previousResult, action, variables) {
-	      if (action.type === _mutations.mutationTypes.APOLLO_MUTATION_RESULT && action.operationName === _mutations.mutationTypes.createSourceList) {
-	        console.log("in the mutation", previousResult, action);
-	        return (0, _immutabilityHelper2.default)(previousResult, {
-	          sourceLists: {
-	            $push: [action.result.data.createSourceList]
-	          }
-	        });
-	      }
-	      // return previous result if not doing anything special
-	      return previousResult;
-	    },
+	    reducer: _reducers.sourceListColumnReducer,
 	    variables: {
 	      userId: ownProps.userId
 	    }
@@ -40427,10 +40291,10 @@
 	};
 
 	// no longer need to compose, leaving it here as an example for now
-	exports.default = (0, _reactApollo.compose)((0, _reactApollo.graphql)(_queries.sourceListsQuery, {
+	exports.default = (0, _reactApollo.graphql)(_queries.sourceListsQuery, {
 	  options: queryOptions,
 	  props: queryProps
-	}))(SourceListColumn);
+	})(SourceListColumn);
 
 /***/ },
 /* 394 */
@@ -40491,7 +40355,8 @@
 	          key: this.props.sourceList.id,
 	          className: (0, _classnames2.default)({
 	            'SourceListBlock': true,
-	            'highlight': this.props.isOver
+	            'highlight': this.props.isOver,
+	            'isHeap': this.props.sourceList.isHeap
 	          })
 	        },
 	        _react2.default.createElement(
@@ -40560,7 +40425,7 @@
 
 
 	// module
-	exports.push([module.id, ".SourceListBlock {\n  position: relative;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  width: 200px;\n  height: 50px;\n  background: #6441A5;\n  border-radius: 3px;\n  margin-bottom: 40px;\n  margin-left: auto;\n  margin-right: auto;\n}\n\n.SourceListBlock a {\n  position: relative;\n  color: white;\n  font-weight: 200;\n  width: inherit;\n  height: inherit;\n}\n\n.SourceListBlock .list-name {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n}\n\n.SourceListBlock.highlight {\n  background: thistle;\n}\n", ""]);
+	exports.push([module.id, ".SourceListBlock {\n  position: relative;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  width: 200px;\n  height: 50px;\n  background: #6441A5;\n  border-radius: 3px;\n  margin-bottom: 40px;\n  margin-left: auto;\n  margin-right: auto;\n}\n\n.SourceListBlock.isHeap {\n  background: rgba(0,0,0,0.6);\n}\n\n.SourceListBlock a {\n  position: relative;\n  color: white;\n  font-weight: 200;\n  width: inherit;\n  height: inherit;\n}\n\n.SourceListBlock .list-name {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n}\n\n.SourceListBlock.highlight {\n  background: thistle;\n}\n", ""]);
 
 	// exports
 
@@ -40624,10 +40489,6 @@
 
 	var _reactApollo = __webpack_require__(208);
 
-	var _immutabilityHelper = __webpack_require__(388);
-
-	var _immutabilityHelper2 = _interopRequireDefault(_immutabilityHelper);
-
 	__webpack_require__(404);
 
 	var _CreateSourceList = __webpack_require__(401);
@@ -40636,7 +40497,11 @@
 
 	var _queries = __webpack_require__(391);
 
-	var _mutations = __webpack_require__(386);
+	var _reducers = __webpack_require__(470);
+
+	var _DeleteSourceList = __webpack_require__(473);
+
+	var _DeleteSourceList2 = _interopRequireDefault(_DeleteSourceList);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -40667,15 +40532,25 @@
 	        { className: 'IndividualStats' },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'num-sources' },
-	          'Total sources: ',
-	          this.props.user.numSources
+	          { className: 'person-header' },
+	          this.props.user.name
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'num-source-lists' },
-	          'Total source lists: ',
-	          this.props.user.numSourceLists
+	          { className: 'source-stats' },
+	          _react2.default.createElement('hr', { className: 'name-separator' }),
+	          'Sources: ',
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'stat-val' },
+	            this.props.user.numSources
+	          ),
+	          ' | Source Lists: ',
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'stat-val' },
+	            this.props.user.numSourceLists
+	          )
 	        )
 	      );
 	    }
@@ -40685,7 +40560,11 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'ListTitle' },
-	        this.props.sourceList.isHeap ? this.props.user.name + '\'s Heap' : this.props.sourceList.name,
+	        this.props.sourceList.isHeap ? _react2.default.createElement(
+	          'span',
+	          { className: 'heap-title' },
+	          'The Heap'
+	        ) : this.props.sourceList.name,
 	        _react2.default.createElement('hr', null),
 	        _react2.default.createElement(
 	          'div',
@@ -40727,40 +40606,7 @@
 
 	var options = function options(ownProps) {
 	  return {
-	    reducer: function reducer(previousResult, action, variables) {
-	      if (action.type === _mutations.mutationTypes.APOLLO_MUTATION_RESULT) {
-	        switch (action.operationName) {
-	          case _mutations.mutationTypes.createSourceList:
-	            return (0, _immutabilityHelper2.default)(previousResult, {
-	              user: {
-	                numSourceLists: {
-	                  $set: previousResult.user.numSourceLists + 1
-	                }
-	              }
-	            });
-	          case _mutations.mutationTypes.createSource:
-	            return (0, _immutabilityHelper2.default)(previousResult, {
-	              user: {
-	                numSources: {
-	                  $set: previousResult.user.numSources + 1
-	                }
-	              }
-	            });
-	          case _mutations.mutationTypes.deleteSource:
-	            return (0, _immutabilityHelper2.default)(previousResult, {
-	              user: {
-	                numSources: {
-	                  $set: previousResult.user.numSources - 1
-	                }
-	              }
-	            });
-	          default:
-	            return previousResult;
-	        }
-	      }
-	      // return previous otherwise
-	      return previousResult;
-	    },
+	    reducer: _reducers.subHeaderReducer,
 	    variables: {
 	      userId: ownProps.userId,
 	      sourceListId: ownProps.sourceListId
@@ -40953,7 +40799,7 @@
 
 
 	// module
-	exports.push([module.id, ".SubHeader {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n}\n\n.IndividualStats {\n  width: 30%;\n}\n\n.ListTitleAndTools {\n  width: 40%;\n  text-align: center;\n}\n\n.ListTitle {\n  margin-top: 15px;\n  font-weight: bold;\n  color: rgba(0,0,0,0.6);\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  font-size: 20px;\n}\n\n.ListTitle hr {\n  margin: 5px 30px;\n}\n\n.ListTitle-button-row {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n}\n\n.ListTitleControl {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  color: #6441A5;\n  font-size: 14px;\n  margin: 0px 5px;\n  width: 25px;\n  height: 25px;\n  border: 1px solid #6441A5;\n  border-radius: 50%;\n  cursor: pointer;\n}\n\n.CreateSourceList-wrapper {\n  width: 30%;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: flex-end;\n}\n", ""]);
+	exports.push([module.id, ".SubHeader {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n}\n\n.IndividualStats {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  width: 30%;\n  font-weight: 300;\n  color: rgba(0,0,0,0.6);\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  font-size: 16px;\n}\n\n.IndividualStats .name-separator {\n  width: 100%;\n  margin: 5px 0px;\n}\n\n.IndividualStats .person-header {\n  font-size: 24px;\n}\n\n.IndividualStats .stat-val {\n  color: #6441A5;\n  font-weight: 100;\n}\n\n.ListTitleAndTools {\n  width: 40%;\n  text-align: center;\n}\n\n.ListTitle {\n  margin-top: 15px;\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  font-size: 24px;\n  color: #6441A5;\n  font-weight: 300;\n}\n\n.ListTitle .heap-title {\n  color: rgba(0,0,0,0.6);\n  font-weight: bold;\n}\n\n.ListTitle hr {\n  margin: 5px 30px;\n}\n\n.ListTitle-button-row {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n}\n\n.ListTitleControl {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  color: #6441A5;\n  font-size: 14px;\n  margin: 0px 5px;\n  width: 25px;\n  height: 25px;\n  border: 1px solid #6441A5;\n  border-radius: 50%;\n  cursor: pointer;\n}\n\n.CreateSourceList-wrapper {\n  width: 30%;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: flex-end;\n}\n", ""]);
 
 	// exports
 
@@ -41110,11 +40956,12 @@
 
 
 	var props = function props(_ref) {
-	  var mutate = _ref.mutate;
+	  var ownProps = _ref.ownProps,
+	      mutate = _ref.mutate;
 
 	  return {
 	    deleteSource: function deleteSource(id) {
-	      mutate({ variables: { id: id } }).then(function (response) {
+	      mutate({ variables: { userId: ownProps.userId, id: id } }).then(function (response) {
 	        return console.log("deleted this object", response);
 	      });
 	    }
@@ -46233,9 +46080,7 @@
 
 	var _mutations = __webpack_require__(386);
 
-	var _SourceListReducer = __webpack_require__(392);
-
-	var _SourceListReducer2 = _interopRequireDefault(_SourceListReducer);
+	var _reducers = __webpack_require__(470);
 
 	var _SourceItem = __webpack_require__(409);
 
@@ -46292,7 +46137,7 @@
 	  console.log("what info", ownProps);
 	  return {
 	    // we need this reducer for when we add, delete, or update sources
-	    reducer: _SourceListReducer2.default,
+	    reducer: _reducers.sourceListReducer,
 	    variables: {
 	      userId: ownProps.userId,
 	      sourceListId: ownProps.sourceListId
@@ -46376,6 +46221,8 @@
 
 	var _reactApollo = __webpack_require__(208);
 
+	__webpack_require__(471);
+
 	var _queries = __webpack_require__(391);
 
 	var _Header = __webpack_require__(376);
@@ -46405,7 +46252,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 	// data for this component
 
 	// the Header for the page
@@ -46419,6 +46265,14 @@
 	// the SubHeader component
 
 
+	// this paradigm may eventually change based on how the graphql community
+	// decides to manage shared data across components, but for now here is the
+	// set up: we are navigating around via the username and a source list id in
+	// the url. it is the responsiblity of the PageContent component to convert
+	// the username into a user (more importantly, the user id) which can then
+	// be passed to child components so that they can manage their own data
+	// fetching. we will want to figure out some means of data batching at some
+	// point, but for now this is working pretty well
 	var PageContent = function (_Component) {
 	  _inherits(PageContent, _Component);
 
@@ -46431,7 +46285,6 @@
 	  _createClass(PageContent, [{
 	    key: 'render',
 	    value: function render() {
-	      console.log('boomshakalaka', this.props);
 	      if (this.props.user) {
 	        return _react2.default.createElement(
 	          'div',
@@ -46505,7 +46358,189 @@
 	  props: props
 	})(PageContent);
 
-	//export default PageContent
+/***/ },
+/* 470 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.sourceListReducer = exports.sourceListColumnReducer = exports.subHeaderReducer = undefined;
+
+	var _mutations = __webpack_require__(386);
+
+	var _immutabilityHelper = __webpack_require__(388);
+
+	var _immutabilityHelper2 = _interopRequireDefault(_immutabilityHelper);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var subHeaderReducer = exports.subHeaderReducer = function subHeaderReducer(previousResult, action, variables) {
+	  if (action.type === _mutations.mutationTypes.APOLLO_MUTATION_RESULT) {
+	    switch (action.operationName) {
+	      case _mutations.mutationTypes.createSourceList:
+	        return (0, _immutabilityHelper2.default)(previousResult, {
+	          user: {
+	            numSourceLists: {
+	              $set: previousResult.user.numSourceLists + 1
+	            }
+	          }
+	        });
+	      case _mutations.mutationTypes.createSource:
+	        return (0, _immutabilityHelper2.default)(previousResult, {
+	          user: {
+	            numSources: {
+	              $set: previousResult.user.numSources + 1
+	            }
+	          }
+	        });
+	      case _mutations.mutationTypes.deleteSource:
+	        return (0, _immutabilityHelper2.default)(previousResult, {
+	          user: {
+	            numSources: {
+	              $set: previousResult.user.numSources - 1
+	            }
+	          }
+	        });
+	      default:
+	        return previousResult;
+	    }
+	  }
+	  // return previous otherwise
+	  return previousResult;
+	};
+
+	var sourceListColumnReducer = exports.sourceListColumnReducer = function sourceListColumnReducer(previousResult, action, variables) {
+	  if (action.type === _mutations.mutationTypes.APOLLO_MUTATION_RESULT && action.operationName === _mutations.mutationTypes.createSourceList) {
+	    console.log("in the mutation", previousResult, action);
+	    return (0, _immutabilityHelper2.default)(previousResult, {
+	      sourceLists: {
+	        $push: [action.result.data.createSourceList]
+	      }
+	    });
+	  }
+	  // return previous result if not doing anything special
+	  return previousResult;
+	};
+
+	var sourceListReducer = exports.sourceListReducer = function sourceListReducer(previousResult, action, variables) {
+	  // if we are mutating, want to update what is stored
+	  if (action.type === _mutations.mutationTypes.APOLLO_MUTATION_RESULT) {
+	    switch (action.operationName) {
+	      case _mutations.mutationTypes.createSource:
+	        // adding a source
+	        return (0, _immutabilityHelper2.default)(previousResult, {
+	          sourceList: {
+	            sources: {
+	              $unshift: [action.result.data.createSource]
+	            }
+	          }
+	        });
+	      case _mutations.mutationTypes.updateSource:
+	        // changing a current source
+	        // if it was just added to the same list return the previous result
+	        console.log("hm", action, previousResult);
+	        if (action.result.data.updateSource.sourceListId === previousResult.sourceList.id) {
+	          return previousResult;
+	        }
+	        // otherwise filter it out of the currently displayed list
+	        return (0, _immutabilityHelper2.default)(previousResult, {
+	          sourceList: {
+	            sources: {
+	              $apply: function $apply(currentArr) {
+	                return currentArr.filter(function (source) {
+	                  return source.id != action.result.data.updateSource.id;
+	                });
+	              }
+	            }
+	          }
+	        });
+	      case _mutations.mutationTypes.deleteSource:
+	        // need to do something for deleting a source
+	        return (0, _immutabilityHelper2.default)(previousResult, {
+	          sourceList: {
+	            sources: {
+	              $apply: function $apply(currentArr) {
+	                return currentArr.filter(function (source) {
+	                  return source.id != action.result.data.deleteSource.id;
+	                });
+	              }
+	            }
+	          }
+	        });
+	      default:
+	        return previousResult;
+	    }
+	  }
+	  // otherwise we can just return the previous result
+	  return previousResult;
+	};
+
+/***/ },
+/* 471 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(472);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(375)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./PageContent.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./PageContent.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 472 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(374)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".page-content-subheader {\n  height: 100px; \n}\n\n.page-content {\n  display: flex;\n  flex-direction: row;\n  /*height: 500px;*/\n}\n\n.SourceTools-wrapper {\n  width: 30%;\n}\n\n.SourceList-wrapper {\n    overflow: auto;\n    width: 40%;\n    min-width: 200px;\n}\n\n.SourceListColumn-wrapper {\n  width: 30%;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 473 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactApollo = __webpack_require__(208);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function DeleteSourceList(_ref) {
+	  var sourceListId = _ref.sourceListId,
+	      deleteSourceList = _ref.deleteSourceList;
+
+	  return _react2.default.createElement('i', {
+	    className: 'fa fa-trash-o ListTitleControl',
+	    onClick: deleteSourceList
+	  });
+	}
 
 /***/ }
 /******/ ]);

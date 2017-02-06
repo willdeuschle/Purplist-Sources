@@ -21,27 +21,3 @@
 .logout-button:hover {
   background: #8B008B;
 }
-
-.page-content-subheader {
-  height: 100px; 
-}
-
-.page-content {
-  display: flex;
-  flex-direction: row;
-  /*height: 500px;*/
-}
-
-.SourceTools-wrapper {
-  width: 30%;
-}
-
-.SourceList-wrapper {
-    overflow: auto;
-    width: 40%;
-    min-width: 200px;
-}
-
-.SourceListColumn-wrapper {
-  width: 30%;
-}

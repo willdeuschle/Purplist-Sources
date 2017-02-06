@@ -14,7 +14,7 @@ class SourceTools extends Component {
           <CreateSource userId={this.props.userId} />
         </div>
         <div className='delete-source SourceTool'>
-          <SourceTrash />
+          <SourceTrash userId={this.props.userId} />
         </div>
         <div className='explain-SourceTools SourceTool'>
           <i

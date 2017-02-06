@@ -12,6 +12,10 @@
   margin-right: auto;
 }
 
+.SourceListBlock.isHeap {
+  background: rgba(0,0,0,0.6);
+}
+
 .SourceListBlock a {
   position: relative;
   color: white;

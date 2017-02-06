@@ -15,7 +15,7 @@ db = SQLAlchemy(app)
 from models import User, Source, SourceList
 
 # we cant import schema until the models are set up, and they need the db
-from schema import schema
+from schema import schema, GraphqlAuthorizationMiddleware
 # app.add_url_rule(
     # '/graphql',
     # view_func=GraphQLView.as_view(
@@ -37,10 +37,13 @@ def load_user(id):
         return None
 
 @app.route('/graphql', methods=['GET', 'POST'])
+@login_required
 def graphql():
+    print("hello moto", current_user, request.data, request.args)
     return GraphQLView.as_view(
         'graphql',
         schema=schema,
+        middleware=[GraphqlAuthorizationMiddleware()],
         context={'current_user': current_user},
         graphiql=app.config['DEVELOPMENT'],
     )()

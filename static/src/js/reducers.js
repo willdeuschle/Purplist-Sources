@@ -1,8 +1,58 @@
+import { mutationTypes } from './mutations.js'
 import update from 'immutability-helper'
-import { mutationTypes } from '../mutations.js'
 
-export default function SourceListReducer (previousResult, action, variables) {
-  console.log("what have now", previousResult)
+
+export const subHeaderReducer = (previousResult, action, variables) => {
+  if (action.type === mutationTypes.APOLLO_MUTATION_RESULT) {
+    switch(action.operationName) {
+      case mutationTypes.createSourceList:
+        return update(previousResult, {
+          user: {
+            numSourceLists: {
+              $set: previousResult.user.numSourceLists + 1
+            },
+          },
+        })
+      case mutationTypes.createSource:
+        return update(previousResult, {
+          user: {
+            numSources: {
+              $set: previousResult.user.numSources + 1
+            },
+          },
+        })
+      case mutationTypes.deleteSource:
+        return update(previousResult, {
+          user: {
+            numSources: {
+              $set: previousResult.user.numSources - 1
+            },
+          },
+        })
+      default:
+        return previousResult
+    }
+  }
+  // return previous otherwise
+  return previousResult
+}
+
+
+export const sourceListColumnReducer = (previousResult, action, variables) => {
+  if (action.type === mutationTypes.APOLLO_MUTATION_RESULT && action.operationName === mutationTypes.createSourceList) {
+    console.log("in the mutation", previousResult, action)
+    return update(previousResult, {
+      sourceLists: {
+        $push: [action.result.data.createSourceList]
+      }
+    })
+  }
+  // return previous result if not doing anything special
+  return previousResult
+}
+
+
+export const sourceListReducer = (previousResult, action, variables) => {
   // if we are mutating, want to update what is stored
   if (action.type === mutationTypes.APOLLO_MUTATION_RESULT) {
     switch(action.operationName) {

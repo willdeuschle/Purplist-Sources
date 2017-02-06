@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
-import update from 'immutability-helper'
 
 import '../styles/SubHeader.css'
 import CreateSourceList from './CreateSourceList.js'
 import { currentUserDataQuery } from './queries.js'
-import { mutationTypes } from './mutations.js'
+import { subHeaderReducer } from './reducers.js'
+import DeleteSourceList from './DeleteSourceList.js'
 
 
 class SubHeader extends Component {
@@ -18,11 +18,13 @@ class SubHeader extends Component {
   renderIndividualStats() {
     return (
       <div className='IndividualStats'>
-        <div className='num-sources'>
-          Total sources: {this.props.user.numSources}
+        <div className='person-header'>
+          {this.props.user.name}
         </div>
-        <div className='num-source-lists'>
-          Total source lists: {this.props.user.numSourceLists}
+        <div className='source-stats'>
+          <hr className='name-separator' />
+          Sources: <span className='stat-val'>{this.props.user.numSources}</span> |
+          Source Lists: <span className='stat-val'>{this.props.user.numSourceLists}</span>
         </div>
       </div>
     )
@@ -31,7 +33,7 @@ class SubHeader extends Component {
   renderListTitle() {
     return (
       <div className='ListTitle'>
-        {this.props.sourceList.isHeap ? `${this.props.user.name}'s Heap` : this.props.sourceList.name}
+        {this.props.sourceList.isHeap ? <span className='heap-title'>The Heap</span> : this.props.sourceList.name}
         <hr/>
         <div className='ListTitle-button-row'>
           <i className='fa fa-info ListTitleControl' />
@@ -64,40 +66,7 @@ class SubHeader extends Component {
 
 const options = ownProps => {
   return {
-    reducer: (previousResult, action, variables) => {
-      if (action.type === mutationTypes.APOLLO_MUTATION_RESULT) {
-        switch(action.operationName) {
-          case mutationTypes.createSourceList:
-            return update(previousResult, {
-              user: {
-                numSourceLists: {
-                  $set: previousResult.user.numSourceLists + 1
-                },
-              },
-            })
-          case mutationTypes.createSource:
-            return update(previousResult, {
-              user: {
-                numSources: {
-                  $set: previousResult.user.numSources + 1
-                },
-              },
-            })
-          case mutationTypes.deleteSource:
-            return update(previousResult, {
-              user: {
-                numSources: {
-                  $set: previousResult.user.numSources - 1
-                },
-              },
-            })
-          default:
-            return previousResult
-        }
-      }
-      // return previous otherwise
-      return previousResult
-    },
+    reducer: subHeaderReducer,
     variables: {
       userId: ownProps.userId,
       sourceListId: ownProps.sourceListId,

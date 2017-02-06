@@ -110,7 +110,7 @@ class CreateSource(graphene.Mutation, SourceFields):
         try:
             req = Request(source_url, headers={'User-Agent': 'Magic-Browser'})
             fake_it = urlopen(req)
-            soup = BeautifulSoup(fake_it.read())
+            soup = BeautifulSoup(fake_it.read(), "html.parser")
             title = soup.title.string
         except:
             title = source_url
@@ -141,8 +141,6 @@ class CreateSource(graphene.Mutation, SourceFields):
         db.session.add(new_source)
         db.session.commit()
 
-        print("WHAT IS NS", new_source.__dict__, new_source.user.id)
-
         return CreateSource(
             user_id=new_source.user_id,
             source_list_id=new_source.source_list_id,
@@ -159,6 +157,7 @@ class DeleteSource(graphene.Mutation, SourceFields):
     class Input:
         # we only need the id to delete something
         id = graphene.ID()
+        user_id = graphene.ID()
 
     def mutate(self, args, context, info):
         id = args.get('id')
@@ -291,7 +290,7 @@ class Query(graphene.ObjectType):
     )
 
     def resolve_user(self, args, context, info):
-        print("we in this bi")
+        print("we in this bi", context)
         username = args.get('username', None)
         if username:
             print("here we are", username)
@@ -337,6 +336,31 @@ class Mutation(graphene.ObjectType):
     delete_source = DeleteSource.Field()
     update_source = UpdateSource.Field()
     create_source_list = CreateSourceList.Field()
+
+
+class GraphqlAuthorizationMiddleware(object):
+    '''
+    The purpose of this class is to authorize incoming mutations. Basically,
+    it checks to make sure the current user is the same as that of the user's
+    information we are trying to mutate. Since this middleware will be run
+    several times over the course of a single mutation, we add an 'authorized'
+    field to the context after we are confident that we can authorize the
+    execution
+    '''
+    def resolve(self, next, root, args, context, info):
+        # if this is a mutation
+        if info.operation.operation == 'mutation':
+            # can skip this if they are already authorized
+            if not context.get('authorized', False):
+                # make sure they are passing a user id
+                if not args.get('user_id', None):
+                    raise ValueError('Mutating without a userId')
+                # make sure they are only mutating the current user
+                if context.get('current_user').id != int(args.get('user_id')):
+                    raise ValueError('Mutating as someone other than the current user')
+                # validate for the remainder of this query
+                context['authorized'] = True
+        return next(root, args, context, info)
 
 
 schema = graphene.Schema(query=Query, mutation=Mutation)

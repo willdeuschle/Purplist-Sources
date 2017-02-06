@@ -17,6 +17,7 @@ class SourceListBlock extends React.Component {
         className={classNames({
           'SourceListBlock': true,
           'highlight': this.props.isOver,
+          'isHeap': this.props.sourceList.isHeap,
         })}
       >
         <Link to={`/${this.props.username}/${this.props.sourceList.id}/`}>

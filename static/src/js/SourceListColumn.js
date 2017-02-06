@@ -1,16 +1,9 @@
 import React, { Component } from 'react'
-import {
-  graphql,
-  compose,
-} from 'react-apollo'
-import update from 'immutability-helper'
+import { graphql } from 'react-apollo'
 
 import SourceListBlock from './SourceListBlock.js'
 import { sourceListsQuery } from './queries.js'
-import {
-  mutationTypes,
-  updateSource,
-} from './mutations.js'
+import { sourceListColumnReducer } from './reducers.js'
 
 import '../styles/SourceListColumn.css'
 
@@ -49,18 +42,7 @@ class SourceListColumn extends Component {
 const queryOptions = (ownProps) => {
   return {
     // we need this reducer for when we add new SourceLists
-    reducer: (previousResult, action, variables) => {
-      if (action.type === mutationTypes.APOLLO_MUTATION_RESULT && action.operationName === mutationTypes.createSourceList) {
-        console.log("in the mutation", previousResult, action)
-        return update(previousResult, {
-          sourceLists: {
-            $push: [action.result.data.createSourceList]
-          }
-        })
-      }
-      // return previous result if not doing anything special
-      return previousResult
-    },
+    reducer: sourceListColumnReducer,
     variables: {
       userId: ownProps.userId,
     },
@@ -74,9 +56,7 @@ const queryProps = ({ ownProps, data: { sourceLists, loading }}) => ({
 })
 
 // no longer need to compose, leaving it here as an example for now
-export default compose(
-  graphql(sourceListsQuery, {
-    options: queryOptions,
-    props: queryProps,
-  }),
-)(SourceListColumn)
+export default graphql(sourceListsQuery, {
+  options: queryOptions,
+  props: queryProps,
+})(SourceListColumn)

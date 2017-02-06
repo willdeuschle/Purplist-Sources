@@ -39,8 +39,8 @@ export const updateSource = gql`
 
 
 export const deleteSource = gql`
-  mutation deleteSource($id: ID!) {
-    deleteSource(id: $id) {
+  mutation deleteSource($userId: ID!, $id: ID!) {
+    deleteSource(userId: $userId, id: $id) {
       id,
       title,
       faviconUrl,

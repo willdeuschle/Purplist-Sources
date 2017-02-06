@@ -26,10 +26,10 @@ class SourceTrash extends Component {
 }
 
 // need to pass variables with the id of the source
-const props = ({ mutate }) => {
+const props = ({ ownProps, mutate }) => {
   return {
     deleteSource: (id) => {
-      mutate({ variables: { id }})
+      mutate({ variables: { userId: ownProps.userId, id }})
         .then((response) => console.log("deleted this object", response))
     }
   }
