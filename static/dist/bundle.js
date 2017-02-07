@@ -45437,6 +45437,30 @@
 	        });
 	      }
 	    }
+
+	    // this is a temporary measure while there is still a bug with how apollo
+	    // handles updating queries. we are going to store the value of the
+	    // current SourceList, and if it changes, we need to refetch data to ensure
+	    // that we have all of the latest sources
+
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this._currentSourceListId = this.props.sourceListId;
+	    }
+
+	    // this is the second part of the temporary measure described above
+
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(newProps) {
+	      // if the sourceListId has changed, reassign that value and
+	      // refetch the data
+	      if (this._currentSourceListId !== newProps.sourceListId) {
+	        this._currentSourceListId = newProps.sourceListId;
+	        this.props.refetch();
+	      }
+	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
@@ -45471,10 +45495,12 @@
 	  var ownProps = _ref.ownProps,
 	      _ref$data = _ref.data,
 	      sourceList = _ref$data.sourceList,
-	      loading = _ref$data.loading;
+	      loading = _ref$data.loading,
+	      refetch = _ref$data.refetch;
 	  return {
 	    sourceList: sourceList,
-	    loading: loading
+	    loading: loading,
+	    refetch: refetch
 	  };
 	};
 

@@ -27,6 +27,24 @@ class SourceList extends React.Component {
     }
   }
 
+  // this is a temporary measure while there is still a bug with how apollo
+  // handles updating queries. we are going to store the value of the
+  // current SourceList, and if it changes, we need to refetch data to ensure
+  // that we have all of the latest sources
+  componentDidMount() {
+    this._currentSourceListId = this.props.sourceListId
+  }
+
+  // this is the second part of the temporary measure described above
+  componentWillReceiveProps(newProps) {
+    // if the sourceListId has changed, reassign that value and
+    // refetch the data
+    if (this._currentSourceListId !== newProps.sourceListId) {
+      this._currentSourceListId = newProps.sourceListId
+      this.props.refetch()
+    }
+  }
+
   render() {
     return (
       <div className='SourceList'>
@@ -50,9 +68,10 @@ const options = (ownProps) => {
 }
 
 // potentially rename our props in the future
-const props = ({ ownProps, data: { sourceList, loading }}) => ({
+const props = ({ ownProps, data: { sourceList, loading, refetch }}) => ({
   sourceList,
   loading,
+  refetch,
 })
 
 // export the 'connected' component
