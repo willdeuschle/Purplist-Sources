@@ -116,6 +116,7 @@ class CreateSource(graphene.Mutation, SourceFields):
         # source_data = SourceInput()
         user_id = graphene.ID()
         source_url = graphene.String()
+        source_list_id = graphene.ID()
         # eventually we will want to support adding to different lists
         # source_list_id = graphene.Int()
 
@@ -126,6 +127,19 @@ class CreateSource(graphene.Mutation, SourceFields):
         # must be given a user_id, and source_url
         user_id = args.get('user_id')
         source_url = args.get('source_url')
+        # we won't necessarily get the source_list_id, in which case we
+        # add it to the heap list
+        source_list_id = args.get('source_list_id', None)
+
+        # get the user object
+        user = User.query.get(user_id)
+
+        # if we have the source_list_id, get the source_list, otherwise
+        # get the users heap list
+        if source_list_id:
+            source_list = SourceList.query.get(source_list_id)
+        else:
+            source_list = SourceList.query.filter_by(user_id=user_id, is_heap=True).first()
 
         # query for the title or use the source url
         try:
@@ -145,26 +159,21 @@ class CreateSource(graphene.Mutation, SourceFields):
         except:
             favicon_url = ''
 
-        # get the user and their heap list from the db
-        user = User.query.get(user_id)
-        # for the moment we are only allowing additions to the heap
-        heap_list = SourceList.query.filter_by(user_id=user_id, is_heap=True).first()
-
         # create the new source
         new_source = Source(
             title=title,
             source_url=source_url,
             favicon_url=favicon_url,
             user=user,
-            source_list=heap_list
+            source_list=source_list,
         )
 
         db.session.add(new_source)
         db.session.commit()
 
         return CreateSource(
-            user_id=new_source.user_id,
-            source_list_id=new_source.source_list_id,
+            user_id=new_source.user.id,
+            source_list_id=new_source.source_list.id,
             title=new_source.title,
             source_url=new_source.source_url,
             favicon_url=new_source.favicon_url,

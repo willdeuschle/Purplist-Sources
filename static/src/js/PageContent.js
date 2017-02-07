@@ -39,6 +39,7 @@ class PageContent extends Component {
              <div className='SourceTools-wrapper content-thirds'>
                <SourceTools
                  userId={this.props.user.id}
+                 sourceListId={this.props.params.sourceListId}
                />
              </div>
              <div className='SourceList-wrapper content-thirds'>

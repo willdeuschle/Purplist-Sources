@@ -41728,7 +41728,8 @@
 	              'div',
 	              { className: 'SourceTools-wrapper content-thirds' },
 	              _react2.default.createElement(_SourceTools2.default, {
-	                userId: this.props.user.id
+	                userId: this.props.user.id,
+	                sourceListId: this.props.params.sourceListId
 	              })
 	            ),
 	            _react2.default.createElement(
@@ -44862,7 +44863,10 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'SourceTool' },
-	          _react2.default.createElement(_CreateSource2.default, { userId: this.props.userId })
+	          _react2.default.createElement(_CreateSource2.default, {
+	            userId: this.props.userId,
+	            sourceListId: this.props.sourceListId
+	          })
 	        ),
 	        _react2.default.createElement(
 	          'div',
@@ -45013,7 +45017,7 @@
 
 	  return {
 	    createSource: function createSource(sourceUrl) {
-	      mutate({ variables: { userId: ownProps.userId, sourceUrl: sourceUrl } }).then(function (resp) {
+	      mutate({ variables: { userId: ownProps.userId, sourceUrl: sourceUrl, sourceListId: ownProps.sourceListId } }).then(function (resp) {
 	        return console.log("what is resp", resp);
 	      });
 	    }
@@ -45073,7 +45077,7 @@
 	});
 	exports.mutationTypes = exports.deleteSourceList = exports.deleteSource = exports.updateSource = exports.createSourceList = exports.createSource = undefined;
 
-	var _templateObject = _taggedTemplateLiteral(['\n  mutation createSource($userId: ID!, $sourceUrl: String!) {\n    createSource(userId: $userId, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n'], ['\n  mutation createSource($userId: ID!, $sourceUrl: String!) {\n    createSource(userId: $userId, sourceUrl: $sourceUrl) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n']),
+	var _templateObject = _taggedTemplateLiteral(['\n  mutation createSource($userId: ID!, $sourceUrl: String!, $sourceListId: ID) {\n    createSource(userId: $userId, sourceUrl: $sourceUrl, sourceListId: $sourceListId) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n'], ['\n  mutation createSource($userId: ID!, $sourceUrl: String!, $sourceListId: ID) {\n    createSource(userId: $userId, sourceUrl: $sourceUrl, sourceListId: $sourceListId) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  mutation createSourceList($userId: ID!, $sourceListName: String!) {\n    createSourceList(userId: $userId, name: $sourceListName) {\n      name,\n      id,\n      isHeap,\n    }\n  }\n'], ['\n  mutation createSourceList($userId: ID!, $sourceListName: String!) {\n    createSourceList(userId: $userId, name: $sourceListName) {\n      name,\n      id,\n      isHeap,\n    }\n  }\n']),
 	    _templateObject3 = _taggedTemplateLiteral(['\n  mutation updateSource($userId: ID!, $sourceData: SourceInput!) {\n    updateSource(userId: $userId, sourceData: $sourceData) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n'], ['\n  mutation updateSource($userId: ID!, $sourceData: SourceInput!) {\n    updateSource(userId: $userId, sourceData: $sourceData) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n']),
 	    _templateObject4 = _taggedTemplateLiteral(['\n  mutation deleteSource($userId: ID!, $id: ID!) {\n    deleteSource(userId: $userId, id: $id) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n'], ['\n  mutation deleteSource($userId: ID!, $id: ID!) {\n    deleteSource(userId: $userId, id: $id) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n']),

@@ -1,5 +1,6 @@
 from app import db
 from flask.ext.login import UserMixin
+from sqlalchemy.orm import backref
 
 
 class User(UserMixin, db.Model):
@@ -62,7 +63,7 @@ class Source(db.Model):
     user = db.relationship('User', backref='sources')
     # another foreign key for lists
     source_list_id = db.Column(db.Integer, db.ForeignKey('source_lists.id'))
-    source_list = db.relationship('SourceList', backref='sources')
+    source_list = db.relationship('SourceList', backref=backref('sources', cascade='all, delete-orphan'))
 
     def __init__(self, title, source_url, favicon_url, user, source_list):
         self.title = title

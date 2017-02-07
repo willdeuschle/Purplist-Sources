@@ -2,8 +2,8 @@ import gql from 'graphql-tag'
 
 // mutation to execute to add a source by its url
 export const createSource = gql`
-  mutation createSource($userId: ID!, $sourceUrl: String!) {
-    createSource(userId: $userId, sourceUrl: $sourceUrl) {
+  mutation createSource($userId: ID!, $sourceUrl: String!, $sourceListId: ID) {
+    createSource(userId: $userId, sourceUrl: $sourceUrl, sourceListId: $sourceListId) {
       id,
       title,
       faviconUrl,
