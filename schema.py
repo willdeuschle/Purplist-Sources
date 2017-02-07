@@ -34,9 +34,12 @@ class SourceType(graphene.ObjectType, SourceFields):
 class SourceInput(graphene.InputObjectType, SourceFields):
     pass
 
-class SourceListType(graphene.ObjectType):
+class SourceListFields(graphene.AbstractType):
     id = graphene.ID(
         description='A source list\'s unique id.',
+    )
+    user_id = graphene.ID(
+        description='The id of the associated user.',
     )
     name = graphene.String(
         description='The name of a source list.',
@@ -51,19 +54,37 @@ class SourceListType(graphene.ObjectType):
         description='The sources for a given source list',
     )
 
+class SourceListType(graphene.ObjectType, SourceListFields):
     def resolve_sources(self, args, context, info):
         return Source.query.filter_by(source_list_id=self.id)
 
+class DeleteSourceList(graphene.Mutation, SourceListFields):
+    class Input:
+        user_id = graphene.ID()
+        id = graphene.ID()
 
-class CreateSourceList(graphene.Mutation):
+    user_username = graphene.String(
+        description='The username of the user that owns this source list',
+    )
+
+    def resolve_user_username(self, args, context, info):
+        user = User.query.get(self.user_id)
+        return user.username
+
+    def mutate(self, args, context, info):
+        id = args.get('id')
+        source_list = SourceList.query.get(id)
+        if source_list.is_heap:
+            raise ValueError('Cannot delete your heap')
+        db.session.delete(source_list)
+        db.session.commit()
+
+        return source_list
+
+class CreateSourceList(graphene.Mutation, SourceListFields):
     class Input:
         user_id = graphene.ID()
         name = graphene.String()
-
-    id = graphene.ID()
-    user_id = graphene.ID()
-    name = graphene.String()
-    is_heap = graphene.Boolean()
 
     def mutate(self, args, context, info):
         print("We are mutation sorucelist")
@@ -155,7 +176,7 @@ class CreateSource(graphene.Mutation, SourceFields):
 # instead of deleting
 class DeleteSource(graphene.Mutation, SourceFields):
     class Input:
-        # we only need the id to delete something
+        # we only need the user_id and source's id to delete something
         id = graphene.ID()
         user_id = graphene.ID()
 
@@ -172,6 +193,7 @@ class DeleteSource(graphene.Mutation, SourceFields):
 class UpdateSource(graphene.Mutation, SourceFields):
     class Input:
         source_data = SourceInput()
+        user_id = graphene.ID()
         # source_id = graphene.ID()
         # title = graphene.String()
         # source_list_id = graphene.ID()
@@ -336,6 +358,7 @@ class Mutation(graphene.ObjectType):
     delete_source = DeleteSource.Field()
     update_source = UpdateSource.Field()
     create_source_list = CreateSourceList.Field()
+    delete_source_list = DeleteSourceList.Field()
 
 
 class GraphqlAuthorizationMiddleware(object):

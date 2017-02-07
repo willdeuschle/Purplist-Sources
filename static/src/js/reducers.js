@@ -39,13 +39,27 @@ export const subHeaderReducer = (previousResult, action, variables) => {
 
 
 export const sourceListColumnReducer = (previousResult, action, variables) => {
-  if (action.type === mutationTypes.APOLLO_MUTATION_RESULT && action.operationName === mutationTypes.createSourceList) {
-    console.log("in the mutation", previousResult, action)
-    return update(previousResult, {
-      sourceLists: {
-        $push: [action.result.data.createSourceList]
-      }
-    })
+  if (action.type === mutationTypes.APOLLO_MUTATION_RESULT) {
+      console.log("in the mutation", previousResult, action)
+    switch(action.operationName) {
+      // if we are creating a source simply add it to the current source list
+      case mutationTypes.createSourceList:
+        return update(previousResult, {
+          sourceLists: {
+            $push: [action.result.data.createSourceList]
+          },
+        })
+      // if we are deleting a source list, filter it out of the current
+      // source list array
+      case mutationTypes.deleteSourceList:
+        return update(previousResult, {
+          sourceLists: {
+            $apply: currentSourceLists => currentSourceLists.filter(sourceList => sourceList.id != action.result.data.deleteSourceList.id)
+          },
+        })
+      default:
+        return previousResult
+    }
   }
   // return previous result if not doing anything special
   return previousResult
@@ -64,7 +78,7 @@ export const sourceListReducer = (previousResult, action, variables) => {
               $unshift: [action.result.data.createSource],
             },
           },
-        });
+        })
       case mutationTypes.updateSource:
         // changing a current source
         // if it was just added to the same list return the previous result
@@ -76,19 +90,19 @@ export const sourceListReducer = (previousResult, action, variables) => {
         return update(previousResult, {
           sourceList: {
             sources: {
-              $apply: currentArr => currentArr.filter(source => source.id != action.result.data.updateSource.id)
+              $apply: currentSources => currentSources.filter(source => source.id != action.result.data.updateSource.id)
             },
           },
-        });
+        })
       case mutationTypes.deleteSource:
         // need to do something for deleting a source
         return update(previousResult, {
           sourceList: {
             sources: {
-              $apply: currentArr => currentArr.filter(source => source.id != action.result.data.deleteSource.id)
+              $apply: currentSources => currentSources.filter(source => source.id != action.result.data.deleteSource.id)
             },
           },
-        });
+        })
       default:
         return previousResult
     }

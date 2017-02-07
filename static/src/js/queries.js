@@ -6,8 +6,10 @@ export const SourceInfoFragment = {
     fragment SourceInfoFragment on SourceType {
       id,
       title,
-      sourceUrl,
       faviconUrl,
+      userId,
+      sourceUrl,
+      sourceListId,
   },
 `}
 
@@ -31,6 +33,7 @@ export const currentUserDataQuery = gql`
       numSourceLists,
     },
     sourceList(userId: $userId, sourceListId: $sourceListId) {
+      id,
       name,
       isHeap,
     },

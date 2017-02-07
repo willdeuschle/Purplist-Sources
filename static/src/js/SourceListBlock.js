@@ -31,10 +31,10 @@ class SourceListBlock extends React.Component {
 }
 
 
-const props = ({ mutate }) => {
+const props = ({ ownProps, mutate }) => {
   return {
     updateSource: (id, sourceListId) => {
-      mutate({ variables: { sourceData: { id, sourceListId }}})
+      mutate({ variables: { userId: ownProps.userId, sourceData: { id, sourceListId }}})
         .then((response) => console.log("what is resp", response))
     }
   }

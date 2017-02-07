@@ -39,7 +39,11 @@ class SubHeader extends Component {
           <i className='fa fa-info ListTitleControl' />
           <i className='fa fa-download ListTitleControl' />
           <i className='fa fa-envelope-o ListTitleControl' />
-          <i className='fa fa-trash-o ListTitleControl' />
+          <DeleteSourceList
+            userId={this.props.userId}
+            sourceListId={this.props.sourceList.id}
+            canDelete={!this.props.sourceList.isHeap}
+          />
         </div>
       </div>
     )

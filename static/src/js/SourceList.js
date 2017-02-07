@@ -19,7 +19,10 @@ class SourceList extends React.Component {
     console.log("heap list props", this.props)
     if (this.props.sourceList) {
       return this.props.sourceList.sources.map(
-        (sourceItem) => <SourceItem key={sourceItem.id} sourceItem={sourceItem} />
+        (sourceItem) => (<SourceItem
+            key={sourceItem.id}
+            sourceItem={sourceItem}
+          />)
       )
     }
   }
