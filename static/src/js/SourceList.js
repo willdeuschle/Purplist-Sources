@@ -18,6 +18,14 @@ class SourceList extends React.Component {
   renderSourceList() {
     console.log("heap list props", this.props)
     if (this.props.sourceList) {
+      // message for if they don't have any sources
+      if (this.props.sourceList.sources.length === 0) {
+        return (
+          <div className='no-sources'>
+            You don't have any sources yet. Add them to the input box to the left.
+          </div>
+        )
+      }
       return this.props.sourceList.sources.map(
         (sourceItem) => (<SourceItem
             key={sourceItem.id}
