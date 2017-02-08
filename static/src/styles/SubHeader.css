@@ -62,6 +62,10 @@
   justify-content: center;
 }
 
+.ListTitle-button-row wrapper {
+  max-width: 16%;
+}
+
 .ListTitleControl {
   display: flex;
   flex-direction: row;
@@ -75,6 +79,10 @@
   border: 1px solid #6441A5;
   border-radius: 50%;
   cursor: pointer;
+}
+
+.ListTitleControl.no-hover {
+  cursor: default;
 }
 
 .ListTitleControl.no-delete {

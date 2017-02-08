@@ -11,7 +11,18 @@ const networkInterface = new createNetworkInterface({
   },
 })
 
-const client = new ApolloClient({ networkInterface })
+// for cache updates
+const dataIdFromObject = (result) => {
+  if (result.id && result.__typename) {
+    return result.__typename + result.id
+  }
+  return null
+}
+
+const client = new ApolloClient({
+  networkInterface,
+  dataIdFromObject,
+})
 
 import App from './App.js'
 import PageContent from './PageContent.js'

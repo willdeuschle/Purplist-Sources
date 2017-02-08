@@ -1,7 +1,7 @@
 import os
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager, login_required, logout_user, login_user, current_user
-from flask import Flask, render_template, url_for, redirect, flash, request
+from flask import Flask, render_template, url_for, redirect, flash, request, make_response
 from oauth import OAuthSignIn
 from flask_graphql import GraphQLView
 
@@ -99,13 +99,34 @@ def oauth_callback(provider):
     login_user(user, True)
     return redirect(url_for('index', username=user.username))
 
+
+
+@app.route('/download/', methods=['GET', 'POST'])
+@app.route('/download/<sourceListId>/', methods=['GET', 'POST'])
+@login_required
+def download_list(sourceListId=None):
+    # get the given source list or use the heap
+    if sourceListId:
+        sl = SourceList.query.get(sourceListId)
+    else:
+        sl = SourceList.query.filter_by(user=current_user, is_heap=True).first()
+    text = '{0}: {1}\n'.format(current_user.name, sl.name)
+    for idx, source in enumerate(sl.sources):
+        text += '{0}) {1}\n'.format(idx, source.title)
+    response = make_response(text)
+    content_disp = 'attachment; filename={0}'.format(sl.name)
+    response.headers['Content-Disposition'] = content_disp
+    return response
+
+
 # this is the landing page, don't need to be logged in to get here
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/login/', methods=['GET', 'POST'])
 def login():
     return render_template('login.html', title='Login')
 
 # this logs you out and returns you to the landing page
-@app.route('/logout')
+@app.route('/logout/')
 @login_required
 def logout():
     logout_user()

@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
+import ReactTooltip from 'react-tooltip'
 
 import '../styles/SourceTools.css'
 import CreateSource from './CreateSource.js'
 import SourceTrash from './SourceTrash.js'
+import { SourceToolsTip } from './constants.js'
 
 
 class SourceTools extends Component {
@@ -21,8 +23,13 @@ class SourceTools extends Component {
         </div>
         <div className='explain-SourceTools SourceTool'>
           <i
+            data-place={'top'}
+            data-effect='solid'
+            data-tip={SourceToolsTip}
+            data-for='SourceToolsTip'
             className='fa fa-info SourceTools-icon explain-source'
           />
+          <ReactTooltip id='SourceToolsTip' />
         </div>
       </div>
     )

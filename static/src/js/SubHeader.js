@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
+import ReactTooltip from 'react-tooltip'
 
 import '../styles/SubHeader.css'
 import CreateSourceList from './CreateSourceList.js'
 import { currentUserDataQuery } from './queries.js'
 import { subHeaderReducer } from './reducers.js'
 import DeleteSourceList from './DeleteSourceList.js'
+import { ListTitleControlTip } from './constants.js'
 
 
 class SubHeader extends Component {
@@ -31,14 +33,28 @@ class SubHeader extends Component {
   }
 
   renderListTitle() {
+    console.log("what have boogalo", this.props)
     return (
       <div className='ListTitle'>
         {this.props.sourceList.isHeap ? <span className='heap-title'>The Heap</span> : this.props.sourceList.name}
         <hr/>
         <div className='ListTitle-button-row'>
-          <i className='fa fa-info ListTitleControl' />
-          <i className='fa fa-download ListTitleControl' />
-          <i className='fa fa-envelope-o ListTitleControl' />
+          <i
+            data-place={'bottom'}
+            data-effect='solid'
+            data-tip={ListTitleControlTip}
+            data-for='ListTitleControlTip'
+            className='fa fa-info no-hover ListTitleControl'
+          />
+          <ReactTooltip id='ListTitleControlTip' />
+          <a
+            href={`/download/${this.props.sourceList.id}`}
+            className='fa fa-download ListTitleControl'
+          />
+          <a
+            href={`mailto:?to=&body=Link here: ${window.location.href}&subject=${this.props.user.name}: ${this.props.sourceList.name}`}
+            className='fa fa-envelope-o ListTitleControl'
+          />
           <DeleteSourceList
             userId={this.props.userId}
             sourceListId={this.props.sourceList.id}

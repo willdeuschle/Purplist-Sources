@@ -2,14 +2,15 @@
 {% block content %}
     <div class='page-wrapper'>
         <div class='login-wrapper'>
-            <h1 class='welcome-source'>Welcome to Source</h1>
+            <h1 class='welcome-source'>Welcome to Purplist</h1>
             {% if current_user.is_authenticated %}
                 <h2 class='greeting-user'>Hi, {{ current_user.name }}</h2>
-                <p class='logout-offer'>
-                    <a class='logout-button' href="{{ url_for('logout') }}">
-                        Click here to logout.
-                    </a>
-                </p>
+                <a class='login-button' href="/{{ current_user.username }}">
+                    Go to your heap.
+                </a>
+                <a class='login-button' href="{{ url_for('logout') }}">
+                    Click here to logout.
+                </a>
             {% else %}
                 <a class='login-button' href="{{ url_for('authorize', provider='google') }}">
                     Login with Google

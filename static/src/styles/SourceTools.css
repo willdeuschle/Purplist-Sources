@@ -27,3 +27,7 @@
   border: 1px solid #6441A5;
   border-radius: 50%;
 }
+
+.explain-SourceTools wrapper {
+  max-width: 16%;
+}
