@@ -1,7 +1,7 @@
 import os
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager, login_required, logout_user, login_user, current_user
-from flask import Flask, render_template, url_for, redirect, flash, request, make_response
+from flask import Flask, render_template, url_for, redirect, flash, request, make_response, jsonify
 from oauth import OAuthSignIn
 from flask_graphql import GraphQLView
 
@@ -123,6 +123,7 @@ def download_list(sourceListId=None):
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
+    print("hello")
     return render_template('login.html', title='Login')
 
 # this logs you out and returns you to the landing page
@@ -131,6 +132,12 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
+# just for testing
+@app.route('/boogly/', methods=['GET', 'POST'])
+@login_required
+def boogly():
+    return jsonify({'doop': 'foobar'})
 
 # this is the index page
 @app.route('/<username>/', methods=['GET', 'POST'])
