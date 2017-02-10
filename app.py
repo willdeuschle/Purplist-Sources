@@ -133,11 +133,26 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-# just for testing
-@app.route('/boogly/', methods=['GET', 'POST'])
-@login_required
-def boogly():
-    return jsonify({'doop': 'foobar'})
+# for our chrome extension
+@app.route('/chromeext/', methods=['GET', 'POST'])
+def chromeext():
+    print("who is current_user", current_user, request.get_json())
+    user_id = getattr(current_user, 'id', None)
+    if not user_id:
+        return jsonify({'logged_in': False})
+    else:
+        # first we need to add this source to their heap
+        # get their heap
+        source_list = SourceList.query.filter_by(user=current_user, is_heap=True).first()
+        payload = request.get_json()
+        s = Source(user=current_user,
+                   source_list=source_list,
+                   title=payload['title'],
+                   favicon_url=payload['favicon_url'],
+                   source_url=payload['source_url'])
+        db.session.add(s)
+        db.session.commit()
+        return jsonify({'logged_in': True})
 
 # this is the index page
 @app.route('/<username>/', methods=['GET', 'POST'])
