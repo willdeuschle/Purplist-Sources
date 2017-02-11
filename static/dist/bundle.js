@@ -46265,7 +46265,7 @@
 
 
 	// module
-	exports.push([module.id, ".SourceTools {\n  height: 100%;\n  display: flex;\n  flex-direction: column;\n}\n\n.SourceTool {\n  margin-bottom: 120px;\n}\n\n.delete-source, .explain-SourceTools {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n}\n\n.SourceTools-icon {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  color: #6441A5;\n  width: 40px;\n  height: 40px;\n  padding: 20px;\n  font-size: 24px;\n  border: 1px solid #6441A5;\n  border-radius: 50%;\n}\n\n.explain-SourceTools wrapper {\n  max-width: 16%;\n}\n", ""]);
+	exports.push([module.id, ".SourceTools {\n  height: 100%;\n  display: flex;\n  flex-direction: column;\n}\n\n.SourceTool {\n  margin-bottom: 120px;\n}\n\n.delete-source, .explain-SourceTools {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n}\n\n.SourceTools-icon {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  color: #6441A5;\n  width: 60px;\n  height: 60px;\n  padding: 20px;\n  font-size: 24px;\n  border: 1px solid #6441A5;\n  border-radius: 50%;\n}\n\n.explain-SourceTools wrapper {\n  max-width: 16%;\n}\n", ""]);
 
 	// exports
 
@@ -46288,9 +46288,15 @@
 
 	var _reactApollo = __webpack_require__(208);
 
+	var _reactTooltip = __webpack_require__(437);
+
+	var _reactTooltip2 = _interopRequireDefault(_reactTooltip);
+
 	__webpack_require__(452);
 
 	var _mutations = __webpack_require__(454);
+
+	var _constants = __webpack_require__(459);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -46340,8 +46346,13 @@
 	        }),
 	        _react2.default.createElement('i', {
 	          onClick: this.createSource,
-	          className: 'fa fa-plus create-new-source'
-	        })
+	          className: 'fa fa-plus create-new-source',
+	          'data-place': 'bottom',
+	          'data-effect': 'solid',
+	          'data-tip': _constants.CreateSourceTip,
+	          'data-for': 'CreateSourceTip'
+	        }),
+	        _react2.default.createElement(_reactTooltip2.default, { id: 'CreateSourceTip' })
 	      );
 	    }
 	  }]);
@@ -46476,11 +46487,17 @@
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
+	var _reactTooltip = __webpack_require__(437);
+
+	var _reactTooltip2 = _interopRequireDefault(_reactTooltip);
+
 	__webpack_require__(456);
 
 	var _mutations = __webpack_require__(454);
 
 	var _DragNDrop = __webpack_require__(458);
+
+	var _constants = __webpack_require__(459);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -46503,15 +46520,24 @@
 	    key: 'render',
 	    value: function render() {
 	      console.log('Source trash propss', this.props);
-	      return this.props.connectDropTarget(_react2.default.createElement('i', {
-	        id: 'SourceTrash',
-	        className: (0, _classnames2.default)({
-	          'fa fa-trash-o': true,
-	          'SourceTools-icon': true,
-	          'delete-source': true,
-	          'highlight': this.props.isOver
-	        })
-	      }));
+	      return this.props.connectDropTarget(_react2.default.createElement(
+	        'span',
+	        null,
+	        _react2.default.createElement('i', {
+	          id: 'SourceTrash',
+	          'data-place': 'top',
+	          'data-effect': 'solid',
+	          'data-tip': _constants.SourceTrashTip,
+	          'data-for': 'SourceTrashTip',
+	          className: (0, _classnames2.default)({
+	            'fa fa-trash-o': true,
+	            'SourceTools-icon': true,
+	            'delete-source': true,
+	            'highlight': this.props.isOver
+	          })
+	        }),
+	        _react2.default.createElement(_reactTooltip2.default, { id: 'SourceTrashTip' })
+	      ));
 	    }
 	  }]);
 
@@ -46666,8 +46692,14 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var SourceToolsTip = exports.SourceToolsTip = 'Drag articles to different lists or the trash, and add new ones by submitting their url in the input box above.';
-	var ListTitleControlTip = exports.ListTitleControlTip = 'Download, email, or delete lists here. Additionally, create new lists by submitting their name in the input box to the right. Note: you cannot delete your heap.';
+	var SourceToolsTip = exports.SourceToolsTip = 'Drag sources to the desired list or to the trash. Add new sources by using our Chrome extension or by submitting the url to the input box above.';
+	var ListTitleControlTip = exports.ListTitleControlTip = 'Download, email, or delete lists here. Additionally, create new lists by submitting their name to the input box on the right. Note: you cannot delete your heap.';
+	var SourceTrashTip = exports.SourceTrashTip = 'Drag articles here to delete.';
+	var DownloadTip = exports.DownloadTip = 'Download the articles on this source list.';
+	var EmailTip = exports.EmailTip = 'Email the articles on this source list.';
+	var DeleteListTip = exports.DeleteListTip = 'Delete this list and its articles. Note: you can\'t delete your Heap.';
+	var CreateListTip = exports.CreateListTip = 'Create new list here.';
+	var CreateSourceTip = exports.CreateSourceTip = 'Add new source here.';
 
 /***/ },
 /* 460 */
@@ -47042,7 +47074,7 @@
 
 
 	// module
-	exports.push([module.id, ".SourceList {\n  padding: 0px 15px;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  max-height: 500px;\n  overflow: auto;\n}\n\n.sourceItem {\n  width: 100%;\n  height: 25px;\n  min-height: 25px;\n  overflow-y: auto;\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 13px;\n  border: 1px solid #f0f0f0;\n  font-weight: 400;\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  text-decoration: none;\n  padding: 5px 10px;\n  border-radius: 3px;\n  color: rgba(0,0,0,.6);\n  background: rgba(255,255,255,.97);\n  cursor: pointer;\n}\n\n.sourceItem:hover {\n    color: rgba(0,0,0,.8);\n    border-color: rgba(0,0,0,.15);\n    background: #fff;\n}\n\n.sourceImgWrapper {\n  position: absolute;\n  left: 10px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n.sourceImg {\n  width: 25px;\n}\n\n.sourceTxtWrapper {\n  /*this margin left accounts for the size of the image (25px) so there is */\n  /*no unwanted overlap as well as the 10px padding around the whole item */\n  /* so there is equal space from edge to image and image to text */\n  margin-left: calc(25px + 10px);\n  width: 80%;\n  white-space: nowrap;\n  overflow-x: hidden;\n  text-overflow: ellipsis;\n}\n\n.no-sources {\n  font-size: 16px;\n  font-weight: 400;\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  text-decoration: none;\n  margin-top: 5px;\n}\n", ""]);
+	exports.push([module.id, ".SourceList {\n  padding: 0px 15px;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  overflow: auto;\n  height: calc(100vh - 220px);\n}\n\n.sourceItem {\n  width: 100%;\n  height: 25px;\n  min-height: 25px;\n  overflow-y: auto;\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 13px;\n  border: 1px solid #f0f0f0;\n  font-weight: 400;\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  text-decoration: none;\n  padding: 5px 10px;\n  border-radius: 3px;\n  color: rgba(0,0,0,.6);\n  background: rgba(255,255,255,.97);\n  cursor: pointer;\n}\n\n.sourceItem:hover {\n    color: rgba(0,0,0,.8);\n    border-color: rgba(0,0,0,.15);\n    background: #fff;\n}\n\n.sourceImgWrapper {\n  position: absolute;\n  left: 10px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n.sourceImg {\n  width: 25px;\n}\n\n.sourceTxtWrapper {\n  /*this margin left accounts for the size of the image (25px) so there is */\n  /*no unwanted overlap as well as the 10px padding around the whole item */\n  /* so there is equal space from edge to image and image to text */\n  margin-left: calc(25px + 10px);\n  width: 80%;\n  white-space: nowrap;\n  overflow-x: hidden;\n  text-overflow: ellipsis;\n}\n\n.no-sources {\n  font-size: 16px;\n  font-weight: 400;\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  text-decoration: none;\n  margin-top: 5px;\n}\n", ""]);
 
 	// exports
 
@@ -47537,7 +47569,7 @@
 
 
 	// module
-	exports.push([module.id, ".SourceListColumn {\n  width: 100%;\n  max-height: 500px;\n  overflow-y: auto;\n}\n", ""]);
+	exports.push([module.id, ".SourceListColumn {\n  width: 100%;\n  height: calc(100vh - 220px);\n  overflow-y: auto;\n}\n", ""]);
 
 	// exports
 
@@ -47657,12 +47689,22 @@
 	          _react2.default.createElement(_reactTooltip2.default, { id: 'ListTitleControlTip' }),
 	          _react2.default.createElement('a', {
 	            href: '/download/' + this.props.sourceList.id,
-	            className: 'fa fa-download ListTitleControl'
+	            className: 'fa fa-download ListTitleControl',
+	            'data-place': 'bottom',
+	            'data-effect': 'solid',
+	            'data-tip': _constants.DownloadTip,
+	            'data-for': 'DownloadTip'
 	          }),
+	          _react2.default.createElement(_reactTooltip2.default, { id: 'DownloadTip' }),
 	          _react2.default.createElement('a', {
 	            href: 'mailto:?to=&body=Link here: ' + window.location.href + '&subject=' + this.props.user.name + ': ' + this.props.sourceList.name,
-	            className: 'fa fa-envelope-o ListTitleControl'
+	            className: 'fa fa-envelope-o ListTitleControl',
+	            'data-place': 'bottom',
+	            'data-effect': 'solid',
+	            'data-tip': _constants.EmailTip,
+	            'data-for': 'EmailTip'
 	          }),
+	          _react2.default.createElement(_reactTooltip2.default, { id: 'EmailTip' }),
 	          _react2.default.createElement(_DeleteSourceList2.default, {
 	            userId: this.props.userId,
 	            sourceListId: this.props.sourceList.id,
@@ -47785,9 +47827,15 @@
 
 	var _reactApollo = __webpack_require__(208);
 
+	var _reactTooltip = __webpack_require__(437);
+
+	var _reactTooltip2 = _interopRequireDefault(_reactTooltip);
+
 	var _mutations = __webpack_require__(454);
 
 	__webpack_require__(476);
+
+	var _constants = __webpack_require__(459);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47835,8 +47883,13 @@
 	        }),
 	        _react2.default.createElement('i', {
 	          onClick: this.createSourceList,
-	          className: 'fa fa-plus create-new-source-list'
-	        })
+	          className: 'fa fa-plus create-new-source-list',
+	          'data-place': 'bottom',
+	          'data-effect': 'solid',
+	          'data-tip': _constants.CreateListTip,
+	          'data-for': 'CreateListTip'
+	        }),
+	        _react2.default.createElement(_reactTooltip2.default, { id: 'CreateListTip' })
 	      );
 	    }
 	  }]);
@@ -47919,7 +47972,13 @@
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
+	var _reactTooltip = __webpack_require__(437);
+
+	var _reactTooltip2 = _interopRequireDefault(_reactTooltip);
+
 	var _mutations = __webpack_require__(454);
+
+	var _constants = __webpack_require__(459);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47927,13 +47986,22 @@
 	  var canDelete = _ref.canDelete,
 	      deleteSourceList = _ref.deleteSourceList;
 
-	  return _react2.default.createElement('i', {
-	    className: (0, _classnames2.default)({
-	      'fa fa-trash-o ListTitleControl': true,
-	      'no-delete': !canDelete
+	  return _react2.default.createElement(
+	    'span',
+	    null,
+	    _react2.default.createElement('i', {
+	      className: (0, _classnames2.default)({
+	        'fa fa-trash-o ListTitleControl': true,
+	        'no-delete': !canDelete
+	      }),
+	      onClick: canDelete ? deleteSourceList : null,
+	      'data-place': 'bottom',
+	      'data-effect': 'solid',
+	      'data-tip': _constants.DeleteListTip,
+	      'data-for': 'DeleteListTip'
 	    }),
-	    onClick: canDelete ? deleteSourceList : null
-	  });
+	    _react2.default.createElement(_reactTooltip2.default, { id: 'DeleteListTip' })
+	  );
 	}
 
 	var props = function props(_ref2) {

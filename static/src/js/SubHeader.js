@@ -7,7 +7,12 @@ import CreateSourceList from './CreateSourceList.js'
 import { currentUserDataQuery } from './queries.js'
 import { subHeaderReducer } from './reducers.js'
 import DeleteSourceList from './DeleteSourceList.js'
-import { ListTitleControlTip } from './constants.js'
+import {
+  ListTitleControlTip,
+  DownloadTip,
+  EmailTip,
+  DeleteListTip,
+} from './constants.js'
 
 
 class SubHeader extends Component {
@@ -50,11 +55,21 @@ class SubHeader extends Component {
           <a
             href={`/download/${this.props.sourceList.id}`}
             className='fa fa-download ListTitleControl'
+            data-place={'bottom'}
+            data-effect='solid'
+            data-tip={DownloadTip}
+            data-for='DownloadTip'
           />
+          <ReactTooltip id='DownloadTip' />
           <a
             href={`mailto:?to=&body=Link here: ${window.location.href}&subject=${this.props.user.name}: ${this.props.sourceList.name}`}
             className='fa fa-envelope-o ListTitleControl'
+            data-place={'bottom'}
+            data-effect='solid'
+            data-tip={EmailTip}
+            data-for='EmailTip'
           />
+          <ReactTooltip id='EmailTip' />
           <DeleteSourceList
             userId={this.props.userId}
             sourceListId={this.props.sourceList.id}

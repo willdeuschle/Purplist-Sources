@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { graphql } from 'react-apollo'
+import ReactTooltip from 'react-tooltip'
 
 import { createSourceList } from './mutations.js'
 import '../styles/CreateSourceList.css'
+import { CreateListTip } from './constants.js'
 
 class CreateSourceList extends Component {
   constructor() {
@@ -29,7 +31,12 @@ class CreateSourceList extends Component {
         <i
           onClick={this.createSourceList}
           className='fa fa-plus create-new-source-list'
+          data-place={'bottom'}
+          data-effect='solid'
+          data-tip={CreateListTip}
+          data-for='CreateListTip'
         />
+        <ReactTooltip id='CreateListTip' />
       </div>
     )
   }
