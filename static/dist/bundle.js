@@ -41563,11 +41563,17 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactTooltip = __webpack_require__(440);
+
+	var _reactTooltip2 = _interopRequireDefault(_reactTooltip);
+
 	__webpack_require__(428);
 
 	var _SearchBarWrapper = __webpack_require__(482);
 
 	var _SearchBarWrapper2 = _interopRequireDefault(_SearchBarWrapper);
+
+	var _constants = __webpack_require__(458);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -41592,7 +41598,26 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'Header' },
-	        _react2.default.createElement(_SearchBarWrapper2.default, null)
+	        _react2.default.createElement('a', {
+	          href: '/',
+	          className: 'fa fa-home return-home',
+	          'data-place': 'right',
+	          'data-effect': 'solid',
+	          'data-tip': _constants.HomeTip,
+	          'data-for': 'HomeTip'
+	        }),
+	        _react2.default.createElement(_reactTooltip2.default, { id: 'HomeTip' }),
+	        _react2.default.createElement(_SearchBarWrapper2.default, null),
+	        _react2.default.createElement('a', {
+	          href: 'https://www.google.com/',
+	          target: '_blank',
+	          className: 'fa fa-google to-chrome-ext',
+	          'data-place': 'left',
+	          'data-effect': 'solid',
+	          'data-tip': _constants.ChromeExtTip,
+	          'data-for': 'ChromeExtTip'
+	        }),
+	        _react2.default.createElement(_reactTooltip2.default, { id: 'ChromeExtTip' })
 	      );
 	    }
 	  }]);
@@ -41637,7 +41662,7 @@
 
 
 	// module
-	exports.push([module.id, ".Header {\n  height: 80px;\n  border-bottom: 1px solid rgba(0,0,0,0.15);\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n}\n", ""]);
+	exports.push([module.id, ".Header {\n  height: 80px;\n  border-bottom: 1px solid rgba(0,0,0,0.15);\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n}\n\n.Header .return-home {\n  position: fixed;\n  left: 0px;\n  top: 0px;\n  padding: 10px;\n  font-size: 24px;\n  color: #6441A5;\n  cursor: pointer;\n  text-decoration: none;\n}\n\n.Header .to-chrome-ext {\n  position: fixed;\n  right: 0px;\n  top: 0px;\n  /*top: 36px;*/\n  padding: 10px;\n  font-size: 24px;\n  color: #6441A5;\n  cursor: pointer;\n  text-decoration: none;\n}\n", ""]);
 
 	// exports
 
@@ -45058,35 +45083,40 @@
 	  _createClass(SourceTools, [{
 	    key: 'render',
 	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'SourceTools' },
-	        _react2.default.createElement(
+	      // only want to display the source tools if the current user is viewing
+	      // their own profile
+	      if (window.cu_id === parseInt(this.props.userId)) {
+	        return _react2.default.createElement(
 	          'div',
-	          { className: 'SourceTool' },
-	          _react2.default.createElement(_CreateSource2.default, {
-	            userId: this.props.userId,
-	            sourceListId: this.props.sourceListId
-	          })
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'delete-source SourceTool' },
-	          _react2.default.createElement(_SourceTrash2.default, { userId: this.props.userId })
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'explain-SourceTools SourceTool' },
-	          _react2.default.createElement('i', {
-	            'data-place': 'top',
-	            'data-effect': 'solid',
-	            'data-tip': _constants.SourceToolsTip,
-	            'data-for': 'SourceToolsTip',
-	            className: 'fa fa-info SourceTools-icon explain-source'
-	          }),
-	          _react2.default.createElement(_reactTooltip2.default, { id: 'SourceToolsTip' })
-	        )
-	      );
+	          { className: 'SourceTools' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'SourceTool' },
+	            _react2.default.createElement(_CreateSource2.default, {
+	              userId: this.props.userId,
+	              sourceListId: this.props.sourceListId
+	            })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'delete-source SourceTool' },
+	            _react2.default.createElement(_SourceTrash2.default, { userId: this.props.userId })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'explain-SourceTools SourceTool' },
+	            _react2.default.createElement('i', {
+	              'data-place': 'top',
+	              'data-effect': 'solid',
+	              'data-tip': _constants.SourceToolsTip,
+	              'data-for': 'SourceToolsTip',
+	              className: 'fa fa-info SourceTools-icon explain-source'
+	            }),
+	            _react2.default.createElement(_reactTooltip2.default, { id: 'SourceToolsTip' })
+	          )
+	        );
+	      }
+	      return false;
 	    }
 	  }]);
 
@@ -46664,6 +46694,8 @@
 	var DeleteListTip = exports.DeleteListTip = 'Delete this list and its articles. Note: you can\'t delete your Heap.';
 	var CreateListTip = exports.CreateListTip = 'Create new list here.';
 	var CreateSourceTip = exports.CreateSourceTip = 'Add new source here.';
+	var HomeTip = exports.HomeTip = 'Go home';
+	var ChromeExtTip = exports.ChromeExtTip = 'Get the Chrome extension.';
 
 /***/ },
 /* 459 */
@@ -47858,7 +47890,11 @@
 	          'span',
 	          { className: 'heap-title' },
 	          'The Heap'
-	        ) : this.props.sourceList.name,
+	        ) : _react2.default.createElement(
+	          'span',
+	          { className: 'list-title' },
+	          this.props.sourceList.name
+	        ),
 	        _react2.default.createElement('hr', null),
 	        _react2.default.createElement(
 	          'div',
@@ -47988,7 +48024,7 @@
 
 
 	// module
-	exports.push([module.id, ".SubHeader {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n}\n\n.IndividualStats {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  width: 30%;\n  font-weight: 300;\n  color: rgba(0,0,0,0.6);\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  font-size: 16px;\n}\n\n.IndividualStats .name-separator {\n  width: 100%;\n  margin: 5px 0px;\n}\n\n.IndividualStats .person-header {\n  font-size: 24px;\n}\n\n.IndividualStats .stat-val {\n  color: #6441A5;\n  font-weight: 100;\n}\n\n.ListTitleAndTools {\n  width: 40%;\n  text-align: center;\n}\n\n.ListTitle {\n  margin-top: 15px;\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  font-size: 24px;\n  color: #6441A5;\n  font-weight: 300;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n\n.ListTitle .heap-title {\n  color: rgba(0,0,0,0.6);\n  font-weight: bold;\n}\n\n.ListTitle hr {\n  margin: 5px 30px;\n}\n\n.ListTitle-button-row {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n}\n\n.ListTitle-button-row wrapper {\n  max-width: 16%;\n}\n\n.ListTitleControl {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  color: #6441A5;\n  font-size: 14px;\n  margin: 0px 5px;\n  width: 25px;\n  height: 25px;\n  border: 1px solid #6441A5;\n  border-radius: 50%;\n  cursor: pointer;\n}\n\n.ListTitleControl.no-hover {\n  cursor: default;\n}\n\n.ListTitleControl.no-delete {\n  color: rgba(0, 0, 0, 0.2);\n  border: 1px solid rgba(0, 0, 0, 0.2);\n  cursor: default;\n}\n\n.CreateSourceList-wrapper {\n  width: 30%;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n}\n", ""]);
+	exports.push([module.id, ".SubHeader {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n}\n\n.IndividualStats {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  width: 30%;\n  font-weight: 300;\n  color: rgba(0,0,0,0.6);\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  font-size: 16px;\n}\n\n.IndividualStats .name-separator {\n  width: 100%;\n  margin: 5px 0px;\n}\n\n.IndividualStats .person-header {\n  font-size: 24px;\n}\n\n.IndividualStats .stat-val {\n  color: #6441A5;\n  font-weight: 100;\n}\n\n.ListTitleAndTools {\n  width: 40%;\n  text-align: center;\n}\n\n.ListTitle {\n  margin-top: 15px;\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  font-size: 24px;\n  color: #6441A5;\n  font-weight: 300;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n\n.ListTitle .heap-title {\n  color: rgba(0,0,0,0.6);\n  font-weight: bold;\n}\n\n.ListTitle .list-title {\n  white-space: nowrap; */\n  overflow: hidden; \n  text-overflow: ellipsis; \n}\n\n.ListTitle hr {\n  margin: 5px 30px;\n}\n\n.ListTitle-button-row {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n}\n\n.ListTitle-button-row wrapper {\n  max-width: 16%;\n}\n\n.ListTitleControl {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  color: #6441A5;\n  font-size: 14px;\n  margin: 0px 5px;\n  width: 25px;\n  height: 25px;\n  border: 1px solid #6441A5;\n  border-radius: 50%;\n  cursor: pointer;\n}\n\n.ListTitleControl.no-hover {\n  cursor: default;\n}\n\n.ListTitleControl.no-delete {\n  color: rgba(0, 0, 0, 0.2);\n  border: 1px solid rgba(0, 0, 0, 0.2);\n  cursor: default;\n}\n\n.CreateSourceList-wrapper {\n  width: 30%;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n}\n", ""]);
 
 	// exports
 
@@ -48055,26 +48091,29 @@
 	    value: function render() {
 	      var _this2 = this;
 
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'CreateSourceList' },
-	        _react2.default.createElement('input', {
-	          ref: function ref(node) {
-	            return _this2._input = node;
-	          },
-	          className: 'new-source-list-name',
-	          placeholder: 'Create new list...'
-	        }),
-	        _react2.default.createElement('i', {
-	          onClick: this.createSourceList,
-	          className: 'fa fa-plus create-new-source-list',
-	          'data-place': 'bottom',
-	          'data-effect': 'solid',
-	          'data-tip': _constants.CreateListTip,
-	          'data-for': 'CreateListTip'
-	        }),
-	        _react2.default.createElement(_reactTooltip2.default, { id: 'CreateListTip' })
-	      );
+	      if (window.cu_id === parseInt(this.props.userId)) {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'CreateSourceList' },
+	          _react2.default.createElement('input', {
+	            ref: function ref(node) {
+	              return _this2._input = node;
+	            },
+	            className: 'new-source-list-name',
+	            placeholder: 'Create new list...'
+	          }),
+	          _react2.default.createElement('i', {
+	            onClick: this.createSourceList,
+	            className: 'fa fa-plus create-new-source-list',
+	            'data-place': 'bottom',
+	            'data-effect': 'solid',
+	            'data-tip': _constants.CreateListTip,
+	            'data-for': 'CreateListTip'
+	          }),
+	          _react2.default.createElement(_reactTooltip2.default, { id: 'CreateListTip' })
+	        );
+	      }
+	      return null;
 	    }
 	  }]);
 
@@ -48333,7 +48372,7 @@
 	              className: 'searchUser',
 	              onClick: _this2.props.removeDropdown
 	            },
-	            searchUser.name
+	            window.cu_id === parseInt(searchUser.id) ? searchUser.name + ' (You)' : searchUser.name
 	          );
 	        });
 	      }

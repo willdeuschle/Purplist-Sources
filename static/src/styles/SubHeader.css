@@ -55,6 +55,12 @@
   font-weight: bold;
 }
 
+.ListTitle .list-title {
+  white-space: nowrap; */
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+}
+
 .ListTitle hr {
   margin: 5px 30px;
 }

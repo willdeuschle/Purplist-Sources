@@ -41,7 +41,10 @@ class SubHeader extends Component {
     console.log("what have boogalo", this.props)
     return (
       <div className='ListTitle'>
-        {this.props.sourceList.isHeap ? <span className='heap-title'>The Heap</span> : this.props.sourceList.name}
+        {this.props.sourceList.isHeap ?
+          <span className='heap-title'>The Heap</span> :
+          <span className='list-title'>{this.props.sourceList.name}</span>
+        }
         <hr/>
         <div className='ListTitle-button-row'>
           <i

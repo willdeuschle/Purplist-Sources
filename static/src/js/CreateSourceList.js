@@ -21,24 +21,27 @@ class CreateSourceList extends Component {
   }
 
   render() {
-    return (
-      <div className='CreateSourceList'>
-        <input
-          ref={node => this._input = node}
-          className='new-source-list-name'
-          placeholder='Create new list...'
-        />
-        <i
-          onClick={this.createSourceList}
-          className='fa fa-plus create-new-source-list'
-          data-place={'bottom'}
-          data-effect='solid'
-          data-tip={CreateListTip}
-          data-for='CreateListTip'
-        />
-        <ReactTooltip id='CreateListTip' />
-      </div>
-    )
+    if (window.cu_id === parseInt(this.props.userId)) {
+      return (
+        <div className='CreateSourceList'>
+          <input
+            ref={node => this._input = node}
+            className='new-source-list-name'
+            placeholder='Create new list...'
+          />
+          <i
+            onClick={this.createSourceList}
+            className='fa fa-plus create-new-source-list'
+            data-place={'bottom'}
+            data-effect='solid'
+            data-tip={CreateListTip}
+            data-for='CreateListTip'
+          />
+          <ReactTooltip id='CreateListTip' />
+        </div>
+      )
+    }
+    return null
   }
 }
 

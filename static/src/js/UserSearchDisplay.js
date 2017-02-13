@@ -14,7 +14,10 @@ export default class UserSearchDisplay extends Component {
             className='searchUser'
             onClick={this.props.removeDropdown}
           >
-            {searchUser.name}
+            {window.cu_id === parseInt(searchUser.id) ?
+                `${searchUser.name} (You)` :
+                searchUser.name
+            }
           </Link>
         )
       })

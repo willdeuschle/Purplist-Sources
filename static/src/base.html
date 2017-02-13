@@ -12,6 +12,9 @@
         </title>
         <link rel='stylesheet' href="{{ url_for('static', filename='base_styles.css') }}" />
         <script src="https://use.fontawesome.com/30917e9134.js"></script>
+        <script>
+          window.cu_id = {{current_user.id}}
+        </script>
     </head>
     <body>
         <div id='root'></div>
