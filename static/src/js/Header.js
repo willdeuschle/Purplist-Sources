@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 
 import '../styles/Header.css'
-import SearchBar from './SearchBar.js'
+import SearchBarWrapper from './SearchBarWrapper.js'
 
 
 export default class Header extends Component {
   render() {
     return (
       <div className='Header'>
-        <SearchBar />
+        <SearchBarWrapper />
       </div>
     )
   }

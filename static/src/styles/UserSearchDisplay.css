@@ -1,0 +1,26 @@
+.UserSearchDisplay {
+  position: absolute;
+  width: 400px;
+  background: #fafafa;
+  padding-left: 10px;
+  margin-top: 4px;
+  border-radius: 3px;
+}
+
+.searchUser {
+  display: block;
+  padding: 4px;
+  margin: 4px;
+  text-decoration: none;
+  border-bottom: 1px solid #dcd;
+  margin-right: 10px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.searchUser:hover {
+  color: #6441A5;
+}
+
+.searchUser:last-child {
+  border-bottom: 0px;
+}

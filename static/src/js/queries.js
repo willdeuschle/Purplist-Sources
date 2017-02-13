@@ -69,8 +69,9 @@ export const sourceListsQuery = gql`
 export const userSearchQuery = gql`
   query userSearchQuery($name: String!) {
     searchUsers(name: $name) {
-      username,
       id,
+      username,
+      name,
     }
   }
 `

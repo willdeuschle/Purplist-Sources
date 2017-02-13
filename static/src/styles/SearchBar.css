@@ -1,4 +1,5 @@
 .SearchBar {
+  position: relative;
   width: 400px;
 }
 
@@ -18,4 +19,15 @@
   margin-right: 10px;
   padding-left: 10px;
   outline: none;
+}
+
+.clearSearch {
+  position: absolute;
+  right: -6px;
+  top: 6px;
+  cursor: pointer;
+}
+
+.clearSearch.hide {
+  display: none;
 }

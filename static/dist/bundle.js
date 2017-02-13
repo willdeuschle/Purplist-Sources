@@ -41565,9 +41565,9 @@
 
 	__webpack_require__(428);
 
-	var _SearchBar = __webpack_require__(430);
+	var _SearchBarWrapper = __webpack_require__(482);
 
-	var _SearchBar2 = _interopRequireDefault(_SearchBar);
+	var _SearchBarWrapper2 = _interopRequireDefault(_SearchBarWrapper);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -41592,7 +41592,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'Header' },
-	        _react2.default.createElement(_SearchBar2.default, null)
+	        _react2.default.createElement(_SearchBarWrapper2.default, null)
 	      );
 	    }
 	  }]);
@@ -41658,7 +41658,19 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactApollo = __webpack_require__(208);
+
+	var _classnames = __webpack_require__(441);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
 	__webpack_require__(431);
+
+	var _queries = __webpack_require__(436);
+
+	var _UserSearchDisplay = __webpack_require__(483);
+
+	var _UserSearchDisplay2 = _interopRequireDefault(_UserSearchDisplay);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -41671,15 +41683,28 @@
 	var SearchBar = function (_Component) {
 	  _inherits(SearchBar, _Component);
 
-	  function SearchBar() {
+	  function SearchBar(props) {
 	    _classCallCheck(this, SearchBar);
 
-	    return _possibleConstructorReturn(this, (SearchBar.__proto__ || Object.getPrototypeOf(SearchBar)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (SearchBar.__proto__ || Object.getPrototypeOf(SearchBar)).call(this, props));
+
+	    _this.state = {
+	      currentlySearching: false
+	    };
+	    _this.removeDropdown = _this.removeDropdown.bind(_this);
+	    return _this;
 	  }
 
 	  _createClass(SearchBar, [{
+	    key: 'removeDropdown',
+	    value: function removeDropdown() {
+	      this.setState({ currentlySearching: false });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'SearchBar' },
@@ -41688,7 +41713,27 @@
 	        }),
 	        _react2.default.createElement('input', {
 	          className: 'SearchBar-input',
-	          placeholder: 'Search for other users...'
+	          placeholder: 'Search for other users...',
+	          value: this.props.value,
+	          onChange: this.props.inputValueChanged,
+	          onFocus: function onFocus() {
+	            return _this2.setState({ currentlySearching: true });
+	          }
+	        }),
+	        _react2.default.createElement('i', {
+	          className: (0, _classnames2.default)({
+	            'fa fa-times clearSearch': true,
+	            'hide': !this.state.currentlySearching
+	          }),
+	          onClick: function onClick() {
+	            _this2.removeDropdown();
+	            _this2.props.clearInput();
+	          }
+	        }),
+	        _react2.default.createElement(_UserSearchDisplay2.default, {
+	          currentlySearching: this.state.currentlySearching,
+	          searchUsers: this.props.searchUsers,
+	          removeDropdown: this.removeDropdown
 	        })
 	      );
 	    }
@@ -41697,7 +41742,39 @@
 	  return SearchBar;
 	}(_react.Component);
 
-	exports.default = SearchBar;
+	var options = function options(ownProps) {
+	  return {
+	    variables: {
+	      name: ownProps.value
+	    }
+	  };
+	};
+
+	var props = function props(_ref) {
+	  var ownProps = _ref.ownProps,
+	      _ref$data = _ref.data,
+	      searchUsers = _ref$data.searchUsers,
+	      loading = _ref$data.loading,
+	      refetch = _ref$data.refetch,
+	      error = _ref$data.error;
+
+	  return {
+	    searchUsers: searchUsers,
+	    loading: loading,
+	    refetch: refetch,
+	    error: error
+	  };
+	};
+
+	exports.default = (0, _reactApollo.graphql)(_queries.userSearchQuery, {
+	  options: options,
+	  props: props,
+	  skip: function skip(ownProps) {
+	    var toSkip = ownProps.value === '';
+	    console.log("toSkip", toSkip, ownProps);
+	    return toSkip;
+	  }
+	})(SearchBar);
 
 /***/ },
 /* 431 */
@@ -41734,7 +41811,7 @@
 
 
 	// module
-	exports.push([module.id, ".SearchBar {\n  width: 400px;\n}\n\n.SearchBar-icon {\n  position: absolute;\n  font-size: 18px;\n  margin-left: -25px;\n  margin-top: 5px;\n  color: #6441A5;\n}\n\n.SearchBar-input {\n  width: 100%;\n  border-radius: 3px;\n  height: 24px;\n  border: 1px solid #6441A5;\n  margin-right: 10px;\n  padding-left: 10px;\n  outline: none;\n}\n", ""]);
+	exports.push([module.id, ".SearchBar {\n  position: relative;\n  width: 400px;\n}\n\n.SearchBar-icon {\n  position: absolute;\n  font-size: 18px;\n  margin-left: -25px;\n  margin-top: 5px;\n  color: #6441A5;\n}\n\n.SearchBar-input {\n  width: 100%;\n  border-radius: 3px;\n  height: 24px;\n  border: 1px solid #6441A5;\n  margin-right: 10px;\n  padding-left: 10px;\n  outline: none;\n}\n\n.clearSearch {\n  position: absolute;\n  right: -6px;\n  top: 6px;\n  cursor: pointer;\n}\n\n.clearSearch.hide {\n  display: none;\n}\n", ""]);
 
 	// exports
 
@@ -41951,7 +42028,7 @@
 	    _templateObject3 = _taggedTemplateLiteral(['\n  query currentUserDataQuery($userId: ID!, $sourceListId: ID) {\n    user(userId: $userId) {\n      name,\n      numSources,\n      numSourceLists,\n    },\n    sourceList(userId: $userId, sourceListId: $sourceListId) {\n      id,\n      name,\n      isHeap,\n    },\n  }\n'], ['\n  query currentUserDataQuery($userId: ID!, $sourceListId: ID) {\n    user(userId: $userId) {\n      name,\n      numSources,\n      numSourceLists,\n    },\n    sourceList(userId: $userId, sourceListId: $sourceListId) {\n      id,\n      name,\n      isHeap,\n    },\n  }\n']),
 	    _templateObject4 = _taggedTemplateLiteral(['\n  query sourceListQuery($userId: ID!, $sourceListId: ID) {\n    sourceList(userId: $userId, sourceListId: $sourceListId) {\n      id,\n      sources {\n        ...SourceInfoFragment,\n      },\n    },\n  }\n  ', ',\n'], ['\n  query sourceListQuery($userId: ID!, $sourceListId: ID) {\n    sourceList(userId: $userId, sourceListId: $sourceListId) {\n      id,\n      sources {\n        ...SourceInfoFragment,\n      },\n    },\n  }\n  ', ',\n']),
 	    _templateObject5 = _taggedTemplateLiteral(['\n  query sourceListsQuery($userId: ID!) {\n    sourceLists(userId: $userId) {\n      id,\n      name,\n      isHeap,\n    },\n  }\n'], ['\n  query sourceListsQuery($userId: ID!) {\n    sourceLists(userId: $userId) {\n      id,\n      name,\n      isHeap,\n    },\n  }\n']),
-	    _templateObject6 = _taggedTemplateLiteral(['\n  query userSearchQuery($name: String!) {\n    searchUsers(name: $name) {\n      username,\n      id,\n    }\n  }\n'], ['\n  query userSearchQuery($name: String!) {\n    searchUsers(name: $name) {\n      username,\n      id,\n    }\n  }\n']);
+	    _templateObject6 = _taggedTemplateLiteral(['\n  query userSearchQuery($name: String!) {\n    searchUsers(name: $name) {\n      id,\n      username,\n      name,\n    }\n  }\n'], ['\n  query userSearchQuery($name: String!) {\n    searchUsers(name: $name) {\n      id,\n      username,\n      name,\n    }\n  }\n']);
 
 	var _graphqlTag = __webpack_require__(437);
 
@@ -46872,7 +46949,7 @@
 	          return _react2.default.createElement(
 	            'div',
 	            { className: 'no-sources' },
-	            'You don\'t have any sources yet. Add them to the input box to the left.'
+	            'You don\'t have any sources yet. Add them via the input box on the left or through our Chrome extension.'
 	          );
 	        }
 	        return this.props.sourceList.sources.map(function (sourceItem) {
@@ -48129,6 +48206,200 @@
 	exports.default = (0, _reactApollo.graphql)(_mutations.deleteSourceList, {
 	  props: props
 	})(DeleteSourceList);
+
+/***/ },
+/* 482 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _SearchBar = __webpack_require__(430);
+
+	var _SearchBar2 = _interopRequireDefault(_SearchBar);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SearchBarWrapper = function (_Component) {
+	  _inherits(SearchBarWrapper, _Component);
+
+	  function SearchBarWrapper(props) {
+	    _classCallCheck(this, SearchBarWrapper);
+
+	    var _this = _possibleConstructorReturn(this, (SearchBarWrapper.__proto__ || Object.getPrototypeOf(SearchBarWrapper)).call(this, props));
+
+	    _this.state = {
+	      inputValue: ''
+	    };
+	    _this.inputValueChanged = _this.inputValueChanged.bind(_this);
+	    _this.clearInput = _this.clearInput.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(SearchBarWrapper, [{
+	    key: 'inputValueChanged',
+	    value: function inputValueChanged(e) {
+	      this.setState({
+	        inputValue: e.target.value
+	      });
+	    }
+	  }, {
+	    key: 'clearInput',
+	    value: function clearInput() {
+	      this.setState({
+	        inputValue: ''
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(_SearchBar2.default, {
+	        value: this.state.inputValue,
+	        inputValueChanged: this.inputValueChanged,
+	        clearInput: this.clearInput
+	      });
+	    }
+	  }]);
+
+	  return SearchBarWrapper;
+	}(_react.Component);
+
+	exports.default = SearchBarWrapper;
+
+/***/ },
+/* 483 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(217);
+
+	__webpack_require__(484);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var UserSearchDisplay = function (_Component) {
+	  _inherits(UserSearchDisplay, _Component);
+
+	  function UserSearchDisplay() {
+	    _classCallCheck(this, UserSearchDisplay);
+
+	    return _possibleConstructorReturn(this, (UserSearchDisplay.__proto__ || Object.getPrototypeOf(UserSearchDisplay)).apply(this, arguments));
+	  }
+
+	  _createClass(UserSearchDisplay, [{
+	    key: 'renderSearchUsers',
+	    value: function renderSearchUsers() {
+	      var _this2 = this;
+
+	      if (this.props.currentlySearching) {
+	        return this.props.searchUsers.map(function (searchUser) {
+	          return _react2.default.createElement(
+	            _reactRouter.Link,
+	            {
+	              to: '/' + searchUser.username + '/',
+	              key: searchUser.id,
+	              className: 'searchUser',
+	              onClick: _this2.props.removeDropdown
+	            },
+	            searchUser.name
+	          );
+	        });
+	      }
+	      return null;
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      console.log("what props do I get her", this.props);
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'UserSearchDisplay' },
+	        this.renderSearchUsers()
+	      );
+	    }
+	  }]);
+
+	  return UserSearchDisplay;
+	}(_react.Component);
+
+	exports.default = UserSearchDisplay;
+
+
+	UserSearchDisplay.defaultProps = {
+	  searchUsers: []
+	};
+
+/***/ },
+/* 484 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(485);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(426)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./UserSearchDisplay.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./UserSearchDisplay.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 485 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(425)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".UserSearchDisplay {\n  position: absolute;\n  width: 400px;\n  background: #fafafa;\n  padding-left: 10px;\n  margin-top: 4px;\n  border-radius: 3px;\n}\n\n.searchUser {\n  display: block;\n  padding: 4px;\n  margin: 4px;\n  text-decoration: none;\n  border-bottom: 1px solid #dcd;\n  margin-right: 10px;\n  color: rgba(0, 0, 0, 0.6);\n}\n\n.searchUser:hover {\n  color: #6441A5;\n}\n\n.searchUser:last-child {\n  border-bottom: 0px;\n}\n", ""]);
+
+	// exports
+
 
 /***/ }
 /******/ ]);

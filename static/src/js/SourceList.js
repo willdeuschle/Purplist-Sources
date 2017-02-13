@@ -22,7 +22,7 @@ class SourceList extends React.Component {
       if (this.props.sourceList.sources.length === 0) {
         return (
           <div className='no-sources'>
-            You don't have any sources yet. Add them to the input box to the left.
+            You don't have any sources yet. Add them via the input box on the left or through our Chrome extension.
           </div>
         )
       }
