@@ -64,8 +64,21 @@ export const sourceListsQuery = gql`
   }
 `
 
+// search for other users - will want to paginate this at some point for
+// infinite scrolling
+export const userSearchQuery = gql`
+  query userSearchQuery($name: String!) {
+    searchUsers(name: $name) {
+      username,
+      id,
+    }
+  }
+`
+
+
 export const queryTypes = {
   userQuery: 'userQuery',
+  currentUserDataQuery: 'currentUserDataQuery',
   sourceListQuery: 'sourceListQuery',
   sourceListsQuery: 'sourceListsQuery',
 }

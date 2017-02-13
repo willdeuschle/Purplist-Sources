@@ -299,6 +299,13 @@ class Query(graphene.ObjectType):
         description='A user',
     )
 
+    search_users = graphene.List(
+        UserType,
+        # argument to filter the users on
+        name=graphene.String(),
+        description='Users',
+    )
+
     source_list = graphene.Field(
         SourceListType,
         user_id=graphene.ID(),
@@ -339,6 +346,12 @@ class Query(graphene.ObjectType):
         # else:
             # user_id = args.get('user_id')
             # return User.query.get(user_id)
+
+    def resolve_search_users(self, args, context, info):
+        name = args.get('name')
+        name_filter = '%{0}%'.format(name)
+        # need to filter based on the name provided
+        return User.query.filter(User.name.ilike(name_filter))
 
     # this is meant to resolve only a single source list at a time
     def resolve_source_list(self, args, context, info):

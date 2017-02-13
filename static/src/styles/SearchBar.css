@@ -1,0 +1,21 @@
+.SearchBar {
+  width: 400px;
+}
+
+.SearchBar-icon {
+  position: absolute;
+  font-size: 18px;
+  margin-left: -25px;
+  margin-top: 5px;
+  color: #6441A5;
+}
+
+.SearchBar-input {
+  width: 100%;
+  border-radius: 3px;
+  height: 24px;
+  border: 1px solid #6441A5;
+  margin-right: 10px;
+  padding-left: 10px;
+  outline: none;
+}

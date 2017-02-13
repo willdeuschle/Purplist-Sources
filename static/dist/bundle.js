@@ -73,7 +73,7 @@
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _PageContent = __webpack_require__(430);
+	var _PageContent = __webpack_require__(433);
 
 	var _PageContent2 = _interopRequireDefault(_PageContent);
 
@@ -41565,6 +41565,10 @@
 
 	__webpack_require__(428);
 
+	var _SearchBar = __webpack_require__(430);
+
+	var _SearchBar2 = _interopRequireDefault(_SearchBar);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41588,7 +41592,7 @@
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'Header' },
-	        'hello'
+	        _react2.default.createElement(_SearchBar2.default, null)
 	      );
 	    }
 	  }]);
@@ -41633,7 +41637,7 @@
 
 
 	// module
-	exports.push([module.id, ".Header {\n  height: 80px;\n  border-bottom: 1px solid rgba(0,0,0,0.15);\n}\n", ""]);
+	exports.push([module.id, ".Header {\n  height: 80px;\n  border-bottom: 1px solid rgba(0,0,0,0.15);\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n}\n", ""]);
 
 	// exports
 
@@ -41654,29 +41658,126 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactApollo = __webpack_require__(208);
-
 	__webpack_require__(431);
 
-	var _queries = __webpack_require__(433);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SearchBar = function (_Component) {
+	  _inherits(SearchBar, _Component);
+
+	  function SearchBar() {
+	    _classCallCheck(this, SearchBar);
+
+	    return _possibleConstructorReturn(this, (SearchBar.__proto__ || Object.getPrototypeOf(SearchBar)).apply(this, arguments));
+	  }
+
+	  _createClass(SearchBar, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'SearchBar' },
+	        _react2.default.createElement('i', {
+	          className: 'SearchBar-icon fa fa-search'
+	        }),
+	        _react2.default.createElement('input', {
+	          className: 'SearchBar-input',
+	          placeholder: 'Search for other users...'
+	        })
+	      );
+	    }
+	  }]);
+
+	  return SearchBar;
+	}(_react.Component);
+
+	exports.default = SearchBar;
+
+/***/ },
+/* 431 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(432);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(426)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./SearchBar.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./SearchBar.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 432 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(425)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".SearchBar {\n  width: 400px;\n}\n\n.SearchBar-icon {\n  position: absolute;\n  font-size: 18px;\n  margin-left: -25px;\n  margin-top: 5px;\n  color: #6441A5;\n}\n\n.SearchBar-input {\n  width: 100%;\n  border-radius: 3px;\n  height: 24px;\n  border: 1px solid #6441A5;\n  margin-right: 10px;\n  padding-left: 10px;\n  outline: none;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 433 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactApollo = __webpack_require__(208);
+
+	__webpack_require__(434);
+
+	var _queries = __webpack_require__(436);
 
 	var _Header = __webpack_require__(427);
 
 	var _Header2 = _interopRequireDefault(_Header);
 
-	var _SourceTools = __webpack_require__(436);
+	var _SourceTools = __webpack_require__(439);
 
 	var _SourceTools2 = _interopRequireDefault(_SourceTools);
 
-	var _SourceList = __webpack_require__(460);
+	var _SourceList = __webpack_require__(463);
 
 	var _SourceList2 = _interopRequireDefault(_SourceList);
 
-	var _SourceListColumn = __webpack_require__(466);
+	var _SourceListColumn = __webpack_require__(469);
 
 	var _SourceListColumn2 = _interopRequireDefault(_SourceListColumn);
 
-	var _SubHeader = __webpack_require__(472);
+	var _SubHeader = __webpack_require__(475);
 
 	var _SubHeader2 = _interopRequireDefault(_SubHeader);
 
@@ -41795,13 +41896,13 @@
 	})(PageContent);
 
 /***/ },
-/* 431 */
+/* 434 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(432);
+	var content = __webpack_require__(435);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(426)(content, {});
@@ -41821,7 +41922,7 @@
 	}
 
 /***/ },
-/* 432 */
+/* 435 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(425)();
@@ -41835,7 +41936,7 @@
 
 
 /***/ },
-/* 433 */
+/* 436 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41843,15 +41944,16 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.queryTypes = exports.sourceListsQuery = exports.sourceListQuery = exports.currentUserDataQuery = exports.userQuery = exports.SourceInfoFragment = undefined;
+	exports.queryTypes = exports.userSearchQuery = exports.sourceListsQuery = exports.sourceListQuery = exports.currentUserDataQuery = exports.userQuery = exports.SourceInfoFragment = undefined;
 
 	var _templateObject = _taggedTemplateLiteral(['\n    fragment SourceInfoFragment on SourceType {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n  },\n'], ['\n    fragment SourceInfoFragment on SourceType {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n  },\n']),
 	    _templateObject2 = _taggedTemplateLiteral(['\n  query userQuery($username: String!) {\n    user(username: $username) {\n      username,\n      id,\n    },\n  }\n'], ['\n  query userQuery($username: String!) {\n    user(username: $username) {\n      username,\n      id,\n    },\n  }\n']),
 	    _templateObject3 = _taggedTemplateLiteral(['\n  query currentUserDataQuery($userId: ID!, $sourceListId: ID) {\n    user(userId: $userId) {\n      name,\n      numSources,\n      numSourceLists,\n    },\n    sourceList(userId: $userId, sourceListId: $sourceListId) {\n      id,\n      name,\n      isHeap,\n    },\n  }\n'], ['\n  query currentUserDataQuery($userId: ID!, $sourceListId: ID) {\n    user(userId: $userId) {\n      name,\n      numSources,\n      numSourceLists,\n    },\n    sourceList(userId: $userId, sourceListId: $sourceListId) {\n      id,\n      name,\n      isHeap,\n    },\n  }\n']),
 	    _templateObject4 = _taggedTemplateLiteral(['\n  query sourceListQuery($userId: ID!, $sourceListId: ID) {\n    sourceList(userId: $userId, sourceListId: $sourceListId) {\n      id,\n      sources {\n        ...SourceInfoFragment,\n      },\n    },\n  }\n  ', ',\n'], ['\n  query sourceListQuery($userId: ID!, $sourceListId: ID) {\n    sourceList(userId: $userId, sourceListId: $sourceListId) {\n      id,\n      sources {\n        ...SourceInfoFragment,\n      },\n    },\n  }\n  ', ',\n']),
-	    _templateObject5 = _taggedTemplateLiteral(['\n  query sourceListsQuery($userId: ID!) {\n    sourceLists(userId: $userId) {\n      id,\n      name,\n      isHeap,\n    },\n  }\n'], ['\n  query sourceListsQuery($userId: ID!) {\n    sourceLists(userId: $userId) {\n      id,\n      name,\n      isHeap,\n    },\n  }\n']);
+	    _templateObject5 = _taggedTemplateLiteral(['\n  query sourceListsQuery($userId: ID!) {\n    sourceLists(userId: $userId) {\n      id,\n      name,\n      isHeap,\n    },\n  }\n'], ['\n  query sourceListsQuery($userId: ID!) {\n    sourceLists(userId: $userId) {\n      id,\n      name,\n      isHeap,\n    },\n  }\n']),
+	    _templateObject6 = _taggedTemplateLiteral(['\n  query userSearchQuery($name: String!) {\n    searchUsers(name: $name) {\n      username,\n      id,\n    }\n  }\n'], ['\n  query userSearchQuery($name: String!) {\n    searchUsers(name: $name) {\n      username,\n      id,\n    }\n  }\n']);
 
-	var _graphqlTag = __webpack_require__(434);
+	var _graphqlTag = __webpack_require__(437);
 
 	var _graphqlTag2 = _interopRequireDefault(_graphqlTag);
 
@@ -41875,17 +41977,22 @@
 	// grab all of a users source lists
 	var sourceListsQuery = exports.sourceListsQuery = (0, _graphqlTag2.default)(_templateObject5);
 
+	// search for other users - will want to paginate this at some point for
+	// infinite scrolling
+	var userSearchQuery = exports.userSearchQuery = (0, _graphqlTag2.default)(_templateObject6);
+
 	var queryTypes = exports.queryTypes = {
 	  userQuery: 'userQuery',
+	  currentUserDataQuery: 'currentUserDataQuery',
 	  sourceListQuery: 'sourceListQuery',
 	  sourceListsQuery: 'sourceListsQuery'
 	};
 
 /***/ },
-/* 434 */
+/* 437 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var parse = __webpack_require__(435).parse;
+	var parse = __webpack_require__(438).parse;
 
 	// Strip insignificant whitespace
 	// Note that this could do a lot more, such as reorder fields etc.
@@ -42048,7 +42155,7 @@
 
 
 /***/ },
-/* 435 */
+/* 438 */
 /***/ function(module, exports) {
 
 	module.exports =
@@ -44821,7 +44928,7 @@
 	/******/ ]);
 
 /***/ },
-/* 436 */
+/* 439 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44838,21 +44945,21 @@
 
 	var _reactApollo = __webpack_require__(208);
 
-	var _reactTooltip = __webpack_require__(437);
+	var _reactTooltip = __webpack_require__(440);
 
 	var _reactTooltip2 = _interopRequireDefault(_reactTooltip);
 
-	__webpack_require__(449);
+	__webpack_require__(452);
 
-	var _CreateSource = __webpack_require__(451);
+	var _CreateSource = __webpack_require__(454);
 
 	var _CreateSource2 = _interopRequireDefault(_CreateSource);
 
-	var _SourceTrash = __webpack_require__(455);
+	var _SourceTrash = __webpack_require__(459);
 
 	var _SourceTrash2 = _interopRequireDefault(_SourceTrash);
 
-	var _constants = __webpack_require__(459);
+	var _constants = __webpack_require__(458);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -44912,7 +45019,7 @@
 	exports.default = SourceTools;
 
 /***/ },
-/* 437 */
+/* 440 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -44940,41 +45047,41 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _classnames = __webpack_require__(438);
+	var _classnames = __webpack_require__(441);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _staticMethods = __webpack_require__(439);
+	var _staticMethods = __webpack_require__(442);
 
 	var _staticMethods2 = _interopRequireDefault(_staticMethods);
 
-	var _windowListener = __webpack_require__(441);
+	var _windowListener = __webpack_require__(444);
 
 	var _windowListener2 = _interopRequireDefault(_windowListener);
 
-	var _customEvent = __webpack_require__(442);
+	var _customEvent = __webpack_require__(445);
 
 	var _customEvent2 = _interopRequireDefault(_customEvent);
 
-	var _isCapture = __webpack_require__(443);
+	var _isCapture = __webpack_require__(446);
 
 	var _isCapture2 = _interopRequireDefault(_isCapture);
 
-	var _getEffect = __webpack_require__(444);
+	var _getEffect = __webpack_require__(447);
 
 	var _getEffect2 = _interopRequireDefault(_getEffect);
 
-	var _getPosition = __webpack_require__(445);
+	var _getPosition = __webpack_require__(448);
 
 	var _getPosition2 = _interopRequireDefault(_getPosition);
 
-	var _getTipContent = __webpack_require__(446);
+	var _getTipContent = __webpack_require__(449);
 
 	var _getTipContent2 = _interopRequireDefault(_getTipContent);
 
-	var _aria = __webpack_require__(447);
+	var _aria = __webpack_require__(450);
 
-	var _style = __webpack_require__(448);
+	var _style = __webpack_require__(451);
 
 	var _style2 = _interopRequireDefault(_style);
 
@@ -45501,7 +45608,7 @@
 	module.exports = ReactTooltip;
 
 /***/ },
-/* 438 */
+/* 441 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -45555,7 +45662,7 @@
 
 
 /***/ },
-/* 439 */
+/* 442 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45613,7 +45720,7 @@
 	  };
 	};
 
-	var _constant = __webpack_require__(440);
+	var _constant = __webpack_require__(443);
 
 	var _constant2 = _interopRequireDefault(_constant);
 
@@ -45638,7 +45745,7 @@
 	    */
 
 /***/ },
-/* 440 */
+/* 443 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -45656,7 +45763,7 @@
 	};
 
 /***/ },
-/* 441 */
+/* 444 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45702,14 +45809,14 @@
 	  };
 	};
 
-	var _constant = __webpack_require__(440);
+	var _constant = __webpack_require__(443);
 
 	var _constant2 = _interopRequireDefault(_constant);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 442 */
+/* 445 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -45802,7 +45909,7 @@
 	var customListener = void 0;
 
 /***/ },
-/* 443 */
+/* 446 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -45819,7 +45926,7 @@
 	};
 
 /***/ },
-/* 444 */
+/* 447 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -45836,7 +45943,7 @@
 	};
 
 /***/ },
-/* 445 */
+/* 448 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -46154,7 +46261,7 @@
 	};
 
 /***/ },
-/* 446 */
+/* 449 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46191,7 +46298,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 447 */
+/* 450 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -46220,7 +46327,7 @@
 	}
 
 /***/ },
-/* 448 */
+/* 451 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -46231,13 +46338,13 @@
 	exports.default = '.__react_component_tooltip{border-radius:3px;display:inline-block;font-size:13px;left:-999em;opacity:0;padding:8px 21px;position:fixed;pointer-events:none;transition:opacity 0.3s ease-out;top:-999em;visibility:hidden;z-index:999}.__react_component_tooltip:before,.__react_component_tooltip:after{content:"";width:0;height:0;position:absolute}.__react_component_tooltip.show{opacity:0.9;margin-top:0px;margin-left:0px;visibility:visible}.__react_component_tooltip.type-dark{color:#fff;background-color:#222}.__react_component_tooltip.type-dark.place-top:after{border-top-color:#222;border-top-style:solid;border-top-width:6px}.__react_component_tooltip.type-dark.place-bottom:after{border-bottom-color:#222;border-bottom-style:solid;border-bottom-width:6px}.__react_component_tooltip.type-dark.place-left:after{border-left-color:#222;border-left-style:solid;border-left-width:6px}.__react_component_tooltip.type-dark.place-right:after{border-right-color:#222;border-right-style:solid;border-right-width:6px}.__react_component_tooltip.type-dark.border{border:1px solid #fff}.__react_component_tooltip.type-dark.border.place-top:before{border-top:8px solid #fff}.__react_component_tooltip.type-dark.border.place-bottom:before{border-bottom:8px solid #fff}.__react_component_tooltip.type-dark.border.place-left:before{border-left:8px solid #fff}.__react_component_tooltip.type-dark.border.place-right:before{border-right:8px solid #fff}.__react_component_tooltip.type-success{color:#fff;background-color:#8DC572}.__react_component_tooltip.type-success.place-top:after{border-top-color:#8DC572;border-top-style:solid;border-top-width:6px}.__react_component_tooltip.type-success.place-bottom:after{border-bottom-color:#8DC572;border-bottom-style:solid;border-bottom-width:6px}.__react_component_tooltip.type-success.place-left:after{border-left-color:#8DC572;border-left-style:solid;border-left-width:6px}.__react_component_tooltip.type-success.place-right:after{border-right-color:#8DC572;border-right-style:solid;border-right-width:6px}.__react_component_tooltip.type-success.border{border:1px solid #fff}.__react_component_tooltip.type-success.border.place-top:before{border-top:8px solid #fff}.__react_component_tooltip.type-success.border.place-bottom:before{border-bottom:8px solid #fff}.__react_component_tooltip.type-success.border.place-left:before{border-left:8px solid #fff}.__react_component_tooltip.type-success.border.place-right:before{border-right:8px solid #fff}.__react_component_tooltip.type-warning{color:#fff;background-color:#F0AD4E}.__react_component_tooltip.type-warning.place-top:after{border-top-color:#F0AD4E;border-top-style:solid;border-top-width:6px}.__react_component_tooltip.type-warning.place-bottom:after{border-bottom-color:#F0AD4E;border-bottom-style:solid;border-bottom-width:6px}.__react_component_tooltip.type-warning.place-left:after{border-left-color:#F0AD4E;border-left-style:solid;border-left-width:6px}.__react_component_tooltip.type-warning.place-right:after{border-right-color:#F0AD4E;border-right-style:solid;border-right-width:6px}.__react_component_tooltip.type-warning.border{border:1px solid #fff}.__react_component_tooltip.type-warning.border.place-top:before{border-top:8px solid #fff}.__react_component_tooltip.type-warning.border.place-bottom:before{border-bottom:8px solid #fff}.__react_component_tooltip.type-warning.border.place-left:before{border-left:8px solid #fff}.__react_component_tooltip.type-warning.border.place-right:before{border-right:8px solid #fff}.__react_component_tooltip.type-error{color:#fff;background-color:#BE6464}.__react_component_tooltip.type-error.place-top:after{border-top-color:#BE6464;border-top-style:solid;border-top-width:6px}.__react_component_tooltip.type-error.place-bottom:after{border-bottom-color:#BE6464;border-bottom-style:solid;border-bottom-width:6px}.__react_component_tooltip.type-error.place-left:after{border-left-color:#BE6464;border-left-style:solid;border-left-width:6px}.__react_component_tooltip.type-error.place-right:after{border-right-color:#BE6464;border-right-style:solid;border-right-width:6px}.__react_component_tooltip.type-error.border{border:1px solid #fff}.__react_component_tooltip.type-error.border.place-top:before{border-top:8px solid #fff}.__react_component_tooltip.type-error.border.place-bottom:before{border-bottom:8px solid #fff}.__react_component_tooltip.type-error.border.place-left:before{border-left:8px solid #fff}.__react_component_tooltip.type-error.border.place-right:before{border-right:8px solid #fff}.__react_component_tooltip.type-info{color:#fff;background-color:#337AB7}.__react_component_tooltip.type-info.place-top:after{border-top-color:#337AB7;border-top-style:solid;border-top-width:6px}.__react_component_tooltip.type-info.place-bottom:after{border-bottom-color:#337AB7;border-bottom-style:solid;border-bottom-width:6px}.__react_component_tooltip.type-info.place-left:after{border-left-color:#337AB7;border-left-style:solid;border-left-width:6px}.__react_component_tooltip.type-info.place-right:after{border-right-color:#337AB7;border-right-style:solid;border-right-width:6px}.__react_component_tooltip.type-info.border{border:1px solid #fff}.__react_component_tooltip.type-info.border.place-top:before{border-top:8px solid #fff}.__react_component_tooltip.type-info.border.place-bottom:before{border-bottom:8px solid #fff}.__react_component_tooltip.type-info.border.place-left:before{border-left:8px solid #fff}.__react_component_tooltip.type-info.border.place-right:before{border-right:8px solid #fff}.__react_component_tooltip.type-light{color:#222;background-color:#fff}.__react_component_tooltip.type-light.place-top:after{border-top-color:#fff;border-top-style:solid;border-top-width:6px}.__react_component_tooltip.type-light.place-bottom:after{border-bottom-color:#fff;border-bottom-style:solid;border-bottom-width:6px}.__react_component_tooltip.type-light.place-left:after{border-left-color:#fff;border-left-style:solid;border-left-width:6px}.__react_component_tooltip.type-light.place-right:after{border-right-color:#fff;border-right-style:solid;border-right-width:6px}.__react_component_tooltip.type-light.border{border:1px solid #222}.__react_component_tooltip.type-light.border.place-top:before{border-top:8px solid #222}.__react_component_tooltip.type-light.border.place-bottom:before{border-bottom:8px solid #222}.__react_component_tooltip.type-light.border.place-left:before{border-left:8px solid #222}.__react_component_tooltip.type-light.border.place-right:before{border-right:8px solid #222}.__react_component_tooltip.place-top{margin-top:-10px}.__react_component_tooltip.place-top:before{border-left:10px solid transparent;border-right:10px solid transparent;bottom:-8px;left:50%;margin-left:-10px}.__react_component_tooltip.place-top:after{border-left:8px solid transparent;border-right:8px solid transparent;bottom:-6px;left:50%;margin-left:-8px}.__react_component_tooltip.place-bottom{margin-top:10px}.__react_component_tooltip.place-bottom:before{border-left:10px solid transparent;border-right:10px solid transparent;top:-8px;left:50%;margin-left:-10px}.__react_component_tooltip.place-bottom:after{border-left:8px solid transparent;border-right:8px solid transparent;top:-6px;left:50%;margin-left:-8px}.__react_component_tooltip.place-left{margin-left:-10px}.__react_component_tooltip.place-left:before{border-top:6px solid transparent;border-bottom:6px solid transparent;right:-8px;top:50%;margin-top:-5px}.__react_component_tooltip.place-left:after{border-top:5px solid transparent;border-bottom:5px solid transparent;right:-6px;top:50%;margin-top:-4px}.__react_component_tooltip.place-right{margin-left:10px}.__react_component_tooltip.place-right:before{border-top:6px solid transparent;border-bottom:6px solid transparent;left:-8px;top:50%;margin-top:-5px}.__react_component_tooltip.place-right:after{border-top:5px solid transparent;border-bottom:5px solid transparent;left:-6px;top:50%;margin-top:-4px}.__react_component_tooltip .multi-line{display:block;padding:2px 0px;text-align:center}';
 
 /***/ },
-/* 449 */
+/* 452 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(450);
+	var content = __webpack_require__(453);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(426)(content, {});
@@ -46257,7 +46364,7 @@
 	}
 
 /***/ },
-/* 450 */
+/* 453 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(425)();
@@ -46271,7 +46378,7 @@
 
 
 /***/ },
-/* 451 */
+/* 454 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46288,15 +46395,15 @@
 
 	var _reactApollo = __webpack_require__(208);
 
-	var _reactTooltip = __webpack_require__(437);
+	var _reactTooltip = __webpack_require__(440);
 
 	var _reactTooltip2 = _interopRequireDefault(_reactTooltip);
 
-	__webpack_require__(452);
+	__webpack_require__(455);
 
-	var _mutations = __webpack_require__(454);
+	var _mutations = __webpack_require__(457);
 
-	var _constants = __webpack_require__(459);
+	var _constants = __webpack_require__(458);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -46379,13 +46486,13 @@
 	exports.default = (0, _reactApollo.graphql)(_mutations.createSource, { props: props })(CreateSource);
 
 /***/ },
-/* 452 */
+/* 455 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(453);
+	var content = __webpack_require__(456);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(426)(content, {});
@@ -46405,7 +46512,7 @@
 	}
 
 /***/ },
-/* 453 */
+/* 456 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(425)();
@@ -46419,7 +46526,7 @@
 
 
 /***/ },
-/* 454 */
+/* 457 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46435,7 +46542,7 @@
 	    _templateObject4 = _taggedTemplateLiteral(['\n  mutation deleteSource($userId: ID!, $id: ID!) {\n    deleteSource(userId: $userId, id: $id) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n'], ['\n  mutation deleteSource($userId: ID!, $id: ID!) {\n    deleteSource(userId: $userId, id: $id) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n']),
 	    _templateObject5 = _taggedTemplateLiteral(['\n  mutation deleteSourceList($userId: ID!, $id: ID!) {\n    deleteSourceList(userId: $userId, id: $id) {\n      id,\n      userId,\n      name,\n      userUsername,\n    }\n  }\n'], ['\n  mutation deleteSourceList($userId: ID!, $id: ID!) {\n    deleteSourceList(userId: $userId, id: $id) {\n      id,\n      userId,\n      name,\n      userUsername,\n    }\n  }\n']);
 
-	var _graphqlTag = __webpack_require__(434);
+	var _graphqlTag = __webpack_require__(437);
 
 	var _graphqlTag2 = _interopRequireDefault(_graphqlTag);
 
@@ -46464,7 +46571,25 @@
 	};
 
 /***/ },
-/* 455 */
+/* 458 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var SourceToolsTip = exports.SourceToolsTip = 'Drag sources to the desired list or to the trash. Add new sources by using our Chrome extension or by submitting the url to the input box above.';
+	var ListTitleControlTip = exports.ListTitleControlTip = 'Download, email, or delete lists here. Additionally, create new lists by submitting their name to the input box on the right. Note: you cannot delete your heap.';
+	var SourceTrashTip = exports.SourceTrashTip = 'Drag articles here to delete.';
+	var DownloadTip = exports.DownloadTip = 'Download the articles on this source list.';
+	var EmailTip = exports.EmailTip = 'Email the articles on this source list.';
+	var DeleteListTip = exports.DeleteListTip = 'Delete this list and its articles. Note: you can\'t delete your Heap.';
+	var CreateListTip = exports.CreateListTip = 'Create new list here.';
+	var CreateSourceTip = exports.CreateSourceTip = 'Add new source here.';
+
+/***/ },
+/* 459 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46483,21 +46608,21 @@
 
 	var _reactDnd = __webpack_require__(271);
 
-	var _classnames = __webpack_require__(438);
+	var _classnames = __webpack_require__(441);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _reactTooltip = __webpack_require__(437);
+	var _reactTooltip = __webpack_require__(440);
 
 	var _reactTooltip2 = _interopRequireDefault(_reactTooltip);
 
-	__webpack_require__(456);
+	__webpack_require__(460);
 
-	var _mutations = __webpack_require__(454);
+	var _mutations = __webpack_require__(457);
 
-	var _DragNDrop = __webpack_require__(458);
+	var _DragNDrop = __webpack_require__(462);
 
-	var _constants = __webpack_require__(459);
+	var _constants = __webpack_require__(458);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -46563,13 +46688,13 @@
 	exports.default = (0, _reactApollo.graphql)(_mutations.deleteSource, { props: props })((0, _reactDnd.DropTarget)(_DragNDrop.ItemTypes.SOURCE, _DragNDrop.trashTarget, _DragNDrop.trashCollect)(SourceTrash));
 
 /***/ },
-/* 456 */
+/* 460 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(457);
+	var content = __webpack_require__(461);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(426)(content, {});
@@ -46589,7 +46714,7 @@
 	}
 
 /***/ },
-/* 457 */
+/* 461 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(425)();
@@ -46603,7 +46728,7 @@
 
 
 /***/ },
-/* 458 */
+/* 462 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -46684,25 +46809,7 @@
 	}
 
 /***/ },
-/* 459 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var SourceToolsTip = exports.SourceToolsTip = 'Drag sources to the desired list or to the trash. Add new sources by using our Chrome extension or by submitting the url to the input box above.';
-	var ListTitleControlTip = exports.ListTitleControlTip = 'Download, email, or delete lists here. Additionally, create new lists by submitting their name to the input box on the right. Note: you cannot delete your heap.';
-	var SourceTrashTip = exports.SourceTrashTip = 'Drag articles here to delete.';
-	var DownloadTip = exports.DownloadTip = 'Download the articles on this source list.';
-	var EmailTip = exports.EmailTip = 'Email the articles on this source list.';
-	var DeleteListTip = exports.DeleteListTip = 'Delete this list and its articles. Note: you can\'t delete your Heap.';
-	var CreateListTip = exports.CreateListTip = 'Create new list here.';
-	var CreateSourceTip = exports.CreateSourceTip = 'Add new source here.';
-
-/***/ },
-/* 460 */
+/* 463 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46719,19 +46826,19 @@
 
 	var _reactApollo = __webpack_require__(208);
 
-	var _immutabilityHelper = __webpack_require__(461);
+	var _immutabilityHelper = __webpack_require__(464);
 
 	var _immutabilityHelper2 = _interopRequireDefault(_immutabilityHelper);
 
-	__webpack_require__(462);
+	__webpack_require__(465);
 
-	var _queries = __webpack_require__(433);
+	var _queries = __webpack_require__(436);
 
-	var _mutations = __webpack_require__(454);
+	var _mutations = __webpack_require__(457);
 
-	var _reducers = __webpack_require__(464);
+	var _reducers = __webpack_require__(467);
 
-	var _SourceItem = __webpack_require__(465);
+	var _SourceItem = __webpack_require__(468);
 
 	var _SourceItem2 = _interopRequireDefault(_SourceItem);
 
@@ -46850,7 +46957,7 @@
 	})(SourceList);
 
 /***/ },
-/* 461 */
+/* 464 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var invariant = __webpack_require__(210);
@@ -47040,13 +47147,13 @@
 
 
 /***/ },
-/* 462 */
+/* 465 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(463);
+	var content = __webpack_require__(466);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(426)(content, {});
@@ -47066,7 +47173,7 @@
 	}
 
 /***/ },
-/* 463 */
+/* 466 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(425)();
@@ -47080,7 +47187,7 @@
 
 
 /***/ },
-/* 464 */
+/* 467 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47090,9 +47197,9 @@
 	});
 	exports.sourceListReducer = exports.sourceListColumnReducer = exports.subHeaderReducer = undefined;
 
-	var _mutations = __webpack_require__(454);
+	var _mutations = __webpack_require__(457);
 
-	var _immutabilityHelper = __webpack_require__(461);
+	var _immutabilityHelper = __webpack_require__(464);
 
 	var _immutabilityHelper2 = _interopRequireDefault(_immutabilityHelper);
 
@@ -47218,7 +47325,7 @@
 	};
 
 /***/ },
-/* 465 */
+/* 468 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47235,7 +47342,7 @@
 
 	var _reactDnd = __webpack_require__(271);
 
-	var _DragNDrop = __webpack_require__(458);
+	var _DragNDrop = __webpack_require__(462);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47288,7 +47395,7 @@
 	exports.default = (0, _reactDnd.DragSource)(_DragNDrop.ItemTypes.SOURCE, _DragNDrop.sourceSource, _DragNDrop.sourceCollect)(SourceItem);
 
 /***/ },
-/* 466 */
+/* 469 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47305,15 +47412,15 @@
 
 	var _reactApollo = __webpack_require__(208);
 
-	var _SourceListBlock = __webpack_require__(467);
+	var _SourceListBlock = __webpack_require__(470);
 
 	var _SourceListBlock2 = _interopRequireDefault(_SourceListBlock);
 
-	var _queries = __webpack_require__(433);
+	var _queries = __webpack_require__(436);
 
-	var _reducers = __webpack_require__(464);
+	var _reducers = __webpack_require__(467);
 
-	__webpack_require__(470);
+	__webpack_require__(473);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47400,7 +47507,7 @@
 	})(SourceListColumn);
 
 /***/ },
-/* 467 */
+/* 470 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47419,17 +47526,17 @@
 
 	var _reactDnd = __webpack_require__(271);
 
-	var _classnames = __webpack_require__(438);
+	var _classnames = __webpack_require__(441);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
 	var _reactRouter = __webpack_require__(217);
 
-	__webpack_require__(468);
+	__webpack_require__(471);
 
-	var _mutations = __webpack_require__(454);
+	var _mutations = __webpack_require__(457);
 
-	var _DragNDrop = __webpack_require__(458);
+	var _DragNDrop = __webpack_require__(462);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47495,13 +47602,13 @@
 	exports.default = (0, _reactApollo.graphql)(_mutations.updateSource, { props: props })((0, _reactDnd.DropTarget)(_DragNDrop.ItemTypes.SOURCE, _DragNDrop.listTarget, _DragNDrop.listCollect)(SourceListBlock));
 
 /***/ },
-/* 468 */
+/* 471 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(469);
+	var content = __webpack_require__(472);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(426)(content, {});
@@ -47521,7 +47628,7 @@
 	}
 
 /***/ },
-/* 469 */
+/* 472 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(425)();
@@ -47529,19 +47636,19 @@
 
 
 	// module
-	exports.push([module.id, ".SourceListBlock {\n  position: relative;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  width: 200px;\n  height: 50px;\n  background: #6441A5;\n  border-radius: 3px;\n  margin-bottom: 40px;\n  margin-left: auto;\n  margin-right: auto;\n}\n\n.SourceListBlock.isHeap {\n  background: rgba(0,0,0,0.6);\n}\n\n.SourceListBlock a {\n  position: relative;\n  color: white;\n  font-weight: 200;\n  width: inherit;\n  height: inherit;\n}\n\n.SourceListBlock .list-name {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  text-align: center;\n}\n\n.SourceListBlock.highlight {\n  background: thistle;\n}\n", ""]);
+	exports.push([module.id, ".SourceListBlock {\n  position: relative;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  width: 200px;\n  height: 50px;\n  background: #6441A5;\n  border-radius: 3px;\n  margin-bottom: 40px;\n  margin-left: auto;\n  margin-right: auto;\n}\n\n.SourceListBlock.isHeap {\n  background: rgba(0,0,0,0.6);\n}\n\n.SourceListBlock a {\n  position: relative;\n  color: white;\n  font-weight: 200;\n  width: inherit;\n  height: inherit;\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n}\n\n.SourceListBlock .list-name {\n  position: absolute;\n  text-align: center;\n  width: calc(100% - 24px);\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n\n.SourceListBlock.highlight {\n  background: thistle;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 470 */
+/* 473 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(471);
+	var content = __webpack_require__(474);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(426)(content, {});
@@ -47561,7 +47668,7 @@
 	}
 
 /***/ },
-/* 471 */
+/* 474 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(425)();
@@ -47575,7 +47682,7 @@
 
 
 /***/ },
-/* 472 */
+/* 475 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47592,25 +47699,25 @@
 
 	var _reactApollo = __webpack_require__(208);
 
-	var _reactTooltip = __webpack_require__(437);
+	var _reactTooltip = __webpack_require__(440);
 
 	var _reactTooltip2 = _interopRequireDefault(_reactTooltip);
 
-	__webpack_require__(473);
+	__webpack_require__(476);
 
-	var _CreateSourceList = __webpack_require__(475);
+	var _CreateSourceList = __webpack_require__(478);
 
 	var _CreateSourceList2 = _interopRequireDefault(_CreateSourceList);
 
-	var _queries = __webpack_require__(433);
+	var _queries = __webpack_require__(436);
 
-	var _reducers = __webpack_require__(464);
+	var _reducers = __webpack_require__(467);
 
-	var _DeleteSourceList = __webpack_require__(478);
+	var _DeleteSourceList = __webpack_require__(481);
 
 	var _DeleteSourceList2 = _interopRequireDefault(_DeleteSourceList);
 
-	var _constants = __webpack_require__(459);
+	var _constants = __webpack_require__(458);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47770,13 +47877,13 @@
 	})(SubHeader);
 
 /***/ },
-/* 473 */
+/* 476 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(474);
+	var content = __webpack_require__(477);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(426)(content, {});
@@ -47796,7 +47903,7 @@
 	}
 
 /***/ },
-/* 474 */
+/* 477 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(425)();
@@ -47804,13 +47911,13 @@
 
 
 	// module
-	exports.push([module.id, ".SubHeader {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n}\n\n.IndividualStats {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  width: 30%;\n  font-weight: 300;\n  color: rgba(0,0,0,0.6);\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  font-size: 16px;\n}\n\n.IndividualStats .name-separator {\n  width: 100%;\n  margin: 5px 0px;\n}\n\n.IndividualStats .person-header {\n  font-size: 24px;\n}\n\n.IndividualStats .stat-val {\n  color: #6441A5;\n  font-weight: 100;\n}\n\n.ListTitleAndTools {\n  width: 40%;\n  text-align: center;\n}\n\n.ListTitle {\n  margin-top: 15px;\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  font-size: 24px;\n  color: #6441A5;\n  font-weight: 300;\n}\n\n.ListTitle .heap-title {\n  color: rgba(0,0,0,0.6);\n  font-weight: bold;\n}\n\n.ListTitle hr {\n  margin: 5px 30px;\n}\n\n.ListTitle-button-row {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n}\n\n.ListTitle-button-row wrapper {\n  max-width: 16%;\n}\n\n.ListTitleControl {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  color: #6441A5;\n  font-size: 14px;\n  margin: 0px 5px;\n  width: 25px;\n  height: 25px;\n  border: 1px solid #6441A5;\n  border-radius: 50%;\n  cursor: pointer;\n}\n\n.ListTitleControl.no-hover {\n  cursor: default;\n}\n\n.ListTitleControl.no-delete {\n  color: rgba(0, 0, 0, 0.2);\n  border: 1px solid rgba(0, 0, 0, 0.2);\n  cursor: default;\n}\n\n.CreateSourceList-wrapper {\n  width: 30%;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n}\n", ""]);
+	exports.push([module.id, ".SubHeader {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n}\n\n.IndividualStats {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  width: 30%;\n  font-weight: 300;\n  color: rgba(0,0,0,0.6);\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  font-size: 16px;\n}\n\n.IndividualStats .name-separator {\n  width: 100%;\n  margin: 5px 0px;\n}\n\n.IndividualStats .person-header {\n  font-size: 24px;\n}\n\n.IndividualStats .stat-val {\n  color: #6441A5;\n  font-weight: 100;\n}\n\n.ListTitleAndTools {\n  width: 40%;\n  text-align: center;\n}\n\n.ListTitle {\n  margin-top: 15px;\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  font-size: 24px;\n  color: #6441A5;\n  font-weight: 300;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n\n.ListTitle .heap-title {\n  color: rgba(0,0,0,0.6);\n  font-weight: bold;\n}\n\n.ListTitle hr {\n  margin: 5px 30px;\n}\n\n.ListTitle-button-row {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n}\n\n.ListTitle-button-row wrapper {\n  max-width: 16%;\n}\n\n.ListTitleControl {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  color: #6441A5;\n  font-size: 14px;\n  margin: 0px 5px;\n  width: 25px;\n  height: 25px;\n  border: 1px solid #6441A5;\n  border-radius: 50%;\n  cursor: pointer;\n}\n\n.ListTitleControl.no-hover {\n  cursor: default;\n}\n\n.ListTitleControl.no-delete {\n  color: rgba(0, 0, 0, 0.2);\n  border: 1px solid rgba(0, 0, 0, 0.2);\n  cursor: default;\n}\n\n.CreateSourceList-wrapper {\n  width: 30%;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 475 */
+/* 478 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47827,15 +47934,15 @@
 
 	var _reactApollo = __webpack_require__(208);
 
-	var _reactTooltip = __webpack_require__(437);
+	var _reactTooltip = __webpack_require__(440);
 
 	var _reactTooltip2 = _interopRequireDefault(_reactTooltip);
 
-	var _mutations = __webpack_require__(454);
+	var _mutations = __webpack_require__(457);
 
-	__webpack_require__(476);
+	__webpack_require__(479);
 
-	var _constants = __webpack_require__(459);
+	var _constants = __webpack_require__(458);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47913,13 +48020,13 @@
 	exports.default = (0, _reactApollo.graphql)(_mutations.createSourceList, { props: props })(CreateSourceList);
 
 /***/ },
-/* 476 */
+/* 479 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(477);
+	var content = __webpack_require__(480);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(426)(content, {});
@@ -47939,7 +48046,7 @@
 	}
 
 /***/ },
-/* 477 */
+/* 480 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(425)();
@@ -47953,7 +48060,7 @@
 
 
 /***/ },
-/* 478 */
+/* 481 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47968,17 +48075,17 @@
 
 	var _reactApollo = __webpack_require__(208);
 
-	var _classnames = __webpack_require__(438);
+	var _classnames = __webpack_require__(441);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _reactTooltip = __webpack_require__(437);
+	var _reactTooltip = __webpack_require__(440);
 
 	var _reactTooltip2 = _interopRequireDefault(_reactTooltip);
 
-	var _mutations = __webpack_require__(454);
+	var _mutations = __webpack_require__(457);
 
-	var _constants = __webpack_require__(459);
+	var _constants = __webpack_require__(458);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
