@@ -2,7 +2,7 @@
 {% block content %}
     <div class='page-wrapper'>
         <div class='login-wrapper'>
-            <h1 class='welcome-source'>Welcome to Purplist</h1>
+            <h1 class='welcome-source'>Welcome to Purplist Sources</h1>
             {% if current_user.is_authenticated %}
                 <h2 class='greeting-user'>Hi, {{ current_user.name }}</h2>
                 <a class='login-button' href="/{{ current_user.username }}">

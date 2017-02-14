@@ -33552,6 +33552,11 @@
 	          'a',
 	          { className: 'logout-button', href: '/logout' },
 	          'Logout'
+	        ),
+	        _react2.default.createElement(
+	          'a',
+	          { className: 'contact-button', href: 'mailto:?to=purplistsources@gmail.com&subject=Purplist Team' },
+	          'Contact Us'
 	        )
 	      );
 	    }
@@ -41234,7 +41239,7 @@
 
 
 	// module
-	exports.push([module.id, ".reactive-base {\n  width: 100%;\n  /*background: #fafafa;*/\n}\n\n.reactive-base .logout-button {\n  position: fixed;\n  bottom: 0;\n  left: 0;\n  padding: 5px;\n  font-size: 12px;\n  margin: 10px;\n  font-weight: 200;\n  border-radius: 4px;\n  text-decoration: none;\n  cursor: pointer;\n  background: #6441A5;\n  color: white;\n}\n\n.logout-button:hover {\n  background: #8B008B;\n}\n", ""]);
+	exports.push([module.id, ".reactive-base {\n  width: 100%;\n  /*background: #fafafa;*/\n}\n\n.reactive-base .logout-button, .contact-button {\n  position: fixed;\n  bottom: 0px;\n  padding: 5px;\n  font-size: 12px;\n  margin: 10px;\n  font-weight: 200;\n  border-radius: 4px;\n  text-decoration: none;\n  cursor: pointer;\n  background: #6441A5;\n  color: white;\n}\n\n.reactive-base .logout-button {\n  left: 0px;\n}\n\n.reactive-base .contact-button {\n  left: 50px;\n}\n\n.logout-button:hover, .contact-button:hover {\n  background: #8B008B;\n}\n", ""]);
 
 	// exports
 
@@ -46268,31 +46273,32 @@
 	    value: function renderSearchUsers() {
 	      var _this2 = this;
 
-	      if (this.props.currentlySearching) {
-	        return this.props.searchUsers.map(function (searchUser) {
-	          return _react2.default.createElement(
-	            _reactRouter.Link,
-	            {
-	              to: '/' + searchUser.username + '/',
-	              key: searchUser.id,
-	              className: 'searchUser',
-	              onClick: _this2.props.removeDropdown
-	            },
-	            window.cu_id === parseInt(searchUser.id) ? searchUser.name + ' (You)' : searchUser.name
-	          );
-	        });
-	      }
-	      return null;
+	      return this.props.searchUsers.map(function (searchUser) {
+	        return _react2.default.createElement(
+	          _reactRouter.Link,
+	          {
+	            to: '/' + searchUser.username + '/',
+	            key: searchUser.id,
+	            className: 'searchUser',
+	            onClick: _this2.props.removeDropdown
+	          },
+	          window.cu_id === parseInt(searchUser.id) ? searchUser.name + ' (You)' : searchUser.name
+	        );
+	      });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
 	      console.log("what props do I get her", this.props);
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'UserSearchDisplay' },
-	        this.renderSearchUsers()
-	      );
+	      // if we are currently searching and have matches
+	      if (this.props.currentlySearching && this.props.searchUsers.length) {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'UserSearchDisplay' },
+	          this.renderSearchUsers()
+	        );
+	      }
+	      return null;
 	    }
 	  }]);
 
@@ -46341,7 +46347,7 @@
 
 
 	// module
-	exports.push([module.id, ".UserSearchDisplay {\n  position: absolute;\n  width: 400px;\n  background: #fafafa;\n  padding-left: 10px;\n  margin-top: 4px;\n  border-radius: 3px;\n}\n\n.searchUser {\n  display: block;\n  padding: 4px;\n  margin: 4px;\n  text-decoration: none;\n  border-bottom: 1px solid #dcd;\n  margin-right: 10px;\n  color: rgba(0, 0, 0, 0.6);\n}\n\n.searchUser:hover {\n  color: #6441A5;\n}\n\n.searchUser:last-child {\n  border-bottom: 0px;\n}\n", ""]);
+	exports.push([module.id, ".UserSearchDisplay {\n  position: absolute;\n  width: 400px;\n  background: #fafafa;\n  padding-left: 10px;\n  margin-top: 4px;\n  border-radius: 3px;\n  max-height: 300px;\n  overflow: auto;\n  z-index: 10;\n  border: 1px solid #6441A5;\n}\n\n.searchUser {\n  display: block;\n  padding: 4px;\n  margin: 4px;\n  text-decoration: none;\n  border-bottom: 1px solid #dcd;\n  margin-right: 10px;\n  color: rgba(0, 0, 0, 0.6);\n}\n\n.searchUser:hover {\n  color: #6441A5;\n}\n\n.searchUser:last-child {\n  border-bottom: 0px;\n}\n", ""]);
 
 	// exports
 

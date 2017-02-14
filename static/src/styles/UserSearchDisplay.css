@@ -5,6 +5,10 @@
   padding-left: 10px;
   margin-top: 4px;
   border-radius: 3px;
+  max-height: 300px;
+  overflow: auto;
+  z-index: 10;
+  border: 1px solid #6441A5;
 }
 
 .searchUser {

@@ -16,6 +16,7 @@ class App extends Component {
         <Header />
         {this.props.children}
         <a className='logout-button' href='/logout'>Logout</a>
+        <a className='contact-button' href='mailto:?to=purplistsources@gmail.com&subject=Purplist Team'>Contact Us</a>
       </div>
     )
   }
