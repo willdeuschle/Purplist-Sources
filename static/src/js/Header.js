@@ -17,7 +17,7 @@ export default class Header extends Component {
         <a
           href={'/'}
           className='fa fa-home return-home'
-          data-place={'right'}
+          data-place={'bottom'}
           data-effect='solid'
           data-tip={HomeTip}
           data-for='HomeTip'
@@ -28,7 +28,7 @@ export default class Header extends Component {
           href={'https://www.google.com/'}
           target='_blank'
           className='fa fa-google to-chrome-ext'
-          data-place={'left'}
+          data-place={'bottom'}
           data-effect='solid'
           data-tip={ChromeExtTip}
           data-for='ChromeExtTip'

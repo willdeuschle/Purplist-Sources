@@ -73,7 +73,7 @@
 
 	var _App2 = _interopRequireDefault(_App);
 
-	var _PageContent = __webpack_require__(433);
+	var _PageContent = __webpack_require__(453);
 
 	var _PageContent2 = _interopRequireDefault(_PageContent);
 
@@ -41563,17 +41563,17 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactTooltip = __webpack_require__(440);
+	var _reactTooltip = __webpack_require__(428);
 
 	var _reactTooltip2 = _interopRequireDefault(_reactTooltip);
 
-	__webpack_require__(428);
+	__webpack_require__(440);
 
-	var _SearchBarWrapper = __webpack_require__(482);
+	var _SearchBarWrapper = __webpack_require__(442);
 
 	var _SearchBarWrapper2 = _interopRequireDefault(_SearchBarWrapper);
 
-	var _constants = __webpack_require__(458);
+	var _constants = __webpack_require__(452);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -41601,7 +41601,7 @@
 	        _react2.default.createElement('a', {
 	          href: '/',
 	          className: 'fa fa-home return-home',
-	          'data-place': 'right',
+	          'data-place': 'bottom',
 	          'data-effect': 'solid',
 	          'data-tip': _constants.HomeTip,
 	          'data-for': 'HomeTip'
@@ -41612,7 +41612,7 @@
 	          href: 'https://www.google.com/',
 	          target: '_blank',
 	          className: 'fa fa-google to-chrome-ext',
-	          'data-place': 'left',
+	          'data-place': 'bottom',
 	          'data-effect': 'solid',
 	          'data-tip': _constants.ChromeExtTip,
 	          'data-for': 'ChromeExtTip'
@@ -41631,10 +41631,1329 @@
 /* 428 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _class, _class2, _temp;
+
+	/* Decoraters */
+
+
+	/* Utils */
+
+
+	/* CSS */
+
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(33);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _classnames = __webpack_require__(429);
+
+	var _classnames2 = _interopRequireDefault(_classnames);
+
+	var _staticMethods = __webpack_require__(430);
+
+	var _staticMethods2 = _interopRequireDefault(_staticMethods);
+
+	var _windowListener = __webpack_require__(432);
+
+	var _windowListener2 = _interopRequireDefault(_windowListener);
+
+	var _customEvent = __webpack_require__(433);
+
+	var _customEvent2 = _interopRequireDefault(_customEvent);
+
+	var _isCapture = __webpack_require__(434);
+
+	var _isCapture2 = _interopRequireDefault(_isCapture);
+
+	var _getEffect = __webpack_require__(435);
+
+	var _getEffect2 = _interopRequireDefault(_getEffect);
+
+	var _getPosition = __webpack_require__(436);
+
+	var _getPosition2 = _interopRequireDefault(_getPosition);
+
+	var _getTipContent = __webpack_require__(437);
+
+	var _getTipContent2 = _interopRequireDefault(_getTipContent);
+
+	var _aria = __webpack_require__(438);
+
+	var _style = __webpack_require__(439);
+
+	var _style2 = _interopRequireDefault(_style);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ReactTooltip = (0, _staticMethods2.default)(_class = (0, _windowListener2.default)(_class = (0, _customEvent2.default)(_class = (0, _isCapture2.default)(_class = (0, _getEffect2.default)(_class = (_temp = _class2 = function (_Component) {
+	  _inherits(ReactTooltip, _Component);
+
+	  function ReactTooltip(props) {
+	    _classCallCheck(this, ReactTooltip);
+
+	    var _this = _possibleConstructorReturn(this, (ReactTooltip.__proto__ || Object.getPrototypeOf(ReactTooltip)).call(this, props));
+
+	    _this.state = {
+	      place: 'top', // Direction of tooltip
+	      type: 'dark', // Color theme of tooltip
+	      effect: 'float', // float or fixed
+	      show: false,
+	      border: false,
+	      placeholder: '',
+	      offset: {},
+	      extraClass: '',
+	      html: false,
+	      delayHide: 0,
+	      delayShow: 0,
+	      event: props.event || null,
+	      eventOff: props.eventOff || null,
+	      currentEvent: null, // Current mouse event
+	      currentTarget: null, // Current target of mouse event
+	      ariaProps: (0, _aria.parseAria)(props), // aria- and role attributes
+	      isEmptyTip: false,
+	      disable: false
+	    };
+
+	    _this.bind(['showTooltip', 'updateTooltip', 'hideTooltip', 'globalRebuild', 'globalShow', 'globalHide', 'onWindowResize']);
+
+	    _this.mount = true;
+	    _this.delayShowLoop = null;
+	    _this.delayHideLoop = null;
+	    _this.intervalUpdateContent = null;
+	    return _this;
+	  }
+
+	  /**
+	   * For unify the bind and unbind listener
+	   */
+
+
+	  _createClass(ReactTooltip, [{
+	    key: 'bind',
+	    value: function bind(methodArray) {
+	      var _this2 = this;
+
+	      methodArray.forEach(function (method) {
+	        _this2[method] = _this2[method].bind(_this2);
+	      });
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var _props = this.props;
+	      var insecure = _props.insecure;
+	      var resizeHide = _props.resizeHide;
+
+	      if (insecure) {
+	        this.setStyleHeader(); // Set the style to the <link>
+	      }
+	      this.bindListener(); // Bind listener for tooltip
+	      this.bindWindowEvents(resizeHide); // Bind global event for static method
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(props) {
+	      var ariaProps = this.state.ariaProps;
+
+	      var newAriaProps = (0, _aria.parseAria)(props);
+
+	      var isChanged = Object.keys(newAriaProps).some(function (props) {
+	        return newAriaProps[props] !== ariaProps[props];
+	      });
+	      if (isChanged) {
+	        this.setState({ ariaProps: newAriaProps });
+	      }
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      this.mount = false;
+
+	      this.clearTimer();
+
+	      this.unbindListener();
+	      this.removeScrollListener();
+	      this.unbindWindowEvents();
+	    }
+
+	    /**
+	     * Pick out corresponded target elements
+	     */
+
+	  }, {
+	    key: 'getTargetArray',
+	    value: function getTargetArray(id) {
+	      var targetArray = void 0;
+
+	      if (!id) {
+	        targetArray = document.querySelectorAll('[data-tip]:not([data-for])');
+	      } else {
+	        targetArray = document.querySelectorAll('[data-tip][data-for="' + id + '"]');
+	      }
+
+	      // targetArray is a NodeList, convert it to a real array
+	      // I hope I can use Object.values...
+	      return Object.getOwnPropertyNames(targetArray).map(function (key) {
+	        return targetArray[key];
+	      });
+	    }
+
+	    /**
+	     * Bind listener to the target elements
+	     * These listeners used to trigger showing or hiding the tooltip
+	     */
+
+	  }, {
+	    key: 'bindListener',
+	    value: function bindListener() {
+	      var _this3 = this;
+
+	      var _props2 = this.props;
+	      var id = _props2.id;
+	      var globalEventOff = _props2.globalEventOff;
+
+	      var targetArray = this.getTargetArray(id);
+
+	      targetArray.forEach(function (target) {
+	        var isCaptureMode = _this3.isCapture(target);
+	        var effect = _this3.getEffect(target);
+	        if (target.getAttribute('currentItem') === null) {
+	          target.setAttribute('currentItem', 'false');
+	        }
+	        _this3.unbindBasicListener(target);
+
+	        if (_this3.isCustomEvent(target)) {
+	          _this3.customBindListener(target);
+	          return;
+	        }
+
+	        target.addEventListener('mouseenter', _this3.showTooltip, isCaptureMode);
+	        if (effect === 'float') {
+	          target.addEventListener('mousemove', _this3.updateTooltip, isCaptureMode);
+	        }
+	        target.addEventListener('mouseleave', _this3.hideTooltip, isCaptureMode);
+	      });
+
+	      // Global event to hide tooltip
+	      if (globalEventOff) {
+	        window.removeEventListener(globalEventOff, this.hideTooltip);
+	        window.addEventListener(globalEventOff, this.hideTooltip, false);
+	      }
+	    }
+
+	    /**
+	     * Unbind listeners on target elements
+	     */
+
+	  }, {
+	    key: 'unbindListener',
+	    value: function unbindListener() {
+	      var _this4 = this;
+
+	      var _props3 = this.props;
+	      var id = _props3.id;
+	      var globalEventOff = _props3.globalEventOff;
+
+	      var targetArray = this.getTargetArray(id);
+	      targetArray.forEach(function (target) {
+	        _this4.unbindBasicListener(target);
+	        if (_this4.isCustomEvent(target)) _this4.customUnbindListener(target);
+	      });
+
+	      if (globalEventOff) window.removeEventListener(globalEventOff, this.hideTooltip);
+	    }
+
+	    /**
+	     * Invoke this before bind listener and ummount the compont
+	     * it is necessary to invloke this even when binding custom event
+	     * so that the tooltip can switch between custom and default listener
+	     */
+
+	  }, {
+	    key: 'unbindBasicListener',
+	    value: function unbindBasicListener(target) {
+	      var isCaptureMode = this.isCapture(target);
+	      target.removeEventListener('mouseenter', this.showTooltip, isCaptureMode);
+	      target.removeEventListener('mousemove', this.updateTooltip, isCaptureMode);
+	      target.removeEventListener('mouseleave', this.hideTooltip, isCaptureMode);
+	    }
+
+	    /**
+	     * When mouse enter, show the tooltip
+	     */
+
+	  }, {
+	    key: 'showTooltip',
+	    value: function showTooltip(e, isGlobalCall) {
+	      var _this5 = this;
+
+	      if (isGlobalCall) {
+	        // Don't trigger other elements belongs to other ReactTooltip
+	        var targetArray = this.getTargetArray(this.props.id);
+	        var isMyElement = targetArray.some(function (ele) {
+	          return ele === e.currentTarget;
+	        });
+	        if (!isMyElement || this.state.show) return;
+	      }
+	      // Get the tooltip content
+	      // calculate in this phrase so that tip width height can be detected
+	      var _props4 = this.props;
+	      var children = _props4.children;
+	      var multiline = _props4.multiline;
+	      var getContent = _props4.getContent;
+
+	      var originTooltip = e.currentTarget.getAttribute('data-tip');
+	      var isMultiline = e.currentTarget.getAttribute('data-multiline') || multiline || false;
+
+	      // Generate tootlip content
+	      var content = void 0;
+	      if (getContent) {
+	        if (Array.isArray(getContent)) {
+	          content = getContent[0] && getContent[0]();
+	        } else {
+	          content = getContent();
+	        }
+	      }
+	      var placeholder = (0, _getTipContent2.default)(originTooltip, children, content, isMultiline);
+	      var isEmptyTip = typeof placeholder === 'string' && placeholder === '' || placeholder === null;
+
+	      // If it is focus event or called by ReactTooltip.show, switch to `solid` effect
+	      var switchToSolid = e instanceof window.FocusEvent || isGlobalCall;
+
+	      // if it need to skip adding hide listener to scroll
+	      var scrollHide = true;
+	      if (e.currentTarget.getAttribute('data-scroll-hide')) {
+	        scrollHide = e.currentTarget.getAttribute('data-scroll-hide') === 'true';
+	      } else if (this.props.scrollHide != null) {
+	        scrollHide = this.props.scrollHide;
+	      }
+
+	      // To prevent previously created timers from triggering
+	      this.clearTimer();
+
+	      this.setState({
+	        placeholder: placeholder,
+	        isEmptyTip: isEmptyTip,
+	        place: e.currentTarget.getAttribute('data-place') || this.props.place || 'top',
+	        type: e.currentTarget.getAttribute('data-type') || this.props.type || 'dark',
+	        effect: switchToSolid && 'solid' || this.getEffect(e.currentTarget),
+	        offset: e.currentTarget.getAttribute('data-offset') || this.props.offset || {},
+	        html: e.currentTarget.getAttribute('data-html') ? e.currentTarget.getAttribute('data-html') === 'true' : this.props.html || false,
+	        delayShow: e.currentTarget.getAttribute('data-delay-show') || this.props.delayShow || 0,
+	        delayHide: e.currentTarget.getAttribute('data-delay-hide') || this.props.delayHide || 0,
+	        border: e.currentTarget.getAttribute('data-border') ? e.currentTarget.getAttribute('data-border') === 'true' : this.props.border || false,
+	        extraClass: e.currentTarget.getAttribute('data-class') || this.props.class || '',
+	        disable: e.currentTarget.getAttribute('data-tip-disable') ? e.currentTarget.getAttribute('data-tip-disable') === 'true' : this.props.disable || false
+	      }, function () {
+	        if (scrollHide) _this5.addScrollListener(e);
+	        _this5.updateTooltip(e);
+
+	        if (getContent && Array.isArray(getContent)) {
+	          _this5.intervalUpdateContent = setInterval(function () {
+	            if (_this5.mount) {
+	              var _getContent = _this5.props.getContent;
+
+	              var _placeholder = (0, _getTipContent2.default)(originTooltip, _getContent[0](), isMultiline);
+	              var _isEmptyTip = typeof _placeholder === 'string' && _placeholder === '';
+	              _this5.setState({
+	                placeholder: _placeholder,
+	                isEmptyTip: _isEmptyTip
+	              });
+	            }
+	          }, getContent[1]);
+	        }
+	      });
+	    }
+
+	    /**
+	     * When mouse hover, updatetooltip
+	     */
+
+	  }, {
+	    key: 'updateTooltip',
+	    value: function updateTooltip(e) {
+	      var _this6 = this;
+
+	      var _state = this.state;
+	      var delayShow = _state.delayShow;
+	      var show = _state.show;
+	      var isEmptyTip = _state.isEmptyTip;
+	      var disable = _state.disable;
+	      var afterShow = this.props.afterShow;
+	      var placeholder = this.state.placeholder;
+
+	      var delayTime = show ? 0 : parseInt(delayShow, 10);
+	      var eventTarget = e.currentTarget;
+
+	      if (isEmptyTip || disable) return; // if the tooltip is empty, disable the tooltip
+	      var updateState = function updateState() {
+	        if (Array.isArray(placeholder) && placeholder.length > 0 || placeholder) {
+	          (function () {
+	            var isInvisible = !_this6.state.show;
+	            _this6.setState({
+	              currentEvent: e,
+	              currentTarget: eventTarget,
+	              show: true
+	            }, function () {
+	              _this6.updatePosition();
+	              if (isInvisible && afterShow) afterShow();
+	            });
+	          })();
+	        }
+	      };
+
+	      clearTimeout(this.delayShowLoop);
+	      if (delayShow) {
+	        this.delayShowLoop = setTimeout(updateState, delayTime);
+	      } else {
+	        updateState();
+	      }
+	    }
+
+	    /**
+	     * When mouse leave, hide tooltip
+	     */
+
+	  }, {
+	    key: 'hideTooltip',
+	    value: function hideTooltip(e, hasTarget) {
+	      var _this7 = this;
+
+	      var _state2 = this.state;
+	      var delayHide = _state2.delayHide;
+	      var isEmptyTip = _state2.isEmptyTip;
+	      var disable = _state2.disable;
+	      var afterHide = this.props.afterHide;
+
+	      if (!this.mount) return;
+	      if (isEmptyTip || disable) return; // if the tooltip is empty, disable the tooltip
+	      if (hasTarget) {
+	        // Don't trigger other elements belongs to other ReactTooltip
+	        var targetArray = this.getTargetArray(this.props.id);
+	        var isMyElement = targetArray.some(function (ele) {
+	          return ele === e.currentTarget;
+	        });
+	        if (!isMyElement || !this.state.show) return;
+	      }
+	      var resetState = function resetState() {
+	        var isVisible = _this7.state.show;
+	        _this7.setState({
+	          show: false
+	        }, function () {
+	          _this7.removeScrollListener();
+	          if (isVisible && afterHide) afterHide();
+	        });
+	      };
+
+	      this.clearTimer();
+	      if (delayHide) {
+	        this.delayHideLoop = setTimeout(resetState, parseInt(delayHide, 10));
+	      } else {
+	        resetState();
+	      }
+	    }
+
+	    /**
+	     * Add scroll eventlistener when tooltip show
+	     * automatically hide the tooltip when scrolling
+	     */
+
+	  }, {
+	    key: 'addScrollListener',
+	    value: function addScrollListener(e) {
+	      var isCaptureMode = this.isCapture(e.currentTarget);
+	      window.addEventListener('scroll', this.hideTooltip, isCaptureMode);
+	    }
+	  }, {
+	    key: 'removeScrollListener',
+	    value: function removeScrollListener() {
+	      window.removeEventListener('scroll', this.hideTooltip);
+	    }
+
+	    // Calculation the position
+
+	  }, {
+	    key: 'updatePosition',
+	    value: function updatePosition() {
+	      var _this8 = this;
+
+	      var _state3 = this.state;
+	      var currentEvent = _state3.currentEvent;
+	      var currentTarget = _state3.currentTarget;
+	      var place = _state3.place;
+	      var effect = _state3.effect;
+	      var offset = _state3.offset;
+
+	      var node = _reactDom2.default.findDOMNode(this);
+	      var result = (0, _getPosition2.default)(currentEvent, currentTarget, node, place, effect, offset);
+
+	      if (result.isNewState) {
+	        // Switch to reverse placement
+	        return this.setState(result.newState, function () {
+	          _this8.updatePosition();
+	        });
+	      }
+	      // Set tooltip position
+	      node.style.left = result.position.left + 'px';
+	      node.style.top = result.position.top + 'px';
+	    }
+
+	    /**
+	     * Set style tag in header
+	     * in this way we can insert default css
+	     */
+
+	  }, {
+	    key: 'setStyleHeader',
+	    value: function setStyleHeader() {
+	      if (!document.getElementsByTagName('head')[0].querySelector('style[id="react-tooltip"]')) {
+	        var tag = document.createElement('style');
+	        tag.id = 'react-tooltip';
+	        tag.innerHTML = _style2.default;
+	        document.getElementsByTagName('head')[0].appendChild(tag);
+	      }
+	    }
+
+	    /**
+	     * CLear all kinds of timeout of interval
+	     */
+
+	  }, {
+	    key: 'clearTimer',
+	    value: function clearTimer() {
+	      clearTimeout(this.delayShowLoop);
+	      clearTimeout(this.delayHideLoop);
+	      clearInterval(this.intervalUpdateContent);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _state4 = this.state;
+	      var placeholder = _state4.placeholder;
+	      var extraClass = _state4.extraClass;
+	      var html = _state4.html;
+	      var ariaProps = _state4.ariaProps;
+	      var disable = _state4.disable;
+	      var isEmptyTip = _state4.isEmptyTip;
+
+	      var tooltipClass = (0, _classnames2.default)('__react_component_tooltip', { 'show': this.state.show && !disable && !isEmptyTip }, { 'border': this.state.border }, { 'place-top': this.state.place === 'top' }, { 'place-bottom': this.state.place === 'bottom' }, { 'place-left': this.state.place === 'left' }, { 'place-right': this.state.place === 'right' }, { 'type-dark': this.state.type === 'dark' }, { 'type-success': this.state.type === 'success' }, { 'type-warning': this.state.type === 'warning' }, { 'type-error': this.state.type === 'error' }, { 'type-info': this.state.type === 'info' }, { 'type-light': this.state.type === 'light' });
+
+	      var wrapper = ReactTooltip.supportedWrappers[this.props.wrapper];
+	      if (!wrapper) wrapper = ReactTooltip.supportedWrappers['div'];
+
+	      if (html) {
+	        return _react2.default.createElement('wrapper', _extends({ className: tooltipClass + ' ' + extraClass
+	        }, ariaProps, {
+	          'data-id': 'tooltip',
+	          dangerouslySetInnerHTML: { __html: placeholder } }));
+	      } else {
+	        return _react2.default.createElement(
+	          'wrapper',
+	          _extends({ className: tooltipClass + ' ' + extraClass
+	          }, ariaProps, {
+	            'data-id': 'tooltip' }),
+	          placeholder
+	        );
+	      }
+	    }
+	  }]);
+
+	  return ReactTooltip;
+	}(_react.Component), _class2.propTypes = {
+	  children: _react.PropTypes.any,
+	  place: _react.PropTypes.string,
+	  type: _react.PropTypes.string,
+	  effect: _react.PropTypes.string,
+	  offset: _react.PropTypes.object,
+	  multiline: _react.PropTypes.bool,
+	  border: _react.PropTypes.bool,
+	  insecure: _react.PropTypes.bool,
+	  class: _react.PropTypes.string,
+	  id: _react.PropTypes.string,
+	  html: _react.PropTypes.bool,
+	  delayHide: _react.PropTypes.number,
+	  delayShow: _react.PropTypes.number,
+	  event: _react.PropTypes.string,
+	  eventOff: _react.PropTypes.string,
+	  watchWindow: _react.PropTypes.bool,
+	  isCapture: _react.PropTypes.bool,
+	  globalEventOff: _react.PropTypes.string,
+	  getContent: _react.PropTypes.any,
+	  afterShow: _react.PropTypes.func,
+	  afterHide: _react.PropTypes.func,
+	  disable: _react.PropTypes.bool,
+	  scrollHide: _react.PropTypes.bool,
+	  resizeHide: _react.PropTypes.bool,
+	  wrapper: _react.PropTypes.string
+	}, _class2.defaultProps = {
+	  insecure: true,
+	  resizeHide: true,
+	  wrapper: 'div'
+	}, _class2.supportedWrappers = {
+	  'div': _react2.default.DOM.div,
+	  'span': _react2.default.DOM.span
+	}, _temp)) || _class) || _class) || _class) || _class) || _class;
+
+	/* export default not fit for standalone, it will exports {default:...} */
+
+
+	module.exports = ReactTooltip;
+
+/***/ },
+/* 429 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2016 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+	/* global define */
+
+	(function () {
+		'use strict';
+
+		var hasOwn = {}.hasOwnProperty;
+
+		function classNames () {
+			var classes = [];
+
+			for (var i = 0; i < arguments.length; i++) {
+				var arg = arguments[i];
+				if (!arg) continue;
+
+				var argType = typeof arg;
+
+				if (argType === 'string' || argType === 'number') {
+					classes.push(arg);
+				} else if (Array.isArray(arg)) {
+					classes.push(classNames.apply(null, arg));
+				} else if (argType === 'object') {
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes.push(key);
+						}
+					}
+				}
+			}
+
+			return classes.join(' ');
+		}
+
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = classNames;
+		} else if (true) {
+			// register as 'classnames', consistent with npm package name
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return classNames;
+			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else {
+			window.classNames = classNames;
+		}
+	}());
+
+
+/***/ },
+/* 430 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function (target) {
+	  /**
+	   * Hide all tooltip
+	   * @trigger ReactTooltip.hide()
+	   */
+	  target.hide = function (target) {
+	    dispatchGlobalEvent(_constant2.default.GLOBAL.HIDE, { target: target });
+	  };
+
+	  /**
+	   * Rebuild all tooltip
+	   * @trigger ReactTooltip.rebuild()
+	   */
+	  target.rebuild = function () {
+	    dispatchGlobalEvent(_constant2.default.GLOBAL.REBUILD);
+	  };
+
+	  /**
+	   * Show specific tooltip
+	   * @trigger ReactTooltip.show()
+	   */
+	  target.show = function (target) {
+	    dispatchGlobalEvent(_constant2.default.GLOBAL.SHOW, { target: target });
+	  };
+
+	  target.prototype.globalRebuild = function () {
+	    if (this.mount) {
+	      this.unbindListener();
+	      this.bindListener();
+	    }
+	  };
+
+	  target.prototype.globalShow = function (event) {
+	    if (this.mount) {
+	      // Create a fake event, specific show will limit the type to `solid`
+	      // only `float` type cares e.clientX e.clientY
+	      var e = { currentTarget: event.detail.target };
+	      this.showTooltip(e, true);
+	    }
+	  };
+
+	  target.prototype.globalHide = function (event) {
+	    if (this.mount) {
+	      var hasTarget = event && event.detail && event.detail.target && true || false;
+	      this.hideTooltip({ currentTarget: hasTarget && event.detail.target }, hasTarget);
+	    }
+	  };
+	};
+
+	var _constant = __webpack_require__(431);
+
+	var _constant2 = _interopRequireDefault(_constant);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var dispatchGlobalEvent = function dispatchGlobalEvent(eventName, opts) {
+	  // Compatibale with IE
+	  // @see http://stackoverflow.com/questions/26596123/internet-explorer-9-10-11-event-constructor-doesnt-work
+	  var event = void 0;
+
+	  if (typeof window.CustomEvent === 'function') {
+	    event = new window.CustomEvent(eventName, { detail: opts });
+	  } else {
+	    event = document.createEvent('Event');
+	    event.initEvent(eventName, false, true);
+	    event.detail = opts;
+	  }
+
+	  window.dispatchEvent(event);
+	}; /**
+	    * Static methods for react-tooltip
+	    */
+
+/***/ },
+/* 431 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = {
+
+	  GLOBAL: {
+	    HIDE: '__react_tooltip_hide_event',
+	    REBUILD: '__react_tooltip_rebuild_event',
+	    SHOW: '__react_tooltip_show_event'
+	  }
+	};
+
+/***/ },
+/* 432 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function (target) {
+	  target.prototype.bindWindowEvents = function (resizeHide) {
+	    // ReactTooltip.hide
+	    window.removeEventListener(_constant2.default.GLOBAL.HIDE, this.globalHide);
+	    window.addEventListener(_constant2.default.GLOBAL.HIDE, this.globalHide, false);
+
+	    // ReactTooltip.rebuild
+	    window.removeEventListener(_constant2.default.GLOBAL.REBUILD, this.globalRebuild);
+	    window.addEventListener(_constant2.default.GLOBAL.REBUILD, this.globalRebuild, false);
+
+	    // ReactTooltip.show
+	    window.removeEventListener(_constant2.default.GLOBAL.SHOW, this.globalShow);
+	    window.addEventListener(_constant2.default.GLOBAL.SHOW, this.globalShow, false);
+
+	    // Resize
+	    if (resizeHide) {
+	      window.removeEventListener('resize', this.onWindowResize);
+	      window.addEventListener('resize', this.onWindowResize, false);
+	    }
+	  };
+
+	  target.prototype.unbindWindowEvents = function () {
+	    window.removeEventListener(_constant2.default.GLOBAL.HIDE, this.globalHide);
+	    window.removeEventListener(_constant2.default.GLOBAL.REBUILD, this.globalRebuild);
+	    window.removeEventListener(_constant2.default.GLOBAL.SHOW, this.globalShow);
+	    window.removeEventListener('resize', this.onWindowResize);
+	  };
+
+	  /**
+	   * invoked by resize event of window
+	   */
+	  target.prototype.onWindowResize = function () {
+	    if (!this.mount) return;
+	    this.hideTooltip();
+	  };
+	};
+
+	var _constant = __webpack_require__(431);
+
+	var _constant2 = _interopRequireDefault(_constant);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ },
+/* 433 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function (target) {
+	  target.prototype.isCustomEvent = function (ele) {
+	    var event = this.state.event;
+
+	    return event || !!ele.getAttribute('data-event');
+	  };
+
+	  /* Bind listener for custom event */
+	  target.prototype.customBindListener = function (ele) {
+	    var _this = this;
+
+	    var _state = this.state;
+	    var event = _state.event;
+	    var eventOff = _state.eventOff;
+
+	    var dataEvent = ele.getAttribute('data-event') || event;
+	    var dataEventOff = ele.getAttribute('data-event-off') || eventOff;
+
+	    dataEvent.split(' ').forEach(function (event) {
+	      ele.removeEventListener(event, customListener);
+	      customListener = checkStatus.bind(_this, dataEventOff);
+	      ele.addEventListener(event, customListener, false);
+	    });
+	    if (dataEventOff) {
+	      dataEventOff.split(' ').forEach(function (event) {
+	        ele.removeEventListener(event, _this.hideTooltip);
+	        ele.addEventListener(event, _this.hideTooltip, false);
+	      });
+	    }
+	  };
+
+	  /* Unbind listener for custom event */
+	  target.prototype.customUnbindListener = function (ele) {
+	    var _state2 = this.state;
+	    var event = _state2.event;
+	    var eventOff = _state2.eventOff;
+
+	    var dataEvent = event || ele.getAttribute('data-event');
+	    var dataEventOff = eventOff || ele.getAttribute('data-event-off');
+
+	    ele.removeEventListener(dataEvent, customListener);
+	    if (dataEventOff) ele.removeEventListener(dataEventOff, this.hideTooltip);
+	  };
+	};
+
+	/**
+	 * Custom events to control showing and hiding of tooltip
+	 *
+	 * @attributes
+	 * - `event` {String}
+	 * - `eventOff` {String}
+	 */
+
+	var checkStatus = function checkStatus(dataEventOff, e) {
+	  var show = this.state.show;
+	  var id = this.props.id;
+
+	  var dataIsCapture = e.currentTarget.getAttribute('data-iscapture');
+	  var isCapture = dataIsCapture && dataIsCapture === 'true' || this.props.isCapture;
+	  var currentItem = e.currentTarget.getAttribute('currentItem');
+
+	  if (!isCapture) e.stopPropagation();
+	  if (show && currentItem === 'true') {
+	    if (!dataEventOff) this.hideTooltip(e);
+	  } else {
+	    e.currentTarget.setAttribute('currentItem', 'true');
+	    setUntargetItems(e.currentTarget, this.getTargetArray(id));
+	    this.showTooltip(e);
+	  }
+	};
+
+	var setUntargetItems = function setUntargetItems(currentTarget, targetArray) {
+	  for (var i = 0; i < targetArray.length; i++) {
+	    if (currentTarget !== targetArray[i]) {
+	      targetArray[i].setAttribute('currentItem', 'false');
+	    } else {
+	      targetArray[i].setAttribute('currentItem', 'true');
+	    }
+	  }
+	};
+
+	var customListener = void 0;
+
+/***/ },
+/* 434 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function (target) {
+	  target.prototype.isCapture = function (currentTarget) {
+	    var dataIsCapture = currentTarget.getAttribute('data-iscapture');
+	    return dataIsCapture && dataIsCapture === 'true' || this.props.isCapture || false;
+	  };
+	};
+
+/***/ },
+/* 435 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function (target) {
+	  target.prototype.getEffect = function (currentTarget) {
+	    var dataEffect = currentTarget.getAttribute('data-effect');
+	    return dataEffect || this.props.effect || 'float';
+	  };
+	};
+
+/***/ },
+/* 436 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function (e, target, node, place, effect, offset) {
+	  var tipWidth = node.clientWidth;
+	  var tipHeight = node.clientHeight;
+
+	  var _getCurrentOffset = getCurrentOffset(e, target, effect);
+
+	  var mouseX = _getCurrentOffset.mouseX;
+	  var mouseY = _getCurrentOffset.mouseY;
+
+	  var defaultOffset = getDefaultPosition(effect, target.clientWidth, target.clientHeight, tipWidth, tipHeight);
+
+	  var _calculateOffset = calculateOffset(offset);
+
+	  var extraOffset_X = _calculateOffset.extraOffset_X;
+	  var extraOffset_Y = _calculateOffset.extraOffset_Y;
+
+
+	  var windowWidth = window.innerWidth;
+	  var windowHeight = window.innerHeight;
+
+	  var _getParent = getParent(node);
+
+	  var parentTop = _getParent.parentTop;
+	  var parentLeft = _getParent.parentLeft;
+
+	  // Get the edge offset of the tooltip
+
+	  var getTipOffsetLeft = function getTipOffsetLeft(place) {
+	    var offset_X = defaultOffset[place].l;
+	    return mouseX + offset_X + extraOffset_X;
+	  };
+	  var getTipOffsetRight = function getTipOffsetRight(place) {
+	    var offset_X = defaultOffset[place].r;
+	    return mouseX + offset_X + extraOffset_X;
+	  };
+	  var getTipOffsetTop = function getTipOffsetTop(place) {
+	    var offset_Y = defaultOffset[place].t;
+	    return mouseY + offset_Y + extraOffset_Y;
+	  };
+	  var getTipOffsetBottom = function getTipOffsetBottom(place) {
+	    var offset_Y = defaultOffset[place].b;
+	    return mouseY + offset_Y + extraOffset_Y;
+	  };
+
+	  // Judge if the tooltip has over the window(screen)
+	  var outsideVertical = function outsideVertical() {
+	    var result = false;
+	    var newPlace = void 0;
+	    if (getTipOffsetTop('left') < 0 && getTipOffsetBottom('left') <= windowHeight && getTipOffsetBottom('bottom') <= windowHeight) {
+	      result = true;
+	      newPlace = 'bottom';
+	    } else if (getTipOffsetBottom('left') > windowHeight && getTipOffsetTop('left') >= 0 && getTipOffsetTop('top') >= 0) {
+	      result = true;
+	      newPlace = 'top';
+	    }
+	    return { result: result, newPlace: newPlace };
+	  };
+	  var outsideLeft = function outsideLeft() {
+	    var _outsideVertical = outsideVertical();
+
+	    var result = _outsideVertical.result;
+	    var newPlace = _outsideVertical.newPlace; // Deal with vertical as first priority
+
+	    if (result && outsideHorizontal().result) {
+	      return { result: false }; // No need to change, if change to vertical will out of space
+	    }
+	    if (!result && getTipOffsetLeft('left') < 0 && getTipOffsetRight('right') <= windowWidth) {
+	      result = true; // If vertical ok, but let out of side and right won't out of side
+	      newPlace = 'right';
+	    }
+	    return { result: result, newPlace: newPlace };
+	  };
+	  var outsideRight = function outsideRight() {
+	    var _outsideVertical2 = outsideVertical();
+
+	    var result = _outsideVertical2.result;
+	    var newPlace = _outsideVertical2.newPlace;
+
+	    if (result && outsideHorizontal().result) {
+	      return { result: false }; // No need to change, if change to vertical will out of space
+	    }
+	    if (!result && getTipOffsetRight('right') > windowWidth && getTipOffsetLeft('left') >= 0) {
+	      result = true;
+	      newPlace = 'left';
+	    }
+	    return { result: result, newPlace: newPlace };
+	  };
+
+	  var outsideHorizontal = function outsideHorizontal() {
+	    var result = false;
+	    var newPlace = void 0;
+	    if (getTipOffsetLeft('top') < 0 && getTipOffsetRight('top') <= windowWidth && getTipOffsetRight('right') <= windowWidth) {
+	      result = true;
+	      newPlace = 'right';
+	    } else if (getTipOffsetRight('top') > windowWidth && getTipOffsetLeft('top') >= 0 && getTipOffsetLeft('left') >= 0) {
+	      result = true;
+	      newPlace = 'left';
+	    }
+	    return { result: result, newPlace: newPlace };
+	  };
+	  var outsideTop = function outsideTop() {
+	    var _outsideHorizontal = outsideHorizontal();
+
+	    var result = _outsideHorizontal.result;
+	    var newPlace = _outsideHorizontal.newPlace;
+
+	    if (result && outsideVertical().result) {
+	      return { result: false };
+	    }
+	    if (!result && getTipOffsetTop('top') < 0 && getTipOffsetBottom('bottom') <= windowHeight) {
+	      result = true;
+	      newPlace = 'bottom';
+	    }
+	    return { result: result, newPlace: newPlace };
+	  };
+	  var outsideBottom = function outsideBottom() {
+	    var _outsideHorizontal2 = outsideHorizontal();
+
+	    var result = _outsideHorizontal2.result;
+	    var newPlace = _outsideHorizontal2.newPlace;
+
+	    if (result && outsideVertical().result) {
+	      return { result: false };
+	    }
+	    if (!result && getTipOffsetBottom('bottom') > windowHeight && getTipOffsetTop('top') >= 0) {
+	      result = true;
+	      newPlace = 'top';
+	    }
+	    return { result: result, newPlace: newPlace };
+	  };
+
+	  // Return new state to change the placement to the reverse if possible
+	  var outsideLeftResult = outsideLeft();
+	  var outsideRightResult = outsideRight();
+	  var outsideTopResult = outsideTop();
+	  var outsideBottomResult = outsideBottom();
+
+	  if (place === 'left' && outsideLeftResult.result) {
+	    return {
+	      isNewState: true,
+	      newState: { place: outsideLeftResult.newPlace }
+	    };
+	  } else if (place === 'right' && outsideRightResult.result) {
+	    return {
+	      isNewState: true,
+	      newState: { place: outsideRightResult.newPlace }
+	    };
+	  } else if (place === 'top' && outsideTopResult.result) {
+	    return {
+	      isNewState: true,
+	      newState: { place: outsideTopResult.newPlace }
+	    };
+	  } else if (place === 'bottom' && outsideBottomResult.result) {
+	    return {
+	      isNewState: true,
+	      newState: { place: outsideBottomResult.newPlace }
+	    };
+	  }
+
+	  // Return tooltip offset position
+	  return {
+	    isNewState: false,
+	    position: {
+	      left: parseInt(getTipOffsetLeft(place) - parentLeft, 10),
+	      top: parseInt(getTipOffsetTop(place) - parentTop, 10)
+	    }
+	  };
+	};
+
+	// Get current mouse offset
+	var getCurrentOffset = function getCurrentOffset(e, currentTarget, effect) {
+	  var boundingClientRect = currentTarget.getBoundingClientRect();
+	  var targetTop = boundingClientRect.top;
+	  var targetLeft = boundingClientRect.left;
+	  var targetWidth = currentTarget.clientWidth;
+	  var targetHeight = currentTarget.clientHeight;
+
+	  if (effect === 'float') {
+	    return {
+	      mouseX: e.clientX,
+	      mouseY: e.clientY
+	    };
+	  }
+	  return {
+	    mouseX: targetLeft + targetWidth / 2,
+	    mouseY: targetTop + targetHeight / 2
+	  };
+	};
+
+	// List all possibility of tooltip final offset
+	// This is useful in judging if it is necessary for tooltip to switch position when out of window
+	/**
+	 * Calculate the position of tooltip
+	 *
+	 * @params
+	 * - `e` {Event} the event of current mouse
+	 * - `target` {Element} the currentTarget of the event
+	 * - `node` {DOM} the react-tooltip object
+	 * - `place` {String} top / right / bottom / left
+	 * - `effect` {String} float / solid
+	 * - `offset` {Object} the offset to default position
+	 *
+	 * @return {Object
+	 * - `isNewState` {Bool} required
+	 * - `newState` {Object}
+	 * - `position` {OBject} {left: {Number}, top: {Number}}
+	 */
+	var getDefaultPosition = function getDefaultPosition(effect, targetWidth, targetHeight, tipWidth, tipHeight) {
+	  var top = void 0;
+	  var right = void 0;
+	  var bottom = void 0;
+	  var left = void 0;
+	  var disToMouse = 3;
+	  var triangleHeight = 2;
+	  var cursorHeight = 12; // Optimize for float bottom only, cause the cursor will hide the tooltip
+
+	  if (effect === 'float') {
+	    top = {
+	      l: -(tipWidth / 2),
+	      r: tipWidth / 2,
+	      t: -(tipHeight + disToMouse + triangleHeight),
+	      b: -disToMouse
+	    };
+	    bottom = {
+	      l: -(tipWidth / 2),
+	      r: tipWidth / 2,
+	      t: disToMouse + cursorHeight,
+	      b: tipHeight + disToMouse + triangleHeight + cursorHeight
+	    };
+	    left = {
+	      l: -(tipWidth + disToMouse + triangleHeight),
+	      r: -disToMouse,
+	      t: -(tipHeight / 2),
+	      b: tipHeight / 2
+	    };
+	    right = {
+	      l: disToMouse,
+	      r: tipWidth + disToMouse + triangleHeight,
+	      t: -(tipHeight / 2),
+	      b: tipHeight / 2
+	    };
+	  } else if (effect === 'solid') {
+	    top = {
+	      l: -(tipWidth / 2),
+	      r: tipWidth / 2,
+	      t: -(targetHeight / 2 + tipHeight + triangleHeight),
+	      b: -(targetHeight / 2)
+	    };
+	    bottom = {
+	      l: -(tipWidth / 2),
+	      r: tipWidth / 2,
+	      t: targetHeight / 2,
+	      b: targetHeight / 2 + tipHeight + triangleHeight
+	    };
+	    left = {
+	      l: -(tipWidth + targetWidth / 2 + triangleHeight),
+	      r: -(targetWidth / 2),
+	      t: -(tipHeight / 2),
+	      b: tipHeight / 2
+	    };
+	    right = {
+	      l: targetWidth / 2,
+	      r: tipWidth + targetWidth / 2 + triangleHeight,
+	      t: -(tipHeight / 2),
+	      b: tipHeight / 2
+	    };
+	  }
+
+	  return { top: top, bottom: bottom, left: left, right: right };
+	};
+
+	// Consider additional offset into position calculation
+	var calculateOffset = function calculateOffset(offset) {
+	  var extraOffset_X = 0;
+	  var extraOffset_Y = 0;
+
+	  if (Object.prototype.toString.apply(offset) === '[object String]') {
+	    offset = JSON.parse(offset.toString().replace(/\'/g, '\"'));
+	  }
+	  for (var key in offset) {
+	    if (key === 'top') {
+	      extraOffset_Y -= parseInt(offset[key], 10);
+	    } else if (key === 'bottom') {
+	      extraOffset_Y += parseInt(offset[key], 10);
+	    } else if (key === 'left') {
+	      extraOffset_X -= parseInt(offset[key], 10);
+	    } else if (key === 'right') {
+	      extraOffset_X += parseInt(offset[key], 10);
+	    }
+	  }
+
+	  return { extraOffset_X: extraOffset_X, extraOffset_Y: extraOffset_Y };
+	};
+
+	// Get the offset of the parent elements
+	var getParent = function getParent(currentTarget) {
+	  var currentParent = currentTarget;
+	  while (currentParent) {
+	    if (window.getComputedStyle(currentParent).getPropertyValue('transform') !== 'none') break;
+	    currentParent = currentParent.parentElement;
+	  }
+
+	  var parentTop = currentParent && currentParent.getBoundingClientRect().top || 0;
+	  var parentLeft = currentParent && currentParent.getBoundingClientRect().left || 0;
+
+	  return { parentTop: parentTop, parentLeft: parentLeft };
+	};
+
+/***/ },
+/* 437 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	exports.default = function (tip, children, getContent, multiline) {
+	  if (children) return children;
+	  if (getContent !== undefined && getContent !== null) return getContent; // getContent can be 0, '', etc.
+	  if (getContent === null) return null; // Tip not exist and childern is null or undefined
+
+	  var regexp = /<br\s*\/?>/;
+	  if (!multiline || multiline === 'false' || !regexp.test(tip)) {
+	    // No trim(), so that user can keep their input
+	    return tip;
+	  }
+
+	  // Multiline tooltip content
+	  return tip.split(regexp).map(function (d, i) {
+	    return _react2.default.createElement(
+	      'span',
+	      { key: i, className: 'multi-line' },
+	      d
+	    );
+	  });
+	};
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ },
+/* 438 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.parseAria = parseAria;
+	/**
+	 * Support aria- and role in ReactTooltip
+	 *
+	 * @params props {Object}
+	 * @return {Object}
+	 */
+	function parseAria(props) {
+	  var ariaObj = {};
+	  Object.keys(props).filter(function (prop) {
+	    // aria-xxx and role is acceptable
+	    return (/(^aria-\w+$|^role$)/.test(prop)
+	    );
+	  }).forEach(function (prop) {
+	    ariaObj[prop] = props[prop];
+	  });
+
+	  return ariaObj;
+	}
+
+/***/ },
+/* 439 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = '.__react_component_tooltip{border-radius:3px;display:inline-block;font-size:13px;left:-999em;opacity:0;padding:8px 21px;position:fixed;pointer-events:none;transition:opacity 0.3s ease-out;top:-999em;visibility:hidden;z-index:999}.__react_component_tooltip:before,.__react_component_tooltip:after{content:"";width:0;height:0;position:absolute}.__react_component_tooltip.show{opacity:0.9;margin-top:0px;margin-left:0px;visibility:visible}.__react_component_tooltip.type-dark{color:#fff;background-color:#222}.__react_component_tooltip.type-dark.place-top:after{border-top-color:#222;border-top-style:solid;border-top-width:6px}.__react_component_tooltip.type-dark.place-bottom:after{border-bottom-color:#222;border-bottom-style:solid;border-bottom-width:6px}.__react_component_tooltip.type-dark.place-left:after{border-left-color:#222;border-left-style:solid;border-left-width:6px}.__react_component_tooltip.type-dark.place-right:after{border-right-color:#222;border-right-style:solid;border-right-width:6px}.__react_component_tooltip.type-dark.border{border:1px solid #fff}.__react_component_tooltip.type-dark.border.place-top:before{border-top:8px solid #fff}.__react_component_tooltip.type-dark.border.place-bottom:before{border-bottom:8px solid #fff}.__react_component_tooltip.type-dark.border.place-left:before{border-left:8px solid #fff}.__react_component_tooltip.type-dark.border.place-right:before{border-right:8px solid #fff}.__react_component_tooltip.type-success{color:#fff;background-color:#8DC572}.__react_component_tooltip.type-success.place-top:after{border-top-color:#8DC572;border-top-style:solid;border-top-width:6px}.__react_component_tooltip.type-success.place-bottom:after{border-bottom-color:#8DC572;border-bottom-style:solid;border-bottom-width:6px}.__react_component_tooltip.type-success.place-left:after{border-left-color:#8DC572;border-left-style:solid;border-left-width:6px}.__react_component_tooltip.type-success.place-right:after{border-right-color:#8DC572;border-right-style:solid;border-right-width:6px}.__react_component_tooltip.type-success.border{border:1px solid #fff}.__react_component_tooltip.type-success.border.place-top:before{border-top:8px solid #fff}.__react_component_tooltip.type-success.border.place-bottom:before{border-bottom:8px solid #fff}.__react_component_tooltip.type-success.border.place-left:before{border-left:8px solid #fff}.__react_component_tooltip.type-success.border.place-right:before{border-right:8px solid #fff}.__react_component_tooltip.type-warning{color:#fff;background-color:#F0AD4E}.__react_component_tooltip.type-warning.place-top:after{border-top-color:#F0AD4E;border-top-style:solid;border-top-width:6px}.__react_component_tooltip.type-warning.place-bottom:after{border-bottom-color:#F0AD4E;border-bottom-style:solid;border-bottom-width:6px}.__react_component_tooltip.type-warning.place-left:after{border-left-color:#F0AD4E;border-left-style:solid;border-left-width:6px}.__react_component_tooltip.type-warning.place-right:after{border-right-color:#F0AD4E;border-right-style:solid;border-right-width:6px}.__react_component_tooltip.type-warning.border{border:1px solid #fff}.__react_component_tooltip.type-warning.border.place-top:before{border-top:8px solid #fff}.__react_component_tooltip.type-warning.border.place-bottom:before{border-bottom:8px solid #fff}.__react_component_tooltip.type-warning.border.place-left:before{border-left:8px solid #fff}.__react_component_tooltip.type-warning.border.place-right:before{border-right:8px solid #fff}.__react_component_tooltip.type-error{color:#fff;background-color:#BE6464}.__react_component_tooltip.type-error.place-top:after{border-top-color:#BE6464;border-top-style:solid;border-top-width:6px}.__react_component_tooltip.type-error.place-bottom:after{border-bottom-color:#BE6464;border-bottom-style:solid;border-bottom-width:6px}.__react_component_tooltip.type-error.place-left:after{border-left-color:#BE6464;border-left-style:solid;border-left-width:6px}.__react_component_tooltip.type-error.place-right:after{border-right-color:#BE6464;border-right-style:solid;border-right-width:6px}.__react_component_tooltip.type-error.border{border:1px solid #fff}.__react_component_tooltip.type-error.border.place-top:before{border-top:8px solid #fff}.__react_component_tooltip.type-error.border.place-bottom:before{border-bottom:8px solid #fff}.__react_component_tooltip.type-error.border.place-left:before{border-left:8px solid #fff}.__react_component_tooltip.type-error.border.place-right:before{border-right:8px solid #fff}.__react_component_tooltip.type-info{color:#fff;background-color:#337AB7}.__react_component_tooltip.type-info.place-top:after{border-top-color:#337AB7;border-top-style:solid;border-top-width:6px}.__react_component_tooltip.type-info.place-bottom:after{border-bottom-color:#337AB7;border-bottom-style:solid;border-bottom-width:6px}.__react_component_tooltip.type-info.place-left:after{border-left-color:#337AB7;border-left-style:solid;border-left-width:6px}.__react_component_tooltip.type-info.place-right:after{border-right-color:#337AB7;border-right-style:solid;border-right-width:6px}.__react_component_tooltip.type-info.border{border:1px solid #fff}.__react_component_tooltip.type-info.border.place-top:before{border-top:8px solid #fff}.__react_component_tooltip.type-info.border.place-bottom:before{border-bottom:8px solid #fff}.__react_component_tooltip.type-info.border.place-left:before{border-left:8px solid #fff}.__react_component_tooltip.type-info.border.place-right:before{border-right:8px solid #fff}.__react_component_tooltip.type-light{color:#222;background-color:#fff}.__react_component_tooltip.type-light.place-top:after{border-top-color:#fff;border-top-style:solid;border-top-width:6px}.__react_component_tooltip.type-light.place-bottom:after{border-bottom-color:#fff;border-bottom-style:solid;border-bottom-width:6px}.__react_component_tooltip.type-light.place-left:after{border-left-color:#fff;border-left-style:solid;border-left-width:6px}.__react_component_tooltip.type-light.place-right:after{border-right-color:#fff;border-right-style:solid;border-right-width:6px}.__react_component_tooltip.type-light.border{border:1px solid #222}.__react_component_tooltip.type-light.border.place-top:before{border-top:8px solid #222}.__react_component_tooltip.type-light.border.place-bottom:before{border-bottom:8px solid #222}.__react_component_tooltip.type-light.border.place-left:before{border-left:8px solid #222}.__react_component_tooltip.type-light.border.place-right:before{border-right:8px solid #222}.__react_component_tooltip.place-top{margin-top:-10px}.__react_component_tooltip.place-top:before{border-left:10px solid transparent;border-right:10px solid transparent;bottom:-8px;left:50%;margin-left:-10px}.__react_component_tooltip.place-top:after{border-left:8px solid transparent;border-right:8px solid transparent;bottom:-6px;left:50%;margin-left:-8px}.__react_component_tooltip.place-bottom{margin-top:10px}.__react_component_tooltip.place-bottom:before{border-left:10px solid transparent;border-right:10px solid transparent;top:-8px;left:50%;margin-left:-10px}.__react_component_tooltip.place-bottom:after{border-left:8px solid transparent;border-right:8px solid transparent;top:-6px;left:50%;margin-left:-8px}.__react_component_tooltip.place-left{margin-left:-10px}.__react_component_tooltip.place-left:before{border-top:6px solid transparent;border-bottom:6px solid transparent;right:-8px;top:50%;margin-top:-5px}.__react_component_tooltip.place-left:after{border-top:5px solid transparent;border-bottom:5px solid transparent;right:-6px;top:50%;margin-top:-4px}.__react_component_tooltip.place-right{margin-left:10px}.__react_component_tooltip.place-right:before{border-top:6px solid transparent;border-bottom:6px solid transparent;left:-8px;top:50%;margin-top:-5px}.__react_component_tooltip.place-right:after{border-top:5px solid transparent;border-bottom:5px solid transparent;left:-6px;top:50%;margin-top:-4px}.__react_component_tooltip .multi-line{display:block;padding:2px 0px;text-align:center}';
+
+/***/ },
+/* 440 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(429);
+	var content = __webpack_require__(441);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(426)(content, {});
@@ -41654,7 +42973,7 @@
 	}
 
 /***/ },
-/* 429 */
+/* 441 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(425)();
@@ -41662,13 +42981,87 @@
 
 
 	// module
-	exports.push([module.id, ".Header {\n  height: 80px;\n  border-bottom: 1px solid rgba(0,0,0,0.15);\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n}\n\n.Header .return-home {\n  position: fixed;\n  left: 0px;\n  top: 0px;\n  padding: 10px;\n  font-size: 24px;\n  color: #6441A5;\n  cursor: pointer;\n  text-decoration: none;\n}\n\n.Header .to-chrome-ext {\n  position: fixed;\n  right: 0px;\n  top: 0px;\n  /*top: 36px;*/\n  padding: 10px;\n  font-size: 24px;\n  color: #6441A5;\n  cursor: pointer;\n  text-decoration: none;\n}\n", ""]);
+	exports.push([module.id, ".Header {\n  height: 80px;\n  border-bottom: 1px solid rgba(0,0,0,0.15);\n  display: flex;\n  flex-direction: row;\n  justify-content: space-around;\n  align-items: center;\n  padding: 0px 50px;\n}\n\n.Header .return-home {\n  /*position: fixed;*/\n  /*left: 0px;*/\n  /*top: 0px;*/\n  /*padding: 10px;*/\n  font-size: 24px;\n  color: #6441A5;\n  cursor: pointer;\n  text-decoration: none;\n}\n\n.Header .to-chrome-ext {\n  /*position: fixed;*/\n  /*right: 0px;*/\n  /*top: 0px;*/\n  /*top: 36px;*/\n  /*padding: 10px;*/\n  font-size: 24px;\n  color: #6441A5;\n  cursor: pointer;\n  text-decoration: none;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 430 */
+/* 442 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _SearchBar = __webpack_require__(443);
+
+	var _SearchBar2 = _interopRequireDefault(_SearchBar);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SearchBarWrapper = function (_Component) {
+	  _inherits(SearchBarWrapper, _Component);
+
+	  function SearchBarWrapper(props) {
+	    _classCallCheck(this, SearchBarWrapper);
+
+	    var _this = _possibleConstructorReturn(this, (SearchBarWrapper.__proto__ || Object.getPrototypeOf(SearchBarWrapper)).call(this, props));
+
+	    _this.state = {
+	      inputValue: ''
+	    };
+	    _this.inputValueChanged = _this.inputValueChanged.bind(_this);
+	    _this.clearInput = _this.clearInput.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(SearchBarWrapper, [{
+	    key: 'inputValueChanged',
+	    value: function inputValueChanged(e) {
+	      this.setState({
+	        inputValue: e.target.value
+	      });
+	    }
+	  }, {
+	    key: 'clearInput',
+	    value: function clearInput() {
+	      this.setState({
+	        inputValue: ''
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(_SearchBar2.default, {
+	        value: this.state.inputValue,
+	        inputValueChanged: this.inputValueChanged,
+	        clearInput: this.clearInput
+	      });
+	    }
+	  }]);
+
+	  return SearchBarWrapper;
+	}(_react.Component);
+
+	exports.default = SearchBarWrapper;
+
+/***/ },
+/* 443 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -41685,15 +43078,15 @@
 
 	var _reactApollo = __webpack_require__(208);
 
-	var _classnames = __webpack_require__(441);
+	var _classnames = __webpack_require__(429);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	__webpack_require__(431);
+	__webpack_require__(444);
 
-	var _queries = __webpack_require__(436);
+	var _queries = __webpack_require__(446);
 
-	var _UserSearchDisplay = __webpack_require__(483);
+	var _UserSearchDisplay = __webpack_require__(449);
 
 	var _UserSearchDisplay2 = _interopRequireDefault(_UserSearchDisplay);
 
@@ -41802,13 +43195,13 @@
 	})(SearchBar);
 
 /***/ },
-/* 431 */
+/* 444 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(432);
+	var content = __webpack_require__(445);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(426)(content, {});
@@ -41828,7 +43221,7 @@
 	}
 
 /***/ },
-/* 432 */
+/* 445 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(425)();
@@ -41842,203 +43235,7 @@
 
 
 /***/ },
-/* 433 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactApollo = __webpack_require__(208);
-
-	__webpack_require__(434);
-
-	var _queries = __webpack_require__(436);
-
-	var _Header = __webpack_require__(427);
-
-	var _Header2 = _interopRequireDefault(_Header);
-
-	var _SourceTools = __webpack_require__(439);
-
-	var _SourceTools2 = _interopRequireDefault(_SourceTools);
-
-	var _SourceList = __webpack_require__(463);
-
-	var _SourceList2 = _interopRequireDefault(_SourceList);
-
-	var _SourceListColumn = __webpack_require__(469);
-
-	var _SourceListColumn2 = _interopRequireDefault(_SourceListColumn);
-
-	var _SubHeader = __webpack_require__(475);
-
-	var _SubHeader2 = _interopRequireDefault(_SubHeader);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	// data for this component
-
-	// the Header for the page
-
-	// the SourceTools component
-
-	// the SourceList component
-
-	// the SourceListColumn component
-
-	// the SubHeader component
-
-
-	// this paradigm may eventually change based on how the graphql community
-	// decides to manage shared data across components, but for now here is the
-	// set up: we are navigating around via the username and a source list id in
-	// the url. it is the responsiblity of the PageContent component to convert
-	// the username into a user (more importantly, the user id) which can then
-	// be passed to child components so that they can manage their own data
-	// fetching. we will want to figure out some means of data batching at some
-	// point, but for now this is working pretty well
-	var PageContent = function (_Component) {
-	  _inherits(PageContent, _Component);
-
-	  function PageContent() {
-	    _classCallCheck(this, PageContent);
-
-	    return _possibleConstructorReturn(this, (PageContent.__proto__ || Object.getPrototypeOf(PageContent)).apply(this, arguments));
-	  }
-
-	  _createClass(PageContent, [{
-	    key: 'render',
-	    value: function render() {
-	      if (this.props.user) {
-	        return _react2.default.createElement(
-	          'div',
-	          { className: 'PageContent' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'page-content-subheader' },
-	            _react2.default.createElement(_SubHeader2.default, {
-	              userId: this.props.user.id,
-	              sourceListId: this.props.params.sourceListId
-	            })
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'page-content' },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'SourceTools-wrapper content-thirds' },
-	              _react2.default.createElement(_SourceTools2.default, {
-	                userId: this.props.user.id,
-	                sourceListId: this.props.params.sourceListId
-	              })
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'SourceList-wrapper content-thirds' },
-	              _react2.default.createElement(_SourceList2.default, {
-	                userId: this.props.user.id,
-	                sourceListId: this.props.params.sourceListId
-	              })
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'SourceListColumn-wrapper content-thirds' },
-	              _react2.default.createElement(_SourceListColumn2.default, {
-	                userId: this.props.user.id,
-	                username: this.props.user.username
-	              })
-	            )
-	          )
-	        );
-	      } else {
-	        return null;
-	      }
-	    }
-	  }]);
-
-	  return PageContent;
-	}(_react.Component);
-
-	var options = function options(ownProps) {
-	  return {
-	    variables: {
-	      username: ownProps.params.username
-	    }
-	  };
-	};
-
-	var props = function props(_ref) {
-	  var ownProps = _ref.ownProps,
-	      _ref$data = _ref.data,
-	      user = _ref$data.user,
-	      loading = _ref$data.loading;
-	  return {
-	    user: user,
-	    loading: loading
-	  };
-	};
-
-	exports.default = (0, _reactApollo.graphql)(_queries.userQuery, {
-	  options: options,
-	  props: props
-	})(PageContent);
-
-/***/ },
-/* 434 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(435);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(426)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./PageContent.css", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./PageContent.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 435 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(425)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".page-content-subheader {\n  height: 100px; \n}\n\n.page-content {\n  display: flex;\n  flex-direction: row;\n  /*height: 500px;*/\n}\n\n.SourceTools-wrapper {\n  width: 30%;\n}\n\n.SourceList-wrapper {\n    overflow: auto;\n    width: 40%;\n    min-width: 200px;\n}\n\n.SourceListColumn-wrapper {\n  width: 30%;\n}\n", ""]);
-
-	// exports
-
-
-/***/ },
-/* 436 */
+/* 446 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -42055,7 +43252,7 @@
 	    _templateObject5 = _taggedTemplateLiteral(['\n  query sourceListsQuery($userId: ID!) {\n    sourceLists(userId: $userId) {\n      id,\n      name,\n      isHeap,\n    },\n  }\n'], ['\n  query sourceListsQuery($userId: ID!) {\n    sourceLists(userId: $userId) {\n      id,\n      name,\n      isHeap,\n    },\n  }\n']),
 	    _templateObject6 = _taggedTemplateLiteral(['\n  query userSearchQuery($name: String!) {\n    searchUsers(name: $name) {\n      id,\n      username,\n      name,\n    }\n  }\n'], ['\n  query userSearchQuery($name: String!) {\n    searchUsers(name: $name) {\n      id,\n      username,\n      name,\n    }\n  }\n']);
 
-	var _graphqlTag = __webpack_require__(437);
+	var _graphqlTag = __webpack_require__(447);
 
 	var _graphqlTag2 = _interopRequireDefault(_graphqlTag);
 
@@ -42091,10 +43288,10 @@
 	};
 
 /***/ },
-/* 437 */
+/* 447 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var parse = __webpack_require__(438).parse;
+	var parse = __webpack_require__(448).parse;
 
 	// Strip insignificant whitespace
 	// Note that this could do a lot more, such as reorder fields etc.
@@ -42257,7 +43454,7 @@
 
 
 /***/ },
-/* 438 */
+/* 448 */
 /***/ function(module, exports) {
 
 	module.exports =
@@ -45030,7 +46227,147 @@
 	/******/ ]);
 
 /***/ },
-/* 439 */
+/* 449 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(217);
+
+	__webpack_require__(450);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var UserSearchDisplay = function (_Component) {
+	  _inherits(UserSearchDisplay, _Component);
+
+	  function UserSearchDisplay() {
+	    _classCallCheck(this, UserSearchDisplay);
+
+	    return _possibleConstructorReturn(this, (UserSearchDisplay.__proto__ || Object.getPrototypeOf(UserSearchDisplay)).apply(this, arguments));
+	  }
+
+	  _createClass(UserSearchDisplay, [{
+	    key: 'renderSearchUsers',
+	    value: function renderSearchUsers() {
+	      var _this2 = this;
+
+	      if (this.props.currentlySearching) {
+	        return this.props.searchUsers.map(function (searchUser) {
+	          return _react2.default.createElement(
+	            _reactRouter.Link,
+	            {
+	              to: '/' + searchUser.username + '/',
+	              key: searchUser.id,
+	              className: 'searchUser',
+	              onClick: _this2.props.removeDropdown
+	            },
+	            window.cu_id === parseInt(searchUser.id) ? searchUser.name + ' (You)' : searchUser.name
+	          );
+	        });
+	      }
+	      return null;
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      console.log("what props do I get her", this.props);
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'UserSearchDisplay' },
+	        this.renderSearchUsers()
+	      );
+	    }
+	  }]);
+
+	  return UserSearchDisplay;
+	}(_react.Component);
+
+	exports.default = UserSearchDisplay;
+
+
+	UserSearchDisplay.defaultProps = {
+	  searchUsers: []
+	};
+
+/***/ },
+/* 450 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(451);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(426)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./UserSearchDisplay.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./UserSearchDisplay.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 451 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(425)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".UserSearchDisplay {\n  position: absolute;\n  width: 400px;\n  background: #fafafa;\n  padding-left: 10px;\n  margin-top: 4px;\n  border-radius: 3px;\n}\n\n.searchUser {\n  display: block;\n  padding: 4px;\n  margin: 4px;\n  text-decoration: none;\n  border-bottom: 1px solid #dcd;\n  margin-right: 10px;\n  color: rgba(0, 0, 0, 0.6);\n}\n\n.searchUser:hover {\n  color: #6441A5;\n}\n\n.searchUser:last-child {\n  border-bottom: 0px;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 452 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var SourceToolsTip = exports.SourceToolsTip = 'Drag sources to the desired list or to the trash. Add new sources by using our Chrome extension or by submitting the url to the input box above.';
+	var ListTitleControlTip = exports.ListTitleControlTip = 'Download, email, or delete lists here. Additionally, create new lists by submitting their name to the input box on the right. Note: you cannot delete your heap.';
+	var SourceTrashTip = exports.SourceTrashTip = 'Drag articles here to delete.';
+	var DownloadTip = exports.DownloadTip = 'Download the articles on this source list.';
+	var EmailTip = exports.EmailTip = 'Email the articles on this source list.';
+	var DeleteListTip = exports.DeleteListTip = 'Delete this list and its articles. Note: you can\'t delete your Heap.';
+	var CreateListTip = exports.CreateListTip = 'Create new list here.';
+	var CreateSourceTip = exports.CreateSourceTip = 'Add new source here.';
+	var HomeTip = exports.HomeTip = 'Go home';
+	var ChromeExtTip = exports.ChromeExtTip = 'Get the Chrome extension.';
+
+/***/ },
+/* 453 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -45047,21 +46384,217 @@
 
 	var _reactApollo = __webpack_require__(208);
 
-	var _reactTooltip = __webpack_require__(440);
+	__webpack_require__(454);
+
+	var _queries = __webpack_require__(446);
+
+	var _Header = __webpack_require__(427);
+
+	var _Header2 = _interopRequireDefault(_Header);
+
+	var _SourceTools = __webpack_require__(456);
+
+	var _SourceTools2 = _interopRequireDefault(_SourceTools);
+
+	var _SourceList = __webpack_require__(467);
+
+	var _SourceList2 = _interopRequireDefault(_SourceList);
+
+	var _SourceListColumn = __webpack_require__(473);
+
+	var _SourceListColumn2 = _interopRequireDefault(_SourceListColumn);
+
+	var _SubHeader = __webpack_require__(479);
+
+	var _SubHeader2 = _interopRequireDefault(_SubHeader);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	// data for this component
+
+	// the Header for the page
+
+	// the SourceTools component
+
+	// the SourceList component
+
+	// the SourceListColumn component
+
+	// the SubHeader component
+
+
+	// this paradigm may eventually change based on how the graphql community
+	// decides to manage shared data across components, but for now here is the
+	// set up: we are navigating around via the username and a source list id in
+	// the url. it is the responsiblity of the PageContent component to convert
+	// the username into a user (more importantly, the user id) which can then
+	// be passed to child components so that they can manage their own data
+	// fetching. we will want to figure out some means of data batching at some
+	// point, but for now this is working pretty well
+	var PageContent = function (_Component) {
+	  _inherits(PageContent, _Component);
+
+	  function PageContent() {
+	    _classCallCheck(this, PageContent);
+
+	    return _possibleConstructorReturn(this, (PageContent.__proto__ || Object.getPrototypeOf(PageContent)).apply(this, arguments));
+	  }
+
+	  _createClass(PageContent, [{
+	    key: 'render',
+	    value: function render() {
+	      if (this.props.user) {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'PageContent' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'page-content-subheader' },
+	            _react2.default.createElement(_SubHeader2.default, {
+	              userId: this.props.user.id,
+	              sourceListId: this.props.params.sourceListId
+	            })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'page-content' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'SourceTools-wrapper content-thirds' },
+	              _react2.default.createElement(_SourceTools2.default, {
+	                userId: this.props.user.id,
+	                sourceListId: this.props.params.sourceListId
+	              })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'SourceList-wrapper content-thirds' },
+	              _react2.default.createElement(_SourceList2.default, {
+	                userId: this.props.user.id,
+	                sourceListId: this.props.params.sourceListId
+	              })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'SourceListColumn-wrapper content-thirds' },
+	              _react2.default.createElement(_SourceListColumn2.default, {
+	                userId: this.props.user.id,
+	                username: this.props.user.username
+	              })
+	            )
+	          )
+	        );
+	      } else {
+	        return null;
+	      }
+	    }
+	  }]);
+
+	  return PageContent;
+	}(_react.Component);
+
+	var options = function options(ownProps) {
+	  return {
+	    variables: {
+	      username: ownProps.params.username
+	    }
+	  };
+	};
+
+	var props = function props(_ref) {
+	  var ownProps = _ref.ownProps,
+	      _ref$data = _ref.data,
+	      user = _ref$data.user,
+	      loading = _ref$data.loading;
+	  return {
+	    user: user,
+	    loading: loading
+	  };
+	};
+
+	exports.default = (0, _reactApollo.graphql)(_queries.userQuery, {
+	  options: options,
+	  props: props
+	})(PageContent);
+
+/***/ },
+/* 454 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(455);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(426)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./PageContent.css", function() {
+				var newContent = require("!!./../../../node_modules/css-loader/index.js!./PageContent.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 455 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(425)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".page-content-subheader {\n  height: 100px; \n}\n\n.page-content {\n  display: flex;\n  flex-direction: row;\n  /*height: 500px;*/\n}\n\n.SourceTools-wrapper {\n  width: 30%;\n}\n\n.SourceList-wrapper {\n    overflow: auto;\n    width: 40%;\n    min-width: 200px;\n}\n\n.SourceListColumn-wrapper {\n  width: 30%;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 456 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactApollo = __webpack_require__(208);
+
+	var _reactTooltip = __webpack_require__(428);
 
 	var _reactTooltip2 = _interopRequireDefault(_reactTooltip);
 
-	__webpack_require__(452);
+	__webpack_require__(457);
 
-	var _CreateSource = __webpack_require__(454);
+	var _CreateSource = __webpack_require__(459);
 
 	var _CreateSource2 = _interopRequireDefault(_CreateSource);
 
-	var _SourceTrash = __webpack_require__(459);
+	var _SourceTrash = __webpack_require__(463);
 
 	var _SourceTrash2 = _interopRequireDefault(_SourceTrash);
 
-	var _constants = __webpack_require__(458);
+	var _constants = __webpack_require__(452);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -45126,1332 +46659,13 @@
 	exports.default = SourceTools;
 
 /***/ },
-/* 440 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _class, _class2, _temp;
-
-	/* Decoraters */
-
-
-	/* Utils */
-
-
-	/* CSS */
-
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactDom = __webpack_require__(33);
-
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-
-	var _classnames = __webpack_require__(441);
-
-	var _classnames2 = _interopRequireDefault(_classnames);
-
-	var _staticMethods = __webpack_require__(442);
-
-	var _staticMethods2 = _interopRequireDefault(_staticMethods);
-
-	var _windowListener = __webpack_require__(444);
-
-	var _windowListener2 = _interopRequireDefault(_windowListener);
-
-	var _customEvent = __webpack_require__(445);
-
-	var _customEvent2 = _interopRequireDefault(_customEvent);
-
-	var _isCapture = __webpack_require__(446);
-
-	var _isCapture2 = _interopRequireDefault(_isCapture);
-
-	var _getEffect = __webpack_require__(447);
-
-	var _getEffect2 = _interopRequireDefault(_getEffect);
-
-	var _getPosition = __webpack_require__(448);
-
-	var _getPosition2 = _interopRequireDefault(_getPosition);
-
-	var _getTipContent = __webpack_require__(449);
-
-	var _getTipContent2 = _interopRequireDefault(_getTipContent);
-
-	var _aria = __webpack_require__(450);
-
-	var _style = __webpack_require__(451);
-
-	var _style2 = _interopRequireDefault(_style);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var ReactTooltip = (0, _staticMethods2.default)(_class = (0, _windowListener2.default)(_class = (0, _customEvent2.default)(_class = (0, _isCapture2.default)(_class = (0, _getEffect2.default)(_class = (_temp = _class2 = function (_Component) {
-	  _inherits(ReactTooltip, _Component);
-
-	  function ReactTooltip(props) {
-	    _classCallCheck(this, ReactTooltip);
-
-	    var _this = _possibleConstructorReturn(this, (ReactTooltip.__proto__ || Object.getPrototypeOf(ReactTooltip)).call(this, props));
-
-	    _this.state = {
-	      place: 'top', // Direction of tooltip
-	      type: 'dark', // Color theme of tooltip
-	      effect: 'float', // float or fixed
-	      show: false,
-	      border: false,
-	      placeholder: '',
-	      offset: {},
-	      extraClass: '',
-	      html: false,
-	      delayHide: 0,
-	      delayShow: 0,
-	      event: props.event || null,
-	      eventOff: props.eventOff || null,
-	      currentEvent: null, // Current mouse event
-	      currentTarget: null, // Current target of mouse event
-	      ariaProps: (0, _aria.parseAria)(props), // aria- and role attributes
-	      isEmptyTip: false,
-	      disable: false
-	    };
-
-	    _this.bind(['showTooltip', 'updateTooltip', 'hideTooltip', 'globalRebuild', 'globalShow', 'globalHide', 'onWindowResize']);
-
-	    _this.mount = true;
-	    _this.delayShowLoop = null;
-	    _this.delayHideLoop = null;
-	    _this.intervalUpdateContent = null;
-	    return _this;
-	  }
-
-	  /**
-	   * For unify the bind and unbind listener
-	   */
-
-
-	  _createClass(ReactTooltip, [{
-	    key: 'bind',
-	    value: function bind(methodArray) {
-	      var _this2 = this;
-
-	      methodArray.forEach(function (method) {
-	        _this2[method] = _this2[method].bind(_this2);
-	      });
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var _props = this.props;
-	      var insecure = _props.insecure;
-	      var resizeHide = _props.resizeHide;
-
-	      if (insecure) {
-	        this.setStyleHeader(); // Set the style to the <link>
-	      }
-	      this.bindListener(); // Bind listener for tooltip
-	      this.bindWindowEvents(resizeHide); // Bind global event for static method
-	    }
-	  }, {
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(props) {
-	      var ariaProps = this.state.ariaProps;
-
-	      var newAriaProps = (0, _aria.parseAria)(props);
-
-	      var isChanged = Object.keys(newAriaProps).some(function (props) {
-	        return newAriaProps[props] !== ariaProps[props];
-	      });
-	      if (isChanged) {
-	        this.setState({ ariaProps: newAriaProps });
-	      }
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      this.mount = false;
-
-	      this.clearTimer();
-
-	      this.unbindListener();
-	      this.removeScrollListener();
-	      this.unbindWindowEvents();
-	    }
-
-	    /**
-	     * Pick out corresponded target elements
-	     */
-
-	  }, {
-	    key: 'getTargetArray',
-	    value: function getTargetArray(id) {
-	      var targetArray = void 0;
-
-	      if (!id) {
-	        targetArray = document.querySelectorAll('[data-tip]:not([data-for])');
-	      } else {
-	        targetArray = document.querySelectorAll('[data-tip][data-for="' + id + '"]');
-	      }
-
-	      // targetArray is a NodeList, convert it to a real array
-	      // I hope I can use Object.values...
-	      return Object.getOwnPropertyNames(targetArray).map(function (key) {
-	        return targetArray[key];
-	      });
-	    }
-
-	    /**
-	     * Bind listener to the target elements
-	     * These listeners used to trigger showing or hiding the tooltip
-	     */
-
-	  }, {
-	    key: 'bindListener',
-	    value: function bindListener() {
-	      var _this3 = this;
-
-	      var _props2 = this.props;
-	      var id = _props2.id;
-	      var globalEventOff = _props2.globalEventOff;
-
-	      var targetArray = this.getTargetArray(id);
-
-	      targetArray.forEach(function (target) {
-	        var isCaptureMode = _this3.isCapture(target);
-	        var effect = _this3.getEffect(target);
-	        if (target.getAttribute('currentItem') === null) {
-	          target.setAttribute('currentItem', 'false');
-	        }
-	        _this3.unbindBasicListener(target);
-
-	        if (_this3.isCustomEvent(target)) {
-	          _this3.customBindListener(target);
-	          return;
-	        }
-
-	        target.addEventListener('mouseenter', _this3.showTooltip, isCaptureMode);
-	        if (effect === 'float') {
-	          target.addEventListener('mousemove', _this3.updateTooltip, isCaptureMode);
-	        }
-	        target.addEventListener('mouseleave', _this3.hideTooltip, isCaptureMode);
-	      });
-
-	      // Global event to hide tooltip
-	      if (globalEventOff) {
-	        window.removeEventListener(globalEventOff, this.hideTooltip);
-	        window.addEventListener(globalEventOff, this.hideTooltip, false);
-	      }
-	    }
-
-	    /**
-	     * Unbind listeners on target elements
-	     */
-
-	  }, {
-	    key: 'unbindListener',
-	    value: function unbindListener() {
-	      var _this4 = this;
-
-	      var _props3 = this.props;
-	      var id = _props3.id;
-	      var globalEventOff = _props3.globalEventOff;
-
-	      var targetArray = this.getTargetArray(id);
-	      targetArray.forEach(function (target) {
-	        _this4.unbindBasicListener(target);
-	        if (_this4.isCustomEvent(target)) _this4.customUnbindListener(target);
-	      });
-
-	      if (globalEventOff) window.removeEventListener(globalEventOff, this.hideTooltip);
-	    }
-
-	    /**
-	     * Invoke this before bind listener and ummount the compont
-	     * it is necessary to invloke this even when binding custom event
-	     * so that the tooltip can switch between custom and default listener
-	     */
-
-	  }, {
-	    key: 'unbindBasicListener',
-	    value: function unbindBasicListener(target) {
-	      var isCaptureMode = this.isCapture(target);
-	      target.removeEventListener('mouseenter', this.showTooltip, isCaptureMode);
-	      target.removeEventListener('mousemove', this.updateTooltip, isCaptureMode);
-	      target.removeEventListener('mouseleave', this.hideTooltip, isCaptureMode);
-	    }
-
-	    /**
-	     * When mouse enter, show the tooltip
-	     */
-
-	  }, {
-	    key: 'showTooltip',
-	    value: function showTooltip(e, isGlobalCall) {
-	      var _this5 = this;
-
-	      if (isGlobalCall) {
-	        // Don't trigger other elements belongs to other ReactTooltip
-	        var targetArray = this.getTargetArray(this.props.id);
-	        var isMyElement = targetArray.some(function (ele) {
-	          return ele === e.currentTarget;
-	        });
-	        if (!isMyElement || this.state.show) return;
-	      }
-	      // Get the tooltip content
-	      // calculate in this phrase so that tip width height can be detected
-	      var _props4 = this.props;
-	      var children = _props4.children;
-	      var multiline = _props4.multiline;
-	      var getContent = _props4.getContent;
-
-	      var originTooltip = e.currentTarget.getAttribute('data-tip');
-	      var isMultiline = e.currentTarget.getAttribute('data-multiline') || multiline || false;
-
-	      // Generate tootlip content
-	      var content = void 0;
-	      if (getContent) {
-	        if (Array.isArray(getContent)) {
-	          content = getContent[0] && getContent[0]();
-	        } else {
-	          content = getContent();
-	        }
-	      }
-	      var placeholder = (0, _getTipContent2.default)(originTooltip, children, content, isMultiline);
-	      var isEmptyTip = typeof placeholder === 'string' && placeholder === '' || placeholder === null;
-
-	      // If it is focus event or called by ReactTooltip.show, switch to `solid` effect
-	      var switchToSolid = e instanceof window.FocusEvent || isGlobalCall;
-
-	      // if it need to skip adding hide listener to scroll
-	      var scrollHide = true;
-	      if (e.currentTarget.getAttribute('data-scroll-hide')) {
-	        scrollHide = e.currentTarget.getAttribute('data-scroll-hide') === 'true';
-	      } else if (this.props.scrollHide != null) {
-	        scrollHide = this.props.scrollHide;
-	      }
-
-	      // To prevent previously created timers from triggering
-	      this.clearTimer();
-
-	      this.setState({
-	        placeholder: placeholder,
-	        isEmptyTip: isEmptyTip,
-	        place: e.currentTarget.getAttribute('data-place') || this.props.place || 'top',
-	        type: e.currentTarget.getAttribute('data-type') || this.props.type || 'dark',
-	        effect: switchToSolid && 'solid' || this.getEffect(e.currentTarget),
-	        offset: e.currentTarget.getAttribute('data-offset') || this.props.offset || {},
-	        html: e.currentTarget.getAttribute('data-html') ? e.currentTarget.getAttribute('data-html') === 'true' : this.props.html || false,
-	        delayShow: e.currentTarget.getAttribute('data-delay-show') || this.props.delayShow || 0,
-	        delayHide: e.currentTarget.getAttribute('data-delay-hide') || this.props.delayHide || 0,
-	        border: e.currentTarget.getAttribute('data-border') ? e.currentTarget.getAttribute('data-border') === 'true' : this.props.border || false,
-	        extraClass: e.currentTarget.getAttribute('data-class') || this.props.class || '',
-	        disable: e.currentTarget.getAttribute('data-tip-disable') ? e.currentTarget.getAttribute('data-tip-disable') === 'true' : this.props.disable || false
-	      }, function () {
-	        if (scrollHide) _this5.addScrollListener(e);
-	        _this5.updateTooltip(e);
-
-	        if (getContent && Array.isArray(getContent)) {
-	          _this5.intervalUpdateContent = setInterval(function () {
-	            if (_this5.mount) {
-	              var _getContent = _this5.props.getContent;
-
-	              var _placeholder = (0, _getTipContent2.default)(originTooltip, _getContent[0](), isMultiline);
-	              var _isEmptyTip = typeof _placeholder === 'string' && _placeholder === '';
-	              _this5.setState({
-	                placeholder: _placeholder,
-	                isEmptyTip: _isEmptyTip
-	              });
-	            }
-	          }, getContent[1]);
-	        }
-	      });
-	    }
-
-	    /**
-	     * When mouse hover, updatetooltip
-	     */
-
-	  }, {
-	    key: 'updateTooltip',
-	    value: function updateTooltip(e) {
-	      var _this6 = this;
-
-	      var _state = this.state;
-	      var delayShow = _state.delayShow;
-	      var show = _state.show;
-	      var isEmptyTip = _state.isEmptyTip;
-	      var disable = _state.disable;
-	      var afterShow = this.props.afterShow;
-	      var placeholder = this.state.placeholder;
-
-	      var delayTime = show ? 0 : parseInt(delayShow, 10);
-	      var eventTarget = e.currentTarget;
-
-	      if (isEmptyTip || disable) return; // if the tooltip is empty, disable the tooltip
-	      var updateState = function updateState() {
-	        if (Array.isArray(placeholder) && placeholder.length > 0 || placeholder) {
-	          (function () {
-	            var isInvisible = !_this6.state.show;
-	            _this6.setState({
-	              currentEvent: e,
-	              currentTarget: eventTarget,
-	              show: true
-	            }, function () {
-	              _this6.updatePosition();
-	              if (isInvisible && afterShow) afterShow();
-	            });
-	          })();
-	        }
-	      };
-
-	      clearTimeout(this.delayShowLoop);
-	      if (delayShow) {
-	        this.delayShowLoop = setTimeout(updateState, delayTime);
-	      } else {
-	        updateState();
-	      }
-	    }
-
-	    /**
-	     * When mouse leave, hide tooltip
-	     */
-
-	  }, {
-	    key: 'hideTooltip',
-	    value: function hideTooltip(e, hasTarget) {
-	      var _this7 = this;
-
-	      var _state2 = this.state;
-	      var delayHide = _state2.delayHide;
-	      var isEmptyTip = _state2.isEmptyTip;
-	      var disable = _state2.disable;
-	      var afterHide = this.props.afterHide;
-
-	      if (!this.mount) return;
-	      if (isEmptyTip || disable) return; // if the tooltip is empty, disable the tooltip
-	      if (hasTarget) {
-	        // Don't trigger other elements belongs to other ReactTooltip
-	        var targetArray = this.getTargetArray(this.props.id);
-	        var isMyElement = targetArray.some(function (ele) {
-	          return ele === e.currentTarget;
-	        });
-	        if (!isMyElement || !this.state.show) return;
-	      }
-	      var resetState = function resetState() {
-	        var isVisible = _this7.state.show;
-	        _this7.setState({
-	          show: false
-	        }, function () {
-	          _this7.removeScrollListener();
-	          if (isVisible && afterHide) afterHide();
-	        });
-	      };
-
-	      this.clearTimer();
-	      if (delayHide) {
-	        this.delayHideLoop = setTimeout(resetState, parseInt(delayHide, 10));
-	      } else {
-	        resetState();
-	      }
-	    }
-
-	    /**
-	     * Add scroll eventlistener when tooltip show
-	     * automatically hide the tooltip when scrolling
-	     */
-
-	  }, {
-	    key: 'addScrollListener',
-	    value: function addScrollListener(e) {
-	      var isCaptureMode = this.isCapture(e.currentTarget);
-	      window.addEventListener('scroll', this.hideTooltip, isCaptureMode);
-	    }
-	  }, {
-	    key: 'removeScrollListener',
-	    value: function removeScrollListener() {
-	      window.removeEventListener('scroll', this.hideTooltip);
-	    }
-
-	    // Calculation the position
-
-	  }, {
-	    key: 'updatePosition',
-	    value: function updatePosition() {
-	      var _this8 = this;
-
-	      var _state3 = this.state;
-	      var currentEvent = _state3.currentEvent;
-	      var currentTarget = _state3.currentTarget;
-	      var place = _state3.place;
-	      var effect = _state3.effect;
-	      var offset = _state3.offset;
-
-	      var node = _reactDom2.default.findDOMNode(this);
-	      var result = (0, _getPosition2.default)(currentEvent, currentTarget, node, place, effect, offset);
-
-	      if (result.isNewState) {
-	        // Switch to reverse placement
-	        return this.setState(result.newState, function () {
-	          _this8.updatePosition();
-	        });
-	      }
-	      // Set tooltip position
-	      node.style.left = result.position.left + 'px';
-	      node.style.top = result.position.top + 'px';
-	    }
-
-	    /**
-	     * Set style tag in header
-	     * in this way we can insert default css
-	     */
-
-	  }, {
-	    key: 'setStyleHeader',
-	    value: function setStyleHeader() {
-	      if (!document.getElementsByTagName('head')[0].querySelector('style[id="react-tooltip"]')) {
-	        var tag = document.createElement('style');
-	        tag.id = 'react-tooltip';
-	        tag.innerHTML = _style2.default;
-	        document.getElementsByTagName('head')[0].appendChild(tag);
-	      }
-	    }
-
-	    /**
-	     * CLear all kinds of timeout of interval
-	     */
-
-	  }, {
-	    key: 'clearTimer',
-	    value: function clearTimer() {
-	      clearTimeout(this.delayShowLoop);
-	      clearTimeout(this.delayHideLoop);
-	      clearInterval(this.intervalUpdateContent);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _state4 = this.state;
-	      var placeholder = _state4.placeholder;
-	      var extraClass = _state4.extraClass;
-	      var html = _state4.html;
-	      var ariaProps = _state4.ariaProps;
-	      var disable = _state4.disable;
-	      var isEmptyTip = _state4.isEmptyTip;
-
-	      var tooltipClass = (0, _classnames2.default)('__react_component_tooltip', { 'show': this.state.show && !disable && !isEmptyTip }, { 'border': this.state.border }, { 'place-top': this.state.place === 'top' }, { 'place-bottom': this.state.place === 'bottom' }, { 'place-left': this.state.place === 'left' }, { 'place-right': this.state.place === 'right' }, { 'type-dark': this.state.type === 'dark' }, { 'type-success': this.state.type === 'success' }, { 'type-warning': this.state.type === 'warning' }, { 'type-error': this.state.type === 'error' }, { 'type-info': this.state.type === 'info' }, { 'type-light': this.state.type === 'light' });
-
-	      var wrapper = ReactTooltip.supportedWrappers[this.props.wrapper];
-	      if (!wrapper) wrapper = ReactTooltip.supportedWrappers['div'];
-
-	      if (html) {
-	        return _react2.default.createElement('wrapper', _extends({ className: tooltipClass + ' ' + extraClass
-	        }, ariaProps, {
-	          'data-id': 'tooltip',
-	          dangerouslySetInnerHTML: { __html: placeholder } }));
-	      } else {
-	        return _react2.default.createElement(
-	          'wrapper',
-	          _extends({ className: tooltipClass + ' ' + extraClass
-	          }, ariaProps, {
-	            'data-id': 'tooltip' }),
-	          placeholder
-	        );
-	      }
-	    }
-	  }]);
-
-	  return ReactTooltip;
-	}(_react.Component), _class2.propTypes = {
-	  children: _react.PropTypes.any,
-	  place: _react.PropTypes.string,
-	  type: _react.PropTypes.string,
-	  effect: _react.PropTypes.string,
-	  offset: _react.PropTypes.object,
-	  multiline: _react.PropTypes.bool,
-	  border: _react.PropTypes.bool,
-	  insecure: _react.PropTypes.bool,
-	  class: _react.PropTypes.string,
-	  id: _react.PropTypes.string,
-	  html: _react.PropTypes.bool,
-	  delayHide: _react.PropTypes.number,
-	  delayShow: _react.PropTypes.number,
-	  event: _react.PropTypes.string,
-	  eventOff: _react.PropTypes.string,
-	  watchWindow: _react.PropTypes.bool,
-	  isCapture: _react.PropTypes.bool,
-	  globalEventOff: _react.PropTypes.string,
-	  getContent: _react.PropTypes.any,
-	  afterShow: _react.PropTypes.func,
-	  afterHide: _react.PropTypes.func,
-	  disable: _react.PropTypes.bool,
-	  scrollHide: _react.PropTypes.bool,
-	  resizeHide: _react.PropTypes.bool,
-	  wrapper: _react.PropTypes.string
-	}, _class2.defaultProps = {
-	  insecure: true,
-	  resizeHide: true,
-	  wrapper: 'div'
-	}, _class2.supportedWrappers = {
-	  'div': _react2.default.DOM.div,
-	  'span': _react2.default.DOM.span
-	}, _temp)) || _class) || _class) || _class) || _class) || _class;
-
-	/* export default not fit for standalone, it will exports {default:...} */
-
-
-	module.exports = ReactTooltip;
-
-/***/ },
-/* 441 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	  Copyright (c) 2016 Jed Watson.
-	  Licensed under the MIT License (MIT), see
-	  http://jedwatson.github.io/classnames
-	*/
-	/* global define */
-
-	(function () {
-		'use strict';
-
-		var hasOwn = {}.hasOwnProperty;
-
-		function classNames () {
-			var classes = [];
-
-			for (var i = 0; i < arguments.length; i++) {
-				var arg = arguments[i];
-				if (!arg) continue;
-
-				var argType = typeof arg;
-
-				if (argType === 'string' || argType === 'number') {
-					classes.push(arg);
-				} else if (Array.isArray(arg)) {
-					classes.push(classNames.apply(null, arg));
-				} else if (argType === 'object') {
-					for (var key in arg) {
-						if (hasOwn.call(arg, key) && arg[key]) {
-							classes.push(key);
-						}
-					}
-				}
-			}
-
-			return classes.join(' ');
-		}
-
-		if (typeof module !== 'undefined' && module.exports) {
-			module.exports = classNames;
-		} else if (true) {
-			// register as 'classnames', consistent with npm package name
-			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
-				return classNames;
-			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-		} else {
-			window.classNames = classNames;
-		}
-	}());
-
-
-/***/ },
-/* 442 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	exports.default = function (target) {
-	  /**
-	   * Hide all tooltip
-	   * @trigger ReactTooltip.hide()
-	   */
-	  target.hide = function (target) {
-	    dispatchGlobalEvent(_constant2.default.GLOBAL.HIDE, { target: target });
-	  };
-
-	  /**
-	   * Rebuild all tooltip
-	   * @trigger ReactTooltip.rebuild()
-	   */
-	  target.rebuild = function () {
-	    dispatchGlobalEvent(_constant2.default.GLOBAL.REBUILD);
-	  };
-
-	  /**
-	   * Show specific tooltip
-	   * @trigger ReactTooltip.show()
-	   */
-	  target.show = function (target) {
-	    dispatchGlobalEvent(_constant2.default.GLOBAL.SHOW, { target: target });
-	  };
-
-	  target.prototype.globalRebuild = function () {
-	    if (this.mount) {
-	      this.unbindListener();
-	      this.bindListener();
-	    }
-	  };
-
-	  target.prototype.globalShow = function (event) {
-	    if (this.mount) {
-	      // Create a fake event, specific show will limit the type to `solid`
-	      // only `float` type cares e.clientX e.clientY
-	      var e = { currentTarget: event.detail.target };
-	      this.showTooltip(e, true);
-	    }
-	  };
-
-	  target.prototype.globalHide = function (event) {
-	    if (this.mount) {
-	      var hasTarget = event && event.detail && event.detail.target && true || false;
-	      this.hideTooltip({ currentTarget: hasTarget && event.detail.target }, hasTarget);
-	    }
-	  };
-	};
-
-	var _constant = __webpack_require__(443);
-
-	var _constant2 = _interopRequireDefault(_constant);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var dispatchGlobalEvent = function dispatchGlobalEvent(eventName, opts) {
-	  // Compatibale with IE
-	  // @see http://stackoverflow.com/questions/26596123/internet-explorer-9-10-11-event-constructor-doesnt-work
-	  var event = void 0;
-
-	  if (typeof window.CustomEvent === 'function') {
-	    event = new window.CustomEvent(eventName, { detail: opts });
-	  } else {
-	    event = document.createEvent('Event');
-	    event.initEvent(eventName, false, true);
-	    event.detail = opts;
-	  }
-
-	  window.dispatchEvent(event);
-	}; /**
-	    * Static methods for react-tooltip
-	    */
-
-/***/ },
-/* 443 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = {
-
-	  GLOBAL: {
-	    HIDE: '__react_tooltip_hide_event',
-	    REBUILD: '__react_tooltip_rebuild_event',
-	    SHOW: '__react_tooltip_show_event'
-	  }
-	};
-
-/***/ },
-/* 444 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	exports.default = function (target) {
-	  target.prototype.bindWindowEvents = function (resizeHide) {
-	    // ReactTooltip.hide
-	    window.removeEventListener(_constant2.default.GLOBAL.HIDE, this.globalHide);
-	    window.addEventListener(_constant2.default.GLOBAL.HIDE, this.globalHide, false);
-
-	    // ReactTooltip.rebuild
-	    window.removeEventListener(_constant2.default.GLOBAL.REBUILD, this.globalRebuild);
-	    window.addEventListener(_constant2.default.GLOBAL.REBUILD, this.globalRebuild, false);
-
-	    // ReactTooltip.show
-	    window.removeEventListener(_constant2.default.GLOBAL.SHOW, this.globalShow);
-	    window.addEventListener(_constant2.default.GLOBAL.SHOW, this.globalShow, false);
-
-	    // Resize
-	    if (resizeHide) {
-	      window.removeEventListener('resize', this.onWindowResize);
-	      window.addEventListener('resize', this.onWindowResize, false);
-	    }
-	  };
-
-	  target.prototype.unbindWindowEvents = function () {
-	    window.removeEventListener(_constant2.default.GLOBAL.HIDE, this.globalHide);
-	    window.removeEventListener(_constant2.default.GLOBAL.REBUILD, this.globalRebuild);
-	    window.removeEventListener(_constant2.default.GLOBAL.SHOW, this.globalShow);
-	    window.removeEventListener('resize', this.onWindowResize);
-	  };
-
-	  /**
-	   * invoked by resize event of window
-	   */
-	  target.prototype.onWindowResize = function () {
-	    if (!this.mount) return;
-	    this.hideTooltip();
-	  };
-	};
-
-	var _constant = __webpack_require__(443);
-
-	var _constant2 = _interopRequireDefault(_constant);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/***/ },
-/* 445 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	exports.default = function (target) {
-	  target.prototype.isCustomEvent = function (ele) {
-	    var event = this.state.event;
-
-	    return event || !!ele.getAttribute('data-event');
-	  };
-
-	  /* Bind listener for custom event */
-	  target.prototype.customBindListener = function (ele) {
-	    var _this = this;
-
-	    var _state = this.state;
-	    var event = _state.event;
-	    var eventOff = _state.eventOff;
-
-	    var dataEvent = ele.getAttribute('data-event') || event;
-	    var dataEventOff = ele.getAttribute('data-event-off') || eventOff;
-
-	    dataEvent.split(' ').forEach(function (event) {
-	      ele.removeEventListener(event, customListener);
-	      customListener = checkStatus.bind(_this, dataEventOff);
-	      ele.addEventListener(event, customListener, false);
-	    });
-	    if (dataEventOff) {
-	      dataEventOff.split(' ').forEach(function (event) {
-	        ele.removeEventListener(event, _this.hideTooltip);
-	        ele.addEventListener(event, _this.hideTooltip, false);
-	      });
-	    }
-	  };
-
-	  /* Unbind listener for custom event */
-	  target.prototype.customUnbindListener = function (ele) {
-	    var _state2 = this.state;
-	    var event = _state2.event;
-	    var eventOff = _state2.eventOff;
-
-	    var dataEvent = event || ele.getAttribute('data-event');
-	    var dataEventOff = eventOff || ele.getAttribute('data-event-off');
-
-	    ele.removeEventListener(dataEvent, customListener);
-	    if (dataEventOff) ele.removeEventListener(dataEventOff, this.hideTooltip);
-	  };
-	};
-
-	/**
-	 * Custom events to control showing and hiding of tooltip
-	 *
-	 * @attributes
-	 * - `event` {String}
-	 * - `eventOff` {String}
-	 */
-
-	var checkStatus = function checkStatus(dataEventOff, e) {
-	  var show = this.state.show;
-	  var id = this.props.id;
-
-	  var dataIsCapture = e.currentTarget.getAttribute('data-iscapture');
-	  var isCapture = dataIsCapture && dataIsCapture === 'true' || this.props.isCapture;
-	  var currentItem = e.currentTarget.getAttribute('currentItem');
-
-	  if (!isCapture) e.stopPropagation();
-	  if (show && currentItem === 'true') {
-	    if (!dataEventOff) this.hideTooltip(e);
-	  } else {
-	    e.currentTarget.setAttribute('currentItem', 'true');
-	    setUntargetItems(e.currentTarget, this.getTargetArray(id));
-	    this.showTooltip(e);
-	  }
-	};
-
-	var setUntargetItems = function setUntargetItems(currentTarget, targetArray) {
-	  for (var i = 0; i < targetArray.length; i++) {
-	    if (currentTarget !== targetArray[i]) {
-	      targetArray[i].setAttribute('currentItem', 'false');
-	    } else {
-	      targetArray[i].setAttribute('currentItem', 'true');
-	    }
-	  }
-	};
-
-	var customListener = void 0;
-
-/***/ },
-/* 446 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	exports.default = function (target) {
-	  target.prototype.isCapture = function (currentTarget) {
-	    var dataIsCapture = currentTarget.getAttribute('data-iscapture');
-	    return dataIsCapture && dataIsCapture === 'true' || this.props.isCapture || false;
-	  };
-	};
-
-/***/ },
-/* 447 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	exports.default = function (target) {
-	  target.prototype.getEffect = function (currentTarget) {
-	    var dataEffect = currentTarget.getAttribute('data-effect');
-	    return dataEffect || this.props.effect || 'float';
-	  };
-	};
-
-/***/ },
-/* 448 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	exports.default = function (e, target, node, place, effect, offset) {
-	  var tipWidth = node.clientWidth;
-	  var tipHeight = node.clientHeight;
-
-	  var _getCurrentOffset = getCurrentOffset(e, target, effect);
-
-	  var mouseX = _getCurrentOffset.mouseX;
-	  var mouseY = _getCurrentOffset.mouseY;
-
-	  var defaultOffset = getDefaultPosition(effect, target.clientWidth, target.clientHeight, tipWidth, tipHeight);
-
-	  var _calculateOffset = calculateOffset(offset);
-
-	  var extraOffset_X = _calculateOffset.extraOffset_X;
-	  var extraOffset_Y = _calculateOffset.extraOffset_Y;
-
-
-	  var windowWidth = window.innerWidth;
-	  var windowHeight = window.innerHeight;
-
-	  var _getParent = getParent(node);
-
-	  var parentTop = _getParent.parentTop;
-	  var parentLeft = _getParent.parentLeft;
-
-	  // Get the edge offset of the tooltip
-
-	  var getTipOffsetLeft = function getTipOffsetLeft(place) {
-	    var offset_X = defaultOffset[place].l;
-	    return mouseX + offset_X + extraOffset_X;
-	  };
-	  var getTipOffsetRight = function getTipOffsetRight(place) {
-	    var offset_X = defaultOffset[place].r;
-	    return mouseX + offset_X + extraOffset_X;
-	  };
-	  var getTipOffsetTop = function getTipOffsetTop(place) {
-	    var offset_Y = defaultOffset[place].t;
-	    return mouseY + offset_Y + extraOffset_Y;
-	  };
-	  var getTipOffsetBottom = function getTipOffsetBottom(place) {
-	    var offset_Y = defaultOffset[place].b;
-	    return mouseY + offset_Y + extraOffset_Y;
-	  };
-
-	  // Judge if the tooltip has over the window(screen)
-	  var outsideVertical = function outsideVertical() {
-	    var result = false;
-	    var newPlace = void 0;
-	    if (getTipOffsetTop('left') < 0 && getTipOffsetBottom('left') <= windowHeight && getTipOffsetBottom('bottom') <= windowHeight) {
-	      result = true;
-	      newPlace = 'bottom';
-	    } else if (getTipOffsetBottom('left') > windowHeight && getTipOffsetTop('left') >= 0 && getTipOffsetTop('top') >= 0) {
-	      result = true;
-	      newPlace = 'top';
-	    }
-	    return { result: result, newPlace: newPlace };
-	  };
-	  var outsideLeft = function outsideLeft() {
-	    var _outsideVertical = outsideVertical();
-
-	    var result = _outsideVertical.result;
-	    var newPlace = _outsideVertical.newPlace; // Deal with vertical as first priority
-
-	    if (result && outsideHorizontal().result) {
-	      return { result: false }; // No need to change, if change to vertical will out of space
-	    }
-	    if (!result && getTipOffsetLeft('left') < 0 && getTipOffsetRight('right') <= windowWidth) {
-	      result = true; // If vertical ok, but let out of side and right won't out of side
-	      newPlace = 'right';
-	    }
-	    return { result: result, newPlace: newPlace };
-	  };
-	  var outsideRight = function outsideRight() {
-	    var _outsideVertical2 = outsideVertical();
-
-	    var result = _outsideVertical2.result;
-	    var newPlace = _outsideVertical2.newPlace;
-
-	    if (result && outsideHorizontal().result) {
-	      return { result: false }; // No need to change, if change to vertical will out of space
-	    }
-	    if (!result && getTipOffsetRight('right') > windowWidth && getTipOffsetLeft('left') >= 0) {
-	      result = true;
-	      newPlace = 'left';
-	    }
-	    return { result: result, newPlace: newPlace };
-	  };
-
-	  var outsideHorizontal = function outsideHorizontal() {
-	    var result = false;
-	    var newPlace = void 0;
-	    if (getTipOffsetLeft('top') < 0 && getTipOffsetRight('top') <= windowWidth && getTipOffsetRight('right') <= windowWidth) {
-	      result = true;
-	      newPlace = 'right';
-	    } else if (getTipOffsetRight('top') > windowWidth && getTipOffsetLeft('top') >= 0 && getTipOffsetLeft('left') >= 0) {
-	      result = true;
-	      newPlace = 'left';
-	    }
-	    return { result: result, newPlace: newPlace };
-	  };
-	  var outsideTop = function outsideTop() {
-	    var _outsideHorizontal = outsideHorizontal();
-
-	    var result = _outsideHorizontal.result;
-	    var newPlace = _outsideHorizontal.newPlace;
-
-	    if (result && outsideVertical().result) {
-	      return { result: false };
-	    }
-	    if (!result && getTipOffsetTop('top') < 0 && getTipOffsetBottom('bottom') <= windowHeight) {
-	      result = true;
-	      newPlace = 'bottom';
-	    }
-	    return { result: result, newPlace: newPlace };
-	  };
-	  var outsideBottom = function outsideBottom() {
-	    var _outsideHorizontal2 = outsideHorizontal();
-
-	    var result = _outsideHorizontal2.result;
-	    var newPlace = _outsideHorizontal2.newPlace;
-
-	    if (result && outsideVertical().result) {
-	      return { result: false };
-	    }
-	    if (!result && getTipOffsetBottom('bottom') > windowHeight && getTipOffsetTop('top') >= 0) {
-	      result = true;
-	      newPlace = 'top';
-	    }
-	    return { result: result, newPlace: newPlace };
-	  };
-
-	  // Return new state to change the placement to the reverse if possible
-	  var outsideLeftResult = outsideLeft();
-	  var outsideRightResult = outsideRight();
-	  var outsideTopResult = outsideTop();
-	  var outsideBottomResult = outsideBottom();
-
-	  if (place === 'left' && outsideLeftResult.result) {
-	    return {
-	      isNewState: true,
-	      newState: { place: outsideLeftResult.newPlace }
-	    };
-	  } else if (place === 'right' && outsideRightResult.result) {
-	    return {
-	      isNewState: true,
-	      newState: { place: outsideRightResult.newPlace }
-	    };
-	  } else if (place === 'top' && outsideTopResult.result) {
-	    return {
-	      isNewState: true,
-	      newState: { place: outsideTopResult.newPlace }
-	    };
-	  } else if (place === 'bottom' && outsideBottomResult.result) {
-	    return {
-	      isNewState: true,
-	      newState: { place: outsideBottomResult.newPlace }
-	    };
-	  }
-
-	  // Return tooltip offset position
-	  return {
-	    isNewState: false,
-	    position: {
-	      left: parseInt(getTipOffsetLeft(place) - parentLeft, 10),
-	      top: parseInt(getTipOffsetTop(place) - parentTop, 10)
-	    }
-	  };
-	};
-
-	// Get current mouse offset
-	var getCurrentOffset = function getCurrentOffset(e, currentTarget, effect) {
-	  var boundingClientRect = currentTarget.getBoundingClientRect();
-	  var targetTop = boundingClientRect.top;
-	  var targetLeft = boundingClientRect.left;
-	  var targetWidth = currentTarget.clientWidth;
-	  var targetHeight = currentTarget.clientHeight;
-
-	  if (effect === 'float') {
-	    return {
-	      mouseX: e.clientX,
-	      mouseY: e.clientY
-	    };
-	  }
-	  return {
-	    mouseX: targetLeft + targetWidth / 2,
-	    mouseY: targetTop + targetHeight / 2
-	  };
-	};
-
-	// List all possibility of tooltip final offset
-	// This is useful in judging if it is necessary for tooltip to switch position when out of window
-	/**
-	 * Calculate the position of tooltip
-	 *
-	 * @params
-	 * - `e` {Event} the event of current mouse
-	 * - `target` {Element} the currentTarget of the event
-	 * - `node` {DOM} the react-tooltip object
-	 * - `place` {String} top / right / bottom / left
-	 * - `effect` {String} float / solid
-	 * - `offset` {Object} the offset to default position
-	 *
-	 * @return {Object
-	 * - `isNewState` {Bool} required
-	 * - `newState` {Object}
-	 * - `position` {OBject} {left: {Number}, top: {Number}}
-	 */
-	var getDefaultPosition = function getDefaultPosition(effect, targetWidth, targetHeight, tipWidth, tipHeight) {
-	  var top = void 0;
-	  var right = void 0;
-	  var bottom = void 0;
-	  var left = void 0;
-	  var disToMouse = 3;
-	  var triangleHeight = 2;
-	  var cursorHeight = 12; // Optimize for float bottom only, cause the cursor will hide the tooltip
-
-	  if (effect === 'float') {
-	    top = {
-	      l: -(tipWidth / 2),
-	      r: tipWidth / 2,
-	      t: -(tipHeight + disToMouse + triangleHeight),
-	      b: -disToMouse
-	    };
-	    bottom = {
-	      l: -(tipWidth / 2),
-	      r: tipWidth / 2,
-	      t: disToMouse + cursorHeight,
-	      b: tipHeight + disToMouse + triangleHeight + cursorHeight
-	    };
-	    left = {
-	      l: -(tipWidth + disToMouse + triangleHeight),
-	      r: -disToMouse,
-	      t: -(tipHeight / 2),
-	      b: tipHeight / 2
-	    };
-	    right = {
-	      l: disToMouse,
-	      r: tipWidth + disToMouse + triangleHeight,
-	      t: -(tipHeight / 2),
-	      b: tipHeight / 2
-	    };
-	  } else if (effect === 'solid') {
-	    top = {
-	      l: -(tipWidth / 2),
-	      r: tipWidth / 2,
-	      t: -(targetHeight / 2 + tipHeight + triangleHeight),
-	      b: -(targetHeight / 2)
-	    };
-	    bottom = {
-	      l: -(tipWidth / 2),
-	      r: tipWidth / 2,
-	      t: targetHeight / 2,
-	      b: targetHeight / 2 + tipHeight + triangleHeight
-	    };
-	    left = {
-	      l: -(tipWidth + targetWidth / 2 + triangleHeight),
-	      r: -(targetWidth / 2),
-	      t: -(tipHeight / 2),
-	      b: tipHeight / 2
-	    };
-	    right = {
-	      l: targetWidth / 2,
-	      r: tipWidth + targetWidth / 2 + triangleHeight,
-	      t: -(tipHeight / 2),
-	      b: tipHeight / 2
-	    };
-	  }
-
-	  return { top: top, bottom: bottom, left: left, right: right };
-	};
-
-	// Consider additional offset into position calculation
-	var calculateOffset = function calculateOffset(offset) {
-	  var extraOffset_X = 0;
-	  var extraOffset_Y = 0;
-
-	  if (Object.prototype.toString.apply(offset) === '[object String]') {
-	    offset = JSON.parse(offset.toString().replace(/\'/g, '\"'));
-	  }
-	  for (var key in offset) {
-	    if (key === 'top') {
-	      extraOffset_Y -= parseInt(offset[key], 10);
-	    } else if (key === 'bottom') {
-	      extraOffset_Y += parseInt(offset[key], 10);
-	    } else if (key === 'left') {
-	      extraOffset_X -= parseInt(offset[key], 10);
-	    } else if (key === 'right') {
-	      extraOffset_X += parseInt(offset[key], 10);
-	    }
-	  }
-
-	  return { extraOffset_X: extraOffset_X, extraOffset_Y: extraOffset_Y };
-	};
-
-	// Get the offset of the parent elements
-	var getParent = function getParent(currentTarget) {
-	  var currentParent = currentTarget;
-	  while (currentParent) {
-	    if (window.getComputedStyle(currentParent).getPropertyValue('transform') !== 'none') break;
-	    currentParent = currentParent.parentElement;
-	  }
-
-	  var parentTop = currentParent && currentParent.getBoundingClientRect().top || 0;
-	  var parentLeft = currentParent && currentParent.getBoundingClientRect().left || 0;
-
-	  return { parentTop: parentTop, parentLeft: parentLeft };
-	};
-
-/***/ },
-/* 449 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	exports.default = function (tip, children, getContent, multiline) {
-	  if (children) return children;
-	  if (getContent !== undefined && getContent !== null) return getContent; // getContent can be 0, '', etc.
-	  if (getContent === null) return null; // Tip not exist and childern is null or undefined
-
-	  var regexp = /<br\s*\/?>/;
-	  if (!multiline || multiline === 'false' || !regexp.test(tip)) {
-	    // No trim(), so that user can keep their input
-	    return tip;
-	  }
-
-	  // Multiline tooltip content
-	  return tip.split(regexp).map(function (d, i) {
-	    return _react2.default.createElement(
-	      'span',
-	      { key: i, className: 'multi-line' },
-	      d
-	    );
-	  });
-	};
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/***/ },
-/* 450 */
-/***/ function(module, exports) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.parseAria = parseAria;
-	/**
-	 * Support aria- and role in ReactTooltip
-	 *
-	 * @params props {Object}
-	 * @return {Object}
-	 */
-	function parseAria(props) {
-	  var ariaObj = {};
-	  Object.keys(props).filter(function (prop) {
-	    // aria-xxx and role is acceptable
-	    return (/(^aria-\w+$|^role$)/.test(prop)
-	    );
-	  }).forEach(function (prop) {
-	    ariaObj[prop] = props[prop];
-	  });
-
-	  return ariaObj;
-	}
-
-/***/ },
-/* 451 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = '.__react_component_tooltip{border-radius:3px;display:inline-block;font-size:13px;left:-999em;opacity:0;padding:8px 21px;position:fixed;pointer-events:none;transition:opacity 0.3s ease-out;top:-999em;visibility:hidden;z-index:999}.__react_component_tooltip:before,.__react_component_tooltip:after{content:"";width:0;height:0;position:absolute}.__react_component_tooltip.show{opacity:0.9;margin-top:0px;margin-left:0px;visibility:visible}.__react_component_tooltip.type-dark{color:#fff;background-color:#222}.__react_component_tooltip.type-dark.place-top:after{border-top-color:#222;border-top-style:solid;border-top-width:6px}.__react_component_tooltip.type-dark.place-bottom:after{border-bottom-color:#222;border-bottom-style:solid;border-bottom-width:6px}.__react_component_tooltip.type-dark.place-left:after{border-left-color:#222;border-left-style:solid;border-left-width:6px}.__react_component_tooltip.type-dark.place-right:after{border-right-color:#222;border-right-style:solid;border-right-width:6px}.__react_component_tooltip.type-dark.border{border:1px solid #fff}.__react_component_tooltip.type-dark.border.place-top:before{border-top:8px solid #fff}.__react_component_tooltip.type-dark.border.place-bottom:before{border-bottom:8px solid #fff}.__react_component_tooltip.type-dark.border.place-left:before{border-left:8px solid #fff}.__react_component_tooltip.type-dark.border.place-right:before{border-right:8px solid #fff}.__react_component_tooltip.type-success{color:#fff;background-color:#8DC572}.__react_component_tooltip.type-success.place-top:after{border-top-color:#8DC572;border-top-style:solid;border-top-width:6px}.__react_component_tooltip.type-success.place-bottom:after{border-bottom-color:#8DC572;border-bottom-style:solid;border-bottom-width:6px}.__react_component_tooltip.type-success.place-left:after{border-left-color:#8DC572;border-left-style:solid;border-left-width:6px}.__react_component_tooltip.type-success.place-right:after{border-right-color:#8DC572;border-right-style:solid;border-right-width:6px}.__react_component_tooltip.type-success.border{border:1px solid #fff}.__react_component_tooltip.type-success.border.place-top:before{border-top:8px solid #fff}.__react_component_tooltip.type-success.border.place-bottom:before{border-bottom:8px solid #fff}.__react_component_tooltip.type-success.border.place-left:before{border-left:8px solid #fff}.__react_component_tooltip.type-success.border.place-right:before{border-right:8px solid #fff}.__react_component_tooltip.type-warning{color:#fff;background-color:#F0AD4E}.__react_component_tooltip.type-warning.place-top:after{border-top-color:#F0AD4E;border-top-style:solid;border-top-width:6px}.__react_component_tooltip.type-warning.place-bottom:after{border-bottom-color:#F0AD4E;border-bottom-style:solid;border-bottom-width:6px}.__react_component_tooltip.type-warning.place-left:after{border-left-color:#F0AD4E;border-left-style:solid;border-left-width:6px}.__react_component_tooltip.type-warning.place-right:after{border-right-color:#F0AD4E;border-right-style:solid;border-right-width:6px}.__react_component_tooltip.type-warning.border{border:1px solid #fff}.__react_component_tooltip.type-warning.border.place-top:before{border-top:8px solid #fff}.__react_component_tooltip.type-warning.border.place-bottom:before{border-bottom:8px solid #fff}.__react_component_tooltip.type-warning.border.place-left:before{border-left:8px solid #fff}.__react_component_tooltip.type-warning.border.place-right:before{border-right:8px solid #fff}.__react_component_tooltip.type-error{color:#fff;background-color:#BE6464}.__react_component_tooltip.type-error.place-top:after{border-top-color:#BE6464;border-top-style:solid;border-top-width:6px}.__react_component_tooltip.type-error.place-bottom:after{border-bottom-color:#BE6464;border-bottom-style:solid;border-bottom-width:6px}.__react_component_tooltip.type-error.place-left:after{border-left-color:#BE6464;border-left-style:solid;border-left-width:6px}.__react_component_tooltip.type-error.place-right:after{border-right-color:#BE6464;border-right-style:solid;border-right-width:6px}.__react_component_tooltip.type-error.border{border:1px solid #fff}.__react_component_tooltip.type-error.border.place-top:before{border-top:8px solid #fff}.__react_component_tooltip.type-error.border.place-bottom:before{border-bottom:8px solid #fff}.__react_component_tooltip.type-error.border.place-left:before{border-left:8px solid #fff}.__react_component_tooltip.type-error.border.place-right:before{border-right:8px solid #fff}.__react_component_tooltip.type-info{color:#fff;background-color:#337AB7}.__react_component_tooltip.type-info.place-top:after{border-top-color:#337AB7;border-top-style:solid;border-top-width:6px}.__react_component_tooltip.type-info.place-bottom:after{border-bottom-color:#337AB7;border-bottom-style:solid;border-bottom-width:6px}.__react_component_tooltip.type-info.place-left:after{border-left-color:#337AB7;border-left-style:solid;border-left-width:6px}.__react_component_tooltip.type-info.place-right:after{border-right-color:#337AB7;border-right-style:solid;border-right-width:6px}.__react_component_tooltip.type-info.border{border:1px solid #fff}.__react_component_tooltip.type-info.border.place-top:before{border-top:8px solid #fff}.__react_component_tooltip.type-info.border.place-bottom:before{border-bottom:8px solid #fff}.__react_component_tooltip.type-info.border.place-left:before{border-left:8px solid #fff}.__react_component_tooltip.type-info.border.place-right:before{border-right:8px solid #fff}.__react_component_tooltip.type-light{color:#222;background-color:#fff}.__react_component_tooltip.type-light.place-top:after{border-top-color:#fff;border-top-style:solid;border-top-width:6px}.__react_component_tooltip.type-light.place-bottom:after{border-bottom-color:#fff;border-bottom-style:solid;border-bottom-width:6px}.__react_component_tooltip.type-light.place-left:after{border-left-color:#fff;border-left-style:solid;border-left-width:6px}.__react_component_tooltip.type-light.place-right:after{border-right-color:#fff;border-right-style:solid;border-right-width:6px}.__react_component_tooltip.type-light.border{border:1px solid #222}.__react_component_tooltip.type-light.border.place-top:before{border-top:8px solid #222}.__react_component_tooltip.type-light.border.place-bottom:before{border-bottom:8px solid #222}.__react_component_tooltip.type-light.border.place-left:before{border-left:8px solid #222}.__react_component_tooltip.type-light.border.place-right:before{border-right:8px solid #222}.__react_component_tooltip.place-top{margin-top:-10px}.__react_component_tooltip.place-top:before{border-left:10px solid transparent;border-right:10px solid transparent;bottom:-8px;left:50%;margin-left:-10px}.__react_component_tooltip.place-top:after{border-left:8px solid transparent;border-right:8px solid transparent;bottom:-6px;left:50%;margin-left:-8px}.__react_component_tooltip.place-bottom{margin-top:10px}.__react_component_tooltip.place-bottom:before{border-left:10px solid transparent;border-right:10px solid transparent;top:-8px;left:50%;margin-left:-10px}.__react_component_tooltip.place-bottom:after{border-left:8px solid transparent;border-right:8px solid transparent;top:-6px;left:50%;margin-left:-8px}.__react_component_tooltip.place-left{margin-left:-10px}.__react_component_tooltip.place-left:before{border-top:6px solid transparent;border-bottom:6px solid transparent;right:-8px;top:50%;margin-top:-5px}.__react_component_tooltip.place-left:after{border-top:5px solid transparent;border-bottom:5px solid transparent;right:-6px;top:50%;margin-top:-4px}.__react_component_tooltip.place-right{margin-left:10px}.__react_component_tooltip.place-right:before{border-top:6px solid transparent;border-bottom:6px solid transparent;left:-8px;top:50%;margin-top:-5px}.__react_component_tooltip.place-right:after{border-top:5px solid transparent;border-bottom:5px solid transparent;left:-6px;top:50%;margin-top:-4px}.__react_component_tooltip .multi-line{display:block;padding:2px 0px;text-align:center}';
-
-/***/ },
-/* 452 */
+/* 457 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(453);
+	var content = __webpack_require__(458);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(426)(content, {});
@@ -46471,7 +46685,7 @@
 	}
 
 /***/ },
-/* 453 */
+/* 458 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(425)();
@@ -46485,7 +46699,7 @@
 
 
 /***/ },
-/* 454 */
+/* 459 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46502,15 +46716,15 @@
 
 	var _reactApollo = __webpack_require__(208);
 
-	var _reactTooltip = __webpack_require__(440);
+	var _reactTooltip = __webpack_require__(428);
 
 	var _reactTooltip2 = _interopRequireDefault(_reactTooltip);
 
-	__webpack_require__(455);
+	__webpack_require__(460);
 
-	var _mutations = __webpack_require__(457);
+	var _mutations = __webpack_require__(462);
 
-	var _constants = __webpack_require__(458);
+	var _constants = __webpack_require__(452);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -46593,13 +46807,13 @@
 	exports.default = (0, _reactApollo.graphql)(_mutations.createSource, { props: props })(CreateSource);
 
 /***/ },
-/* 455 */
+/* 460 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(456);
+	var content = __webpack_require__(461);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(426)(content, {});
@@ -46619,7 +46833,7 @@
 	}
 
 /***/ },
-/* 456 */
+/* 461 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(425)();
@@ -46633,7 +46847,7 @@
 
 
 /***/ },
-/* 457 */
+/* 462 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46649,7 +46863,7 @@
 	    _templateObject4 = _taggedTemplateLiteral(['\n  mutation deleteSource($userId: ID!, $id: ID!) {\n    deleteSource(userId: $userId, id: $id) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n'], ['\n  mutation deleteSource($userId: ID!, $id: ID!) {\n    deleteSource(userId: $userId, id: $id) {\n      id,\n      title,\n      faviconUrl,\n      userId,\n      sourceUrl,\n      sourceListId,\n    }\n  }\n']),
 	    _templateObject5 = _taggedTemplateLiteral(['\n  mutation deleteSourceList($userId: ID!, $id: ID!) {\n    deleteSourceList(userId: $userId, id: $id) {\n      id,\n      userId,\n      name,\n      userUsername,\n    }\n  }\n'], ['\n  mutation deleteSourceList($userId: ID!, $id: ID!) {\n    deleteSourceList(userId: $userId, id: $id) {\n      id,\n      userId,\n      name,\n      userUsername,\n    }\n  }\n']);
 
-	var _graphqlTag = __webpack_require__(437);
+	var _graphqlTag = __webpack_require__(447);
 
 	var _graphqlTag2 = _interopRequireDefault(_graphqlTag);
 
@@ -46678,27 +46892,7 @@
 	};
 
 /***/ },
-/* 458 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var SourceToolsTip = exports.SourceToolsTip = 'Drag sources to the desired list or to the trash. Add new sources by using our Chrome extension or by submitting the url to the input box above.';
-	var ListTitleControlTip = exports.ListTitleControlTip = 'Download, email, or delete lists here. Additionally, create new lists by submitting their name to the input box on the right. Note: you cannot delete your heap.';
-	var SourceTrashTip = exports.SourceTrashTip = 'Drag articles here to delete.';
-	var DownloadTip = exports.DownloadTip = 'Download the articles on this source list.';
-	var EmailTip = exports.EmailTip = 'Email the articles on this source list.';
-	var DeleteListTip = exports.DeleteListTip = 'Delete this list and its articles. Note: you can\'t delete your Heap.';
-	var CreateListTip = exports.CreateListTip = 'Create new list here.';
-	var CreateSourceTip = exports.CreateSourceTip = 'Add new source here.';
-	var HomeTip = exports.HomeTip = 'Go home';
-	var ChromeExtTip = exports.ChromeExtTip = 'Get the Chrome extension.';
-
-/***/ },
-/* 459 */
+/* 463 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46717,21 +46911,21 @@
 
 	var _reactDnd = __webpack_require__(271);
 
-	var _classnames = __webpack_require__(441);
+	var _classnames = __webpack_require__(429);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _reactTooltip = __webpack_require__(440);
+	var _reactTooltip = __webpack_require__(428);
 
 	var _reactTooltip2 = _interopRequireDefault(_reactTooltip);
 
-	__webpack_require__(460);
+	__webpack_require__(464);
 
-	var _mutations = __webpack_require__(457);
+	var _mutations = __webpack_require__(462);
 
-	var _DragNDrop = __webpack_require__(462);
+	var _DragNDrop = __webpack_require__(466);
 
-	var _constants = __webpack_require__(458);
+	var _constants = __webpack_require__(452);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -46797,13 +46991,13 @@
 	exports.default = (0, _reactApollo.graphql)(_mutations.deleteSource, { props: props })((0, _reactDnd.DropTarget)(_DragNDrop.ItemTypes.SOURCE, _DragNDrop.trashTarget, _DragNDrop.trashCollect)(SourceTrash));
 
 /***/ },
-/* 460 */
+/* 464 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(461);
+	var content = __webpack_require__(465);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(426)(content, {});
@@ -46823,7 +47017,7 @@
 	}
 
 /***/ },
-/* 461 */
+/* 465 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(425)();
@@ -46837,7 +47031,7 @@
 
 
 /***/ },
-/* 462 */
+/* 466 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -46918,7 +47112,7 @@
 	}
 
 /***/ },
-/* 463 */
+/* 467 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46935,19 +47129,19 @@
 
 	var _reactApollo = __webpack_require__(208);
 
-	var _immutabilityHelper = __webpack_require__(464);
+	var _immutabilityHelper = __webpack_require__(468);
 
 	var _immutabilityHelper2 = _interopRequireDefault(_immutabilityHelper);
 
-	__webpack_require__(465);
+	__webpack_require__(469);
 
-	var _queries = __webpack_require__(436);
+	var _queries = __webpack_require__(446);
 
-	var _mutations = __webpack_require__(457);
+	var _mutations = __webpack_require__(462);
 
-	var _reducers = __webpack_require__(467);
+	var _reducers = __webpack_require__(471);
 
-	var _SourceItem = __webpack_require__(468);
+	var _SourceItem = __webpack_require__(472);
 
 	var _SourceItem2 = _interopRequireDefault(_SourceItem);
 
@@ -47066,7 +47260,7 @@
 	})(SourceList);
 
 /***/ },
-/* 464 */
+/* 468 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var invariant = __webpack_require__(210);
@@ -47256,13 +47450,13 @@
 
 
 /***/ },
-/* 465 */
+/* 469 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(466);
+	var content = __webpack_require__(470);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(426)(content, {});
@@ -47282,7 +47476,7 @@
 	}
 
 /***/ },
-/* 466 */
+/* 470 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(425)();
@@ -47290,13 +47484,13 @@
 
 
 	// module
-	exports.push([module.id, ".SourceList {\n  padding: 0px 15px;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  overflow: auto;\n  height: calc(100vh - 220px);\n}\n\n.sourceItem {\n  width: 100%;\n  height: 25px;\n  min-height: 25px;\n  overflow-y: auto;\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 13px;\n  border: 1px solid #f0f0f0;\n  font-weight: 400;\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  text-decoration: none;\n  padding: 5px 10px;\n  border-radius: 3px;\n  color: rgba(0,0,0,.6);\n  background: rgba(255,255,255,.97);\n  cursor: pointer;\n}\n\n.sourceItem:hover {\n    color: rgba(0,0,0,.8);\n    border-color: rgba(0,0,0,.15);\n    background: #fff;\n}\n\n.sourceImgWrapper {\n  position: absolute;\n  left: 10px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n.sourceImg {\n  width: 25px;\n}\n\n.sourceTxtWrapper {\n  /*this margin left accounts for the size of the image (25px) so there is */\n  /*no unwanted overlap as well as the 10px padding around the whole item */\n  /* so there is equal space from edge to image and image to text */\n  margin-left: calc(25px + 10px);\n  width: 80%;\n  white-space: nowrap;\n  overflow-x: hidden;\n  text-overflow: ellipsis;\n}\n\n.no-sources {\n  font-size: 16px;\n  font-weight: 400;\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  text-decoration: none;\n  margin-top: 5px;\n}\n", ""]);
+	exports.push([module.id, ".SourceList {\n  padding: 0px 15px;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  overflow: auto;\n  height: calc(100vh - 220px);\n}\n\n.sourceItem {\n  width: 100%;\n  height: 25px;\n  min-height: 25px;\n  overflow-y: auto;\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 13px;\n  border: 1px solid #f0f0f0;\n  font-weight: 400;\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  text-decoration: none;\n  padding: 5px 10px;\n  border-radius: 3px;\n  color: rgba(0,0,0,.6);\n  background: rgba(255,255,255,.97);\n  cursor: pointer;\n}\n\n.sourceItem:hover {\n    color: rgba(0,0,0,.8);\n    border-color: rgba(0,0,0,.15);\n    background: #fff;\n}\n\n.sourceImgWrapper {\n  position: absolute;\n  left: 10px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}\n\n.sourceImg {\n  width: 25px;\n}\n\n.sourceTxtWrapper {\n  /*this margin left accounts for the size of the image (25px) so there is */\n  /*no unwanted overlap as well as the 10px padding around the whole item */\n  /* so there is equal space from edge to image and image to text */\n  margin-left: calc(25px + 10px);\n  width: 80%;\n  white-space: nowrap;\n  overflow-x: hidden;\n  text-overflow: ellipsis;\n}\n\n.no-sources {\n  font-size: 16px;\n  font-weight: 400;\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  text-decoration: none;\n  margin-top: 5px;\n  text-align: center;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 467 */
+/* 471 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47306,9 +47500,9 @@
 	});
 	exports.sourceListReducer = exports.sourceListColumnReducer = exports.subHeaderReducer = undefined;
 
-	var _mutations = __webpack_require__(457);
+	var _mutations = __webpack_require__(462);
 
-	var _immutabilityHelper = __webpack_require__(464);
+	var _immutabilityHelper = __webpack_require__(468);
 
 	var _immutabilityHelper2 = _interopRequireDefault(_immutabilityHelper);
 
@@ -47434,7 +47628,7 @@
 	};
 
 /***/ },
-/* 468 */
+/* 472 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47451,7 +47645,7 @@
 
 	var _reactDnd = __webpack_require__(271);
 
-	var _DragNDrop = __webpack_require__(462);
+	var _DragNDrop = __webpack_require__(466);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47504,7 +47698,7 @@
 	exports.default = (0, _reactDnd.DragSource)(_DragNDrop.ItemTypes.SOURCE, _DragNDrop.sourceSource, _DragNDrop.sourceCollect)(SourceItem);
 
 /***/ },
-/* 469 */
+/* 473 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47521,15 +47715,15 @@
 
 	var _reactApollo = __webpack_require__(208);
 
-	var _SourceListBlock = __webpack_require__(470);
+	var _SourceListBlock = __webpack_require__(474);
 
 	var _SourceListBlock2 = _interopRequireDefault(_SourceListBlock);
 
-	var _queries = __webpack_require__(436);
+	var _queries = __webpack_require__(446);
 
-	var _reducers = __webpack_require__(467);
+	var _reducers = __webpack_require__(471);
 
-	__webpack_require__(473);
+	__webpack_require__(477);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47616,7 +47810,7 @@
 	})(SourceListColumn);
 
 /***/ },
-/* 470 */
+/* 474 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47635,17 +47829,17 @@
 
 	var _reactDnd = __webpack_require__(271);
 
-	var _classnames = __webpack_require__(441);
+	var _classnames = __webpack_require__(429);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
 	var _reactRouter = __webpack_require__(217);
 
-	__webpack_require__(471);
+	__webpack_require__(475);
 
-	var _mutations = __webpack_require__(457);
+	var _mutations = __webpack_require__(462);
 
-	var _DragNDrop = __webpack_require__(462);
+	var _DragNDrop = __webpack_require__(466);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47711,13 +47905,13 @@
 	exports.default = (0, _reactApollo.graphql)(_mutations.updateSource, { props: props })((0, _reactDnd.DropTarget)(_DragNDrop.ItemTypes.SOURCE, _DragNDrop.listTarget, _DragNDrop.listCollect)(SourceListBlock));
 
 /***/ },
-/* 471 */
+/* 475 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(472);
+	var content = __webpack_require__(476);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(426)(content, {});
@@ -47737,7 +47931,7 @@
 	}
 
 /***/ },
-/* 472 */
+/* 476 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(425)();
@@ -47751,13 +47945,13 @@
 
 
 /***/ },
-/* 473 */
+/* 477 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(474);
+	var content = __webpack_require__(478);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(426)(content, {});
@@ -47777,7 +47971,7 @@
 	}
 
 /***/ },
-/* 474 */
+/* 478 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(425)();
@@ -47791,7 +47985,7 @@
 
 
 /***/ },
-/* 475 */
+/* 479 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -47808,25 +48002,25 @@
 
 	var _reactApollo = __webpack_require__(208);
 
-	var _reactTooltip = __webpack_require__(440);
+	var _reactTooltip = __webpack_require__(428);
 
 	var _reactTooltip2 = _interopRequireDefault(_reactTooltip);
 
-	__webpack_require__(476);
+	__webpack_require__(480);
 
-	var _CreateSourceList = __webpack_require__(478);
+	var _CreateSourceList = __webpack_require__(482);
 
 	var _CreateSourceList2 = _interopRequireDefault(_CreateSourceList);
 
-	var _queries = __webpack_require__(436);
+	var _queries = __webpack_require__(446);
 
-	var _reducers = __webpack_require__(467);
+	var _reducers = __webpack_require__(471);
 
-	var _DeleteSourceList = __webpack_require__(481);
+	var _DeleteSourceList = __webpack_require__(485);
 
 	var _DeleteSourceList2 = _interopRequireDefault(_DeleteSourceList);
 
-	var _constants = __webpack_require__(458);
+	var _constants = __webpack_require__(452);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -47990,13 +48184,13 @@
 	})(SubHeader);
 
 /***/ },
-/* 476 */
+/* 480 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(477);
+	var content = __webpack_require__(481);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(426)(content, {});
@@ -48016,7 +48210,7 @@
 	}
 
 /***/ },
-/* 477 */
+/* 481 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(425)();
@@ -48024,13 +48218,13 @@
 
 
 	// module
-	exports.push([module.id, ".SubHeader {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n}\n\n.IndividualStats {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  width: 30%;\n  font-weight: 300;\n  color: rgba(0,0,0,0.6);\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  font-size: 16px;\n}\n\n.IndividualStats .name-separator {\n  width: 100%;\n  margin: 5px 0px;\n}\n\n.IndividualStats .person-header {\n  font-size: 24px;\n}\n\n.IndividualStats .stat-val {\n  color: #6441A5;\n  font-weight: 100;\n}\n\n.ListTitleAndTools {\n  width: 40%;\n  text-align: center;\n}\n\n.ListTitle {\n  margin-top: 15px;\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  font-size: 24px;\n  color: #6441A5;\n  font-weight: 300;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n\n.ListTitle .heap-title {\n  color: rgba(0,0,0,0.6);\n  font-weight: bold;\n}\n\n.ListTitle .list-title {\n  white-space: nowrap; */\n  overflow: hidden; \n  text-overflow: ellipsis; \n}\n\n.ListTitle hr {\n  margin: 5px 30px;\n}\n\n.ListTitle-button-row {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n}\n\n.ListTitle-button-row wrapper {\n  max-width: 16%;\n}\n\n.ListTitleControl {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  color: #6441A5;\n  font-size: 14px;\n  margin: 0px 5px;\n  width: 25px;\n  height: 25px;\n  border: 1px solid #6441A5;\n  border-radius: 50%;\n  cursor: pointer;\n}\n\n.ListTitleControl.no-hover {\n  cursor: default;\n}\n\n.ListTitleControl.no-delete {\n  color: rgba(0, 0, 0, 0.2);\n  border: 1px solid rgba(0, 0, 0, 0.2);\n  cursor: default;\n}\n\n.CreateSourceList-wrapper {\n  width: 30%;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n}\n", ""]);
+	exports.push([module.id, ".SubHeader {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n}\n\n.IndividualStats {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n  align-items: center;\n  width: 30%;\n  font-weight: 300;\n  color: rgba(0,0,0,0.6);\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  font-size: 16px;\n}\n\n.IndividualStats .name-separator {\n  width: 100%;\n  margin: 5px 0px;\n}\n\n.IndividualStats .person-header {\n  font-size: 24px;\n}\n\n.IndividualStats .stat-val {\n  color: #6441A5;\n  font-weight: 100;\n}\n\n.ListTitleAndTools {\n  width: 40%;\n  text-align: center;\n}\n\n.ListTitle {\n  margin-top: 15px;\n  font-style: normal;\n  font-family: -apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Oxygen,Ubuntu,Cantarell,\"Open Sans\",\"Helvetica Neue\",sans-serif;\n  letter-spacing: 0;\n  font-size: 24px;\n  color: #6441A5;\n  font-weight: 300;\n  /*white-space: nowrap;*/\n  overflow: hidden;\n  text-overflow: ellipsis;\n}\n\n.ListTitle .heap-title {\n  color: rgba(0,0,0,0.6);\n  font-weight: bold;\n}\n\n.ListTitle .list-title {\n  white-space: nowrap; */\n  overflow: hidden; \n  text-overflow: ellipsis; \n}\n\n.ListTitle hr {\n  margin: 5px 30px;\n}\n\n.ListTitle-button-row {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n}\n\n.ListTitle-button-row wrapper {\n  max-width: 16%;\n}\n\n.ListTitleControl {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n  color: #6441A5;\n  font-size: 14px;\n  margin: 0px 5px;\n  width: 25px;\n  height: 25px;\n  border: 1px solid #6441A5;\n  border-radius: 50%;\n  cursor: pointer;\n}\n\n.ListTitleControl.no-hover {\n  cursor: default;\n}\n\n.ListTitleControl.no-delete {\n  color: rgba(0, 0, 0, 0.2);\n  border: 1px solid rgba(0, 0, 0, 0.2);\n  cursor: default;\n}\n\n.CreateSourceList-wrapper {\n  width: 30%;\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  align-items: center;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 478 */
+/* 482 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48047,15 +48241,15 @@
 
 	var _reactApollo = __webpack_require__(208);
 
-	var _reactTooltip = __webpack_require__(440);
+	var _reactTooltip = __webpack_require__(428);
 
 	var _reactTooltip2 = _interopRequireDefault(_reactTooltip);
 
-	var _mutations = __webpack_require__(457);
+	var _mutations = __webpack_require__(462);
 
-	__webpack_require__(479);
+	__webpack_require__(483);
 
-	var _constants = __webpack_require__(458);
+	var _constants = __webpack_require__(452);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -48136,13 +48330,13 @@
 	exports.default = (0, _reactApollo.graphql)(_mutations.createSourceList, { props: props })(CreateSourceList);
 
 /***/ },
-/* 479 */
+/* 483 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(480);
+	var content = __webpack_require__(484);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(426)(content, {});
@@ -48162,7 +48356,7 @@
 	}
 
 /***/ },
-/* 480 */
+/* 484 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(425)();
@@ -48170,13 +48364,13 @@
 
 
 	// module
-	exports.push([module.id, ".CreateSourceList {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  width: 100%;\n  margin-top: 12px;\n}\n\n.CreateSourceList .new-source-list-name {\n  width: 220px;\n  border-radius: 3px;\n  height: 24px;\n  border: 1px solid #6441A5;\n  margin-right: 10px;\n  padding-left: 10px;\n  outline: none;\n}\n\n.CreateSourceList .create-new-source-list {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  width: 24px;\n  height: 24px;\n  font-size: 16px;\n  border-radius: 50%;\n  color: #6441A5;\n  border: 1px solid #6441A5;\n  cursor: pointer;\n}\n", ""]);
+	exports.push([module.id, ".CreateSourceList {\n  display: flex;\n  flex-direction: row;\n  justify-content: center;\n  width: 100%;\n  margin-top: 12px;\n}\n\n.CreateSourceList .new-source-list-name {\n  width: 220px;\n  border-radius: 3px;\n  height: 24px;\n  border: 1px solid #6441A5;\n  margin-right: 10px;\n  margin-left: 30px;\n  padding-left: 10px;\n  outline: none;\n}\n\n.CreateSourceList .create-new-source-list {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  width: 24px;\n  height: 24px;\n  font-size: 16px;\n  border-radius: 50%;\n  color: #6441A5;\n  border: 1px solid #6441A5;\n  cursor: pointer;\n}\n", ""]);
 
 	// exports
 
 
 /***/ },
-/* 481 */
+/* 485 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -48191,17 +48385,17 @@
 
 	var _reactApollo = __webpack_require__(208);
 
-	var _classnames = __webpack_require__(441);
+	var _classnames = __webpack_require__(429);
 
 	var _classnames2 = _interopRequireDefault(_classnames);
 
-	var _reactTooltip = __webpack_require__(440);
+	var _reactTooltip = __webpack_require__(428);
 
 	var _reactTooltip2 = _interopRequireDefault(_reactTooltip);
 
-	var _mutations = __webpack_require__(457);
+	var _mutations = __webpack_require__(462);
 
-	var _constants = __webpack_require__(458);
+	var _constants = __webpack_require__(452);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -48245,200 +48439,6 @@
 	exports.default = (0, _reactApollo.graphql)(_mutations.deleteSourceList, {
 	  props: props
 	})(DeleteSourceList);
-
-/***/ },
-/* 482 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _SearchBar = __webpack_require__(430);
-
-	var _SearchBar2 = _interopRequireDefault(_SearchBar);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var SearchBarWrapper = function (_Component) {
-	  _inherits(SearchBarWrapper, _Component);
-
-	  function SearchBarWrapper(props) {
-	    _classCallCheck(this, SearchBarWrapper);
-
-	    var _this = _possibleConstructorReturn(this, (SearchBarWrapper.__proto__ || Object.getPrototypeOf(SearchBarWrapper)).call(this, props));
-
-	    _this.state = {
-	      inputValue: ''
-	    };
-	    _this.inputValueChanged = _this.inputValueChanged.bind(_this);
-	    _this.clearInput = _this.clearInput.bind(_this);
-	    return _this;
-	  }
-
-	  _createClass(SearchBarWrapper, [{
-	    key: 'inputValueChanged',
-	    value: function inputValueChanged(e) {
-	      this.setState({
-	        inputValue: e.target.value
-	      });
-	    }
-	  }, {
-	    key: 'clearInput',
-	    value: function clearInput() {
-	      this.setState({
-	        inputValue: ''
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(_SearchBar2.default, {
-	        value: this.state.inputValue,
-	        inputValueChanged: this.inputValueChanged,
-	        clearInput: this.clearInput
-	      });
-	    }
-	  }]);
-
-	  return SearchBarWrapper;
-	}(_react.Component);
-
-	exports.default = SearchBarWrapper;
-
-/***/ },
-/* 483 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(2);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouter = __webpack_require__(217);
-
-	__webpack_require__(484);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var UserSearchDisplay = function (_Component) {
-	  _inherits(UserSearchDisplay, _Component);
-
-	  function UserSearchDisplay() {
-	    _classCallCheck(this, UserSearchDisplay);
-
-	    return _possibleConstructorReturn(this, (UserSearchDisplay.__proto__ || Object.getPrototypeOf(UserSearchDisplay)).apply(this, arguments));
-	  }
-
-	  _createClass(UserSearchDisplay, [{
-	    key: 'renderSearchUsers',
-	    value: function renderSearchUsers() {
-	      var _this2 = this;
-
-	      if (this.props.currentlySearching) {
-	        return this.props.searchUsers.map(function (searchUser) {
-	          return _react2.default.createElement(
-	            _reactRouter.Link,
-	            {
-	              to: '/' + searchUser.username + '/',
-	              key: searchUser.id,
-	              className: 'searchUser',
-	              onClick: _this2.props.removeDropdown
-	            },
-	            window.cu_id === parseInt(searchUser.id) ? searchUser.name + ' (You)' : searchUser.name
-	          );
-	        });
-	      }
-	      return null;
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      console.log("what props do I get her", this.props);
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'UserSearchDisplay' },
-	        this.renderSearchUsers()
-	      );
-	    }
-	  }]);
-
-	  return UserSearchDisplay;
-	}(_react.Component);
-
-	exports.default = UserSearchDisplay;
-
-
-	UserSearchDisplay.defaultProps = {
-	  searchUsers: []
-	};
-
-/***/ },
-/* 484 */
-/***/ function(module, exports, __webpack_require__) {
-
-	// style-loader: Adds some css to the DOM by adding a <style> tag
-
-	// load the styles
-	var content = __webpack_require__(485);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(426)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../../node_modules/css-loader/index.js!./UserSearchDisplay.css", function() {
-				var newContent = require("!!./../../../node_modules/css-loader/index.js!./UserSearchDisplay.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
-
-/***/ },
-/* 485 */
-/***/ function(module, exports, __webpack_require__) {
-
-	exports = module.exports = __webpack_require__(425)();
-	// imports
-
-
-	// module
-	exports.push([module.id, ".UserSearchDisplay {\n  position: absolute;\n  width: 400px;\n  background: #fafafa;\n  padding-left: 10px;\n  margin-top: 4px;\n  border-radius: 3px;\n}\n\n.searchUser {\n  display: block;\n  padding: 4px;\n  margin: 4px;\n  text-decoration: none;\n  border-bottom: 1px solid #dcd;\n  margin-right: 10px;\n  color: rgba(0, 0, 0, 0.6);\n}\n\n.searchUser:hover {\n  color: #6441A5;\n}\n\n.searchUser:last-child {\n  border-bottom: 0px;\n}\n", ""]);
-
-	// exports
-
 
 /***/ }
 /******/ ]);
