@@ -41239,7 +41239,7 @@
 
 
 	// module
-	exports.push([module.id, ".reactive-base {\n  width: 100%;\n  /*background: #fafafa;*/\n}\n\n.reactive-base .logout-button, .contact-button {\n  position: fixed;\n  bottom: 0px;\n  padding: 5px;\n  font-size: 12px;\n  margin: 10px;\n  font-weight: 200;\n  border-radius: 4px;\n  text-decoration: none;\n  cursor: pointer;\n  background: #6441A5;\n  color: white;\n}\n\n.reactive-base .logout-button {\n  left: 0px;\n}\n\n.reactive-base .contact-button {\n  left: 50px;\n}\n\n.logout-button:hover, .contact-button:hover {\n  background: #8B008B;\n}\n", ""]);
+	exports.push([module.id, ".reactive-base {\n  width: 100%;\n  /*background: #fafafa;*/\n}\n\n.reactive-base .logout-button, .contact-button {\n  position: fixed;\n  bottom: 0px;\n  padding: 5px;\n  font-size: 12px;\n  margin: 10px;\n  font-weight: 200;\n  border-radius: 4px;\n  text-decoration: none;\n  cursor: pointer;\n  background: #6441A5;\n  color: white;\n}\n\n.reactive-base .logout-button {\n  left: 0px;\n}\n\n.reactive-base .contact-button {\n  left: 50px;\n}\n\n.logout-button:hover, .contact-button:hover {\n  background: #8B008B;\n}\n\n", ""]);
 
 	// exports
 
