@@ -20,6 +20,7 @@ class SubHeader extends Component {
     super()
     this.renderListTitle = this.renderListTitle.bind(this)
     this.renderIndividualStats = this.renderIndividualStats.bind(this)
+    this.renderDelete = this.renderDelete.bind(this)
   }
 
   renderIndividualStats() {
@@ -37,8 +38,20 @@ class SubHeader extends Component {
     )
   }
 
+  renderDelete() {
+    if (window.cu_id === parseInt(this.props.userId)) {
+      return (
+          <DeleteSourceList
+            userId={this.props.userId}
+            sourceListId={this.props.sourceList.id}
+            canDelete={!this.props.sourceList.isHeap}
+          />
+      )
+    }
+    return null
+  }
+
   renderListTitle() {
-    console.log("what have boogalo", this.props)
     return (
       <div className='ListTitle'>
         {this.props.sourceList.isHeap ?
@@ -73,11 +86,7 @@ class SubHeader extends Component {
             data-for='EmailTip'
           />
           <ReactTooltip id='EmailTip' />
-          <DeleteSourceList
-            userId={this.props.userId}
-            sourceListId={this.props.sourceList.id}
-            canDelete={!this.props.sourceList.isHeap}
-          />
+          {this.renderDelete()}
         </div>
       </div>
     )

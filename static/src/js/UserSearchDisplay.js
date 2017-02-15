@@ -23,7 +23,6 @@ export default class UserSearchDisplay extends Component {
   }
 
   render() {
-    console.log("what props do I get her", this.props)
     // if we are currently searching and have matches
     if (this.props.currentlySearching && this.props.searchUsers.length) {
       return (

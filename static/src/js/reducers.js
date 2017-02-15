@@ -40,7 +40,6 @@ export const subHeaderReducer = (previousResult, action, variables) => {
 
 export const sourceListColumnReducer = (previousResult, action, variables) => {
   if (action.type === mutationTypes.APOLLO_MUTATION_RESULT) {
-      console.log("in the mutation", previousResult, action)
     switch(action.operationName) {
       // if we are creating a source simply add it to the current source list
       case mutationTypes.createSourceList:
@@ -82,7 +81,6 @@ export const sourceListReducer = (previousResult, action, variables) => {
       case mutationTypes.updateSource:
         // changing a current source
         // if it was just added to the same list return the previous result
-        console.log("hm", action, previousResult)
         if (action.result.data.updateSource.sourceListId === previousResult.sourceList.id) {
           return previousResult
         }

@@ -12,7 +12,6 @@ import { SourceTrashTip } from './constants.js'
 
 class SourceTrash extends Component {
   render() {
-    console.log('Source trash propss', this.props)
     return this.props.connectDropTarget(
       <span>
         <i
@@ -39,7 +38,6 @@ const props = ({ ownProps, mutate }) => {
   return {
     deleteSource: (id) => {
       mutate({ variables: { userId: ownProps.userId, id }})
-        .then((response) => console.log("deleted this object", response))
     }
   }
 }

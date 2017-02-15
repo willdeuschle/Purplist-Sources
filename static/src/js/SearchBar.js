@@ -75,7 +75,6 @@ export default graphql(userSearchQuery, {
   props,
   skip: (ownProps) => {
     const toSkip = (ownProps.value === '')
-    console.log("toSkip", toSkip, ownProps)
     return toSkip
   },
 })(SearchBar)

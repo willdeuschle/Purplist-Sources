@@ -43194,7 +43194,6 @@
 	  props: props,
 	  skip: function skip(ownProps) {
 	    var toSkip = ownProps.value === '';
-	    console.log("toSkip", toSkip, ownProps);
 	    return toSkip;
 	  }
 	})(SearchBar);
@@ -46289,7 +46288,6 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      console.log("what props do I get her", this.props);
 	      // if we are currently searching and have matches
 	      if (this.props.currentlySearching && this.props.searchUsers.length) {
 	        return _react2.default.createElement(
@@ -46803,9 +46801,7 @@
 
 	  return {
 	    createSource: function createSource(sourceUrl) {
-	      mutate({ variables: { userId: ownProps.userId, sourceUrl: sourceUrl, sourceListId: ownProps.sourceListId } }).then(function (resp) {
-	        return console.log("what is resp", resp);
-	      });
+	      mutate({ variables: { userId: ownProps.userId, sourceUrl: sourceUrl, sourceListId: ownProps.sourceListId } });
 	    }
 	  };
 	};
@@ -46953,7 +46949,6 @@
 	  _createClass(SourceTrash, [{
 	    key: 'render',
 	    value: function render() {
-	      console.log('Source trash propss', this.props);
 	      return this.props.connectDropTarget(_react2.default.createElement(
 	        'span',
 	        null,
@@ -46987,9 +46982,7 @@
 
 	  return {
 	    deleteSource: function deleteSource(id) {
-	      mutate({ variables: { userId: ownProps.userId, id: id } }).then(function (response) {
-	        return console.log("deleted this object", response);
-	      });
+	      mutate({ variables: { userId: ownProps.userId, id: id } });
 	    }
 	  };
 	};
@@ -47174,7 +47167,6 @@
 	  _createClass(SourceList, [{
 	    key: 'renderSourceList',
 	    value: function renderSourceList() {
-	      console.log("heap list props", this.props);
 	      if (this.props.sourceList) {
 	        // message for if they don't have any sources
 	        if (this.props.sourceList.sources.length === 0) {
@@ -47234,7 +47226,6 @@
 
 
 	var options = function options(ownProps) {
-	  console.log("what info", ownProps);
 	  return {
 	    // we need this reducer for when we add, delete, or update sources
 	    reducer: _reducers.sourceListReducer,
@@ -47551,7 +47542,6 @@
 
 	var sourceListColumnReducer = exports.sourceListColumnReducer = function sourceListColumnReducer(previousResult, action, variables) {
 	  if (action.type === _mutations.mutationTypes.APOLLO_MUTATION_RESULT) {
-	    console.log("in the mutation", previousResult, action);
 	    switch (action.operationName) {
 	      // if we are creating a source simply add it to the current source list
 	      case _mutations.mutationTypes.createSourceList:
@@ -47596,7 +47586,6 @@
 	      case _mutations.mutationTypes.updateSource:
 	        // changing a current source
 	        // if it was just added to the same list return the previous result
-	        console.log("hm", action, previousResult);
 	        if (action.result.data.updateSource.sourceListId === previousResult.sourceList.id) {
 	          return previousResult;
 	        }
@@ -47900,9 +47889,7 @@
 
 	  return {
 	    updateSource: function updateSource(id, sourceListId) {
-	      mutate({ variables: { userId: ownProps.userId, sourceData: { id: id, sourceListId: sourceListId } } }).then(function (response) {
-	        return console.log("what is resp", response);
-	      });
+	      mutate({ variables: { userId: ownProps.userId, sourceData: { id: id, sourceListId: sourceListId } } });
 	    }
 	  };
 	};
@@ -48046,6 +48033,7 @@
 
 	    _this.renderListTitle = _this.renderListTitle.bind(_this);
 	    _this.renderIndividualStats = _this.renderIndividualStats.bind(_this);
+	    _this.renderDelete = _this.renderDelete.bind(_this);
 	    return _this;
 	  }
 
@@ -48080,9 +48068,20 @@
 	      );
 	    }
 	  }, {
+	    key: 'renderDelete',
+	    value: function renderDelete() {
+	      if (window.cu_id === parseInt(this.props.userId)) {
+	        return _react2.default.createElement(_DeleteSourceList2.default, {
+	          userId: this.props.userId,
+	          sourceListId: this.props.sourceList.id,
+	          canDelete: !this.props.sourceList.isHeap
+	        });
+	      }
+	      return null;
+	    }
+	  }, {
 	    key: 'renderListTitle',
 	    value: function renderListTitle() {
-	      console.log("what have boogalo", this.props);
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'ListTitle' },
@@ -48125,11 +48124,7 @@
 	            'data-for': 'EmailTip'
 	          }),
 	          _react2.default.createElement(_reactTooltip2.default, { id: 'EmailTip' }),
-	          _react2.default.createElement(_DeleteSourceList2.default, {
-	            userId: this.props.userId,
-	            sourceListId: this.props.sourceList.id,
-	            canDelete: !this.props.sourceList.isHeap
-	          })
+	          this.renderDelete()
 	        )
 	      );
 	    }
@@ -48280,7 +48275,6 @@
 	  _createClass(CreateSourceList, [{
 	    key: 'createSourceList',
 	    value: function createSourceList() {
-	      console.log("what have");
 	      if (this._input.value) {
 	        this.props.createSourceList(this._input.value);
 	        this._input.value = '';
@@ -48326,9 +48320,7 @@
 
 	  return {
 	    createSourceList: function createSourceList(sourceListName) {
-	      mutate({ variables: { userId: ownProps.userId, sourceListName: sourceListName } }).then(function (resp) {
-	        return console.log("what did we create", resp);
-	      });
+	      mutate({ variables: { userId: ownProps.userId, sourceListName: sourceListName } });
 	    }
 	  };
 	};

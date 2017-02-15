@@ -13,7 +13,6 @@ class CreateSourceList extends Component {
   }
 
   createSourceList() {
-    console.log("what have")
     if (this._input.value) {
       this.props.createSourceList(this._input.value)
       this._input.value = ''
@@ -49,7 +48,6 @@ const props = ({ ownProps, mutate }) => {
   return ({
     createSourceList: (sourceListName) => {
       mutate({ variables: { userId: ownProps.userId, sourceListName, }})
-        .then((resp) => console.log("what did we create", resp))
     }
   })
 }

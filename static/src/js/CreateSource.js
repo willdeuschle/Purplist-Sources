@@ -49,7 +49,6 @@ const props = ({ ownProps, mutate }) => {
   return ({
     createSource: (sourceUrl) => {
       mutate({ variables: { userId: ownProps.userId, sourceUrl, sourceListId: ownProps.sourceListId }})
-        .then((resp) => console.log("what is resp", resp))
     },
   })
 }
