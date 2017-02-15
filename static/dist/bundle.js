@@ -41614,7 +41614,7 @@
 	        _react2.default.createElement(_reactTooltip2.default, { id: 'HomeTip' }),
 	        _react2.default.createElement(_SearchBarWrapper2.default, null),
 	        _react2.default.createElement('a', {
-	          href: 'https://www.google.com/',
+	          href: 'https://chrome.google.com/webstore/detail/purplist-extension/nkphjlaolbjpjfjgclnjjhhjmhlpkife',
 	          target: '_blank',
 	          className: 'fa fa-google to-chrome-ext',
 	          'data-place': 'bottom',

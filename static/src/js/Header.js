@@ -25,7 +25,7 @@ export default class Header extends Component {
         <ReactTooltip id='HomeTip' />
         <SearchBarWrapper />
         <a
-          href={'https://www.google.com/'}
+          href={'https://chrome.google.com/webstore/detail/purplist-extension/nkphjlaolbjpjfjgclnjjhhjmhlpkife'}
           target='_blank'
           className='fa fa-google to-chrome-ext'
           data-place={'bottom'}
