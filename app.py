@@ -1,7 +1,7 @@
 import os
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager, login_required, logout_user, login_user, current_user
-from flask import Flask, render_template, url_for, redirect, flash, request, make_response, jsonify
+from flask import Flask, render_template, url_for, redirect, flash, request, make_response, jsonify, session
 from oauth import OAuthSignIn
 from flask_graphql import GraphQLView
 
@@ -39,7 +39,6 @@ def load_user(id):
 @app.route('/graphql', methods=['GET', 'POST'])
 @login_required
 def graphql():
-    print("hello moto", current_user, request.data, request.args)
     return GraphQLView.as_view(
         'graphql',
         schema=schema,
@@ -56,9 +55,11 @@ def graphql():
 
 
 
-# this route is to handle unauthorized people, just send them to login
+# this route is to handle unauthorized people, send them to login
+# and store where they were trying to go as the next option
 @lm.unauthorized_handler
 def unauthorized():
+    session['next'] = request.url
     return redirect(url_for('login'))
 
 # this route is for authorizing users
@@ -77,6 +78,10 @@ def authorize(provider):
 def oauth_callback(provider):
     # check to see if the user is logged in
     if not current_user.is_anonymous:
+        # if we have a 'next' option
+        next_url = session.pop('next', None)
+        if next_url:
+            return redirect(next_url)
         return redirect(url_for('index', username=current_user.username))
     oauth = OAuthSignIn.get_provider(provider)
     social_id, name, email = oauth.callback()
@@ -97,6 +102,10 @@ def oauth_callback(provider):
         db.session.commit()
     # the 'True' tells our login manager to remember the user
     login_user(user, True)
+    # if we have a 'next' option
+    next_url = session.pop('next', None)
+    if next_url:
+        return redirect(next_url)
     return redirect(url_for('index', username=user.username))
 
 
@@ -123,7 +132,6 @@ def download_list(sourceListId=None):
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
-    print("hello")
     return render_template('login.html', title='Login')
 
 # this logs you out and returns you to the landing page
@@ -136,7 +144,6 @@ def logout():
 # for our chrome extension
 @app.route('/chromeext/', methods=['GET', 'POST'])
 def chromeext():
-    print("who is current_user", current_user, request.get_json())
     user_id = getattr(current_user, 'id', None)
     if not user_id:
         return jsonify({'logged_in': False})

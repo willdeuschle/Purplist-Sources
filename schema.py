@@ -87,7 +87,6 @@ class CreateSourceList(graphene.Mutation, SourceListFields):
         name = graphene.String()
 
     def mutate(self, args, context, info):
-        print("We are mutation sorucelist")
        # parameters we need
         user_id = args.get('user_id')
         name = args.get('name')
@@ -123,7 +122,6 @@ class CreateSource(graphene.Mutation, SourceFields):
     def mutate(self, args, context, info):
         # first get the SourceInput as source_data
         # source_data = args.get('source_data')
-        print("WE ARE HERE")
         # must be given a user_id, and source_url
         user_id = args.get('user_id')
         source_url = args.get('source_url')
@@ -213,14 +211,12 @@ class UpdateSource(graphene.Mutation, SourceFields):
     def mutate(self, args, context, info):
         # first get the SourceInput as source_data
         source_data = args.get('source_data')
-        print("what are args", args)
         id = source_data.pop('id')
         source = Source.query.get(id)
 
         for key, value in source_data.items():
             setattr(source, key, value)
 
-        print("what is source now", source)
         db.session.add(source)
         db.session.commit()
 
@@ -328,12 +324,9 @@ class Query(graphene.ObjectType):
     )
 
     def resolve_user(self, args, context, info):
-        print("we in this bi", context)
         username = args.get('username', None)
         if username:
-            print("here we are", username)
             user = User.query.filter_by(username=username).first()
-            print("who is uesr", user)
             return user
         # going to maintain this for a little while but hopefully get
         # rid of it eventually
@@ -357,7 +350,6 @@ class Query(graphene.ObjectType):
     def resolve_source_list(self, args, context, info):
         user_id = args.get('user_id')
         source_list_id = args.get('source_list_id', None)
-        print("we are trying", user_id)
         # dont need to pass the user id here but might as well be safe
         if source_list_id:
             return SourceList.query.filter_by(user_id=user_id, id=source_list_id).first()
@@ -366,7 +358,6 @@ class Query(graphene.ObjectType):
 
     # this is meant to resolve all of the source lists of a user
     def resolve_source_lists(self, args, context, info):
-        # print("we are here", args, SourceList.query.filter_by(user_id=args['user_id']))
         user_id = args.get('user_id')
         return SourceList.query.filter_by(user_id=user_id)
 
