@@ -76,6 +76,22 @@ export const userSearchQuery = gql`
   }
 `
 
+// putting a subscription here because where else to put it
+// doesn't need any arguments for now, just going to get it to update everything
+// will also eventually want to see if I can use fragments on this
+export const sourceAddedSubscription = gql`
+  subscription sourceAddedSubscription {
+      sourceAdded {
+        id,
+        title,
+        faviconUrl,
+        userId,
+        sourceUrl,
+        sourceListId,
+      }
+  }
+`
+
 
 export const queryTypes = {
   userQuery: 'userQuery',

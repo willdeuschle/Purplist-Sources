@@ -1,4 +1,5 @@
 import os
+import cgi
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager, login_required, logout_user, login_user, current_user
 from flask import Flask, render_template, url_for, redirect, flash, request, make_response, jsonify, session
@@ -26,6 +27,34 @@ from schema import schema, GraphqlAuthorizationMiddleware
         # batch=app.config['DEVELOPMENT'] != True,
     # )
 # )
+
+# websockets
+# TODO: pass our app into the transport package currently in progress
+# eg
+# from python-graphql-transport-ws import SubscriptionServer
+# sub_server = SubscriptionServer(app, ...)
+#
+
+# need to add my setup_functions
+from transport_websockets.subscriptions import SubscriptionManager, PubSub
+pubsub = PubSub()
+# add our setup function of interest - will eventually want to separate this
+# out from what we are doing in this file
+setup_functions = {}
+
+def sourceAdded(options, args, subscription_name):
+    print("in setup funciton for sourceAdded", options, args, subscription_name)
+    return {'sourceAdded': {}}
+
+setup_functions['sourceAdded'] = sourceAdded # not filtering / offering options
+subscription_manager = SubscriptionManager(schema, pubsub, setup_functions)
+
+from transport_websockets.transport import SubscriptionServer
+subscription_server = SubscriptionServer(app,
+                                         subscription_manager)
+# from flask_socketio import SocketIO
+# socketio = SocketIO()
+# socketio.init_app(app)
 
 # manages user authentication and sesions
 lm = LoginManager(app)
@@ -144,6 +173,7 @@ def logout():
 # for our chrome extension
 @app.route('/chromeext/', methods=['GET', 'POST'])
 def chromeext():
+    print("what is pubsub", pubsub)
     user_id = getattr(current_user, 'id', None)
     if not user_id:
         return jsonify({'logged_in': False})
@@ -159,6 +189,10 @@ def chromeext():
                    source_url=payload['source_url'])
         db.session.add(s)
         db.session.commit()
+
+        # use subscriptions
+        pubsub.publish('sourceAdded', s)
+
         return jsonify({'logged_in': True})
 
 # this is the index page
@@ -167,6 +201,23 @@ def chromeext():
 @login_required
 def index(username, sourceListId=None):
     return render_template('index.html')
+
+# @socketio.on('connect', namespace='/dd')
+# def ws_conn():
+    # socketio.emit('msg', {'data': 'hi'}, namespace='/dd')
+
+
+# @socketio.on('disconnect', namespace='/dd')
+# def ws_disconn():
+    # socketio.emit('msg', {'data': 'bye'}, namespace='/dd')
+
+# @socketio.on('listen', namespace='/dd')
+# def ws_listen(message):
+    # print(message['listen'])
+    # socketio.emit('listen', {'data': cgi.escape(message['listen'])},
+                  # namespace="/dd")
+# another way to do it
+# socketio.on('listen', namespace='/dd')(ws_listen)
 
 
 if __name__ == '__main__':

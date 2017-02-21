@@ -3,7 +3,10 @@ import { graphql } from 'react-apollo'
 import update from 'immutability-helper'
 
 import '../styles/SourceList.css'
-import { sourceListQuery } from './queries.js'
+import {
+  sourceListQuery,
+  sourceAddedSubscription,
+} from './queries.js'
 import { mutationTypes } from './mutations.js'
 import { sourceListReducer } from './reducers.js'
 import SourceItem from './SourceItem.js'
@@ -13,6 +16,19 @@ class SourceList extends React.Component {
   constructor() {
     super()
     this.renderSourceList = this.renderSourceList.bind(this)
+    this.subscribe = this.subscribe.bind(this)
+  }
+
+  subscribe() {
+    console.log("what have", this.props)
+    this.props.subscribeToMore({
+      document: sourceAddedSubscription,
+      variables: {},
+      updateQueries: (prev, { subscriptionData }) => {
+        console.log("in updateQueries", prev, subscriptionData)
+        return
+      }
+    })
   }
 
   renderSourceList() {
@@ -40,6 +56,7 @@ class SourceList extends React.Component {
   // that we have all of the latest sources
   componentDidMount() {
     this._currentSourceListId = this.props.sourceListId
+    this.subscribe()
   }
 
   // this is the second part of the temporary measure described above
@@ -74,11 +91,20 @@ const options = (ownProps) => {
 }
 
 // potentially rename our props in the future
-const props = ({ ownProps, data: { sourceList, loading, refetch }}) => ({
+const props = ({ ownProps, data: { sourceList, loading, refetch, subscribeToMore }}) => ({
   sourceList,
   loading,
   refetch,
+  subscribeToMore,
 })
+//const props = ({ ownProps, data}) => {
+  //console.log("what have before", ownProps, data)
+  //return {
+    //sourceList: data.sourceList,
+    //loading: data.loading,
+    //refetch: data.refetch,
+  //}
+//}
 
 // export the 'connected' component
 export default graphql(sourceListQuery, {

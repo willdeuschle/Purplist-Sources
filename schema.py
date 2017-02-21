@@ -374,6 +374,20 @@ class Mutation(graphene.ObjectType):
     delete_source_list = DeleteSourceList.Field()
 
 
+# need to figure out is this is how this works
+class Subscription(graphene.ObjectType):
+    source_added = graphene.Field(
+        SourceType,
+        # source_id=graphene.ID(),
+        description='An individual source',
+    )
+
+    # have really no idea if this is how you set up a subscription schema
+    def resolve_source_added(self, args, context, info):
+        print("FOOOOOOL", self, args, context)
+        return self
+
+
 class GraphqlAuthorizationMiddleware(object):
     '''
     The purpose of this class is to authorize incoming mutations. Basically,
@@ -399,4 +413,4 @@ class GraphqlAuthorizationMiddleware(object):
         return next(root, args, context, info)
 
 
-schema = graphene.Schema(query=Query, mutation=Mutation)
+schema = graphene.Schema(query=Query, mutation=Mutation, subscription=Subscription)
