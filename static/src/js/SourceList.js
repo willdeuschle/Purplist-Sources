@@ -24,7 +24,7 @@ class SourceList extends React.Component {
     this.props.subscribeToMore({
       document: sourceAddedSubscription,
       variables: {},
-      updateQueries: (prev, { subscriptionData }) => {
+      updateQuery: (prev, { subscriptionData }) => {
         console.log("in updateQueries", prev, subscriptionData)
         return
       }

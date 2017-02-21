@@ -28,13 +28,6 @@ from schema import schema, GraphqlAuthorizationMiddleware
     # )
 # )
 
-# websockets
-# TODO: pass our app into the transport package currently in progress
-# eg
-# from python-graphql-transport-ws import SubscriptionServer
-# sub_server = SubscriptionServer(app, ...)
-#
-
 # need to add my setup_functions
 from transport_websockets.subscriptions import SubscriptionManager, PubSub
 pubsub = PubSub()

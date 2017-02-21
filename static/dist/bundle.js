@@ -48197,7 +48197,7 @@
 	      this.props.subscribeToMore({
 	        document: _queries.sourceAddedSubscription,
 	        variables: {},
-	        updateQueries: function updateQueries(prev, _ref) {
+	        updateQuery: function updateQuery(prev, _ref) {
 	          var subscriptionData = _ref.subscriptionData;
 
 	          console.log("in updateQueries", prev, subscriptionData);

@@ -42,6 +42,7 @@ class PubSub(object):
         self.ee.on(trigger_name, on_message)
         self.sub_id_counter += 1
         self.subscriptions[self.sub_id_counter] = [trigger_name, on_message]
+        print("what is counter", self.sub_id_counter)
         return self.sub_id_counter
 
     def unsubscribe(self, subId):
