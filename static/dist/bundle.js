@@ -95,10 +95,6 @@
 	});
 
 	_subscriptionsTransportWs.SubscriptionClient.prototype.sendMessage = function (message) {
-	  this.client.on('subscription_data', function (stuff) {
-	    console.log("WOO", stuff);
-	    debugger;
-	  });
 	  switch (this.client.io.readyState) {
 	    case this.client.io.OPEN:
 	      this.client.send(JSON.stringify(message));
@@ -136,7 +132,8 @@
 
 	  this.client = new this.wsImpl(this.url, GRAPHQL_SUBSCRIPTIONS);
 
-	  this.client.onopen = function () {
+	  //this.client.onopen = () => {
+	  this.client.io.addEventListener('open', function () {
 	    _this.eventEmitter.emit(isReconnect ? 'reconnect' : 'connect');
 	    _this.reconnecting = false;
 	    _this.backoff.reset();
@@ -154,20 +151,20 @@
 
 	    // Send INIT message, no need to wait for connection to success (reduce roundtrips)
 	    _this.sendMessage({ type: INIT, payload: _this.connectionParams });
-	  };
+	  });
 
-	  this.client.onclose = function () {
+	  this.client.io.addEventListener('close', function () {
 	    _this.eventEmitter.emit('disconnect');
 
 	    _this.tryReconnect();
-	  };
+	  });
 
-	  this.client.onerror = function () {
+	  this.client.addEventListener('error', function () {
 	    // Capture and ignore errors to prevent unhandled exceptions, wait for
 	    // onclose to fire before attempting a reconnect.
-	  };
+	  });
 
-	  this.client.on(SUBSCRIPTION_MESSAGE, function (_ref) {
+	  this.client.addEventListener(SUBSCRIPTION_MESSAGE, function (_ref) {
 	    var data = _ref.data;
 
 	    console.log("success", data);
@@ -179,10 +176,7 @@
 	      throw new Error('Message must be JSON-parseable. Got: ' + data);
 	    }
 	    var subId = parsedMessage.id;
-	    console.log("subid", subId);
 	    if ([KEEPALIVE, INIT_SUCCESS, INIT_FAIL].indexOf(parsedMessage.type) === -1 && !_this.subscriptions[subId]) {
-	      console.log("not here");
-	      debugger;
 	      _this.unsubscribe(subId);
 	      return;
 	    }
@@ -210,7 +204,6 @@
 
 	        break;
 	      case SUBSCRIPTION_DATA:
-	        console.log("RECEIVED DATA", parsedMessage);
 	        if (parsedMessage.payload.data && !parsedMessage.payload.errors) {
 	          _this.subscriptions[subId].handler(null, parsedMessage.payload.data);
 	        } else {
@@ -238,7 +231,6 @@
 
 	    var _this2 = _possibleConstructorReturn(this, (modIO.__proto__ || Object.getPrototypeOf(modIO)).call(this, args));
 
-	    console.log("hm", io.Manager);
 	    _this2.io.OPEN = 'open';
 	    _this2.io.CONNECTING = 'opening';
 	    _this2.io.CLOSING = 'closing';
@@ -48193,15 +48185,20 @@
 	  _createClass(SourceList, [{
 	    key: 'subscribe',
 	    value: function subscribe() {
-	      console.log("what have", this.props);
 	      this.props.subscribeToMore({
 	        document: _queries.sourceAddedSubscription,
-	        variables: {},
-	        updateQuery: function updateQuery(prev, _ref) {
+	        variables: { user_id: this.props.userId },
+	        updateQuery: function updateQuery(previousResult, _ref) {
 	          var subscriptionData = _ref.subscriptionData;
 
-	          console.log("in updateQueries", prev, subscriptionData);
-	          return;
+	          console.log("in updateQueries", previousResult, subscriptionData);
+	          return (0, _immutabilityHelper2.default)(previousResult, {
+	            sourceList: {
+	              sources: {
+	                $unshift: [subscriptionData.data.sourceAdded]
+	              }
+	            }
+	          });
 	        }
 	      });
 	    }
@@ -48609,7 +48606,7 @@
 	          sourceLists: {
 	            $apply: function $apply(currentSourceLists) {
 	              return currentSourceLists.filter(function (sourceList) {
-	                return sourceList.id != action.result.data.deleteSourceList.id;
+	                return sourceList.id !== action.result.data.deleteSourceList.id;
 	              });
 	            }
 	          }
@@ -48647,7 +48644,7 @@
 	            sources: {
 	              $apply: function $apply(currentSources) {
 	                return currentSources.filter(function (source) {
-	                  return source.id != action.result.data.updateSource.id;
+	                  return source.id !== action.result.data.updateSource.id;
 	                });
 	              }
 	            }
@@ -48660,7 +48657,7 @@
 	            sources: {
 	              $apply: function $apply(currentSources) {
 	                return currentSources.filter(function (source) {
-	                  return source.id != action.result.data.deleteSource.id;
+	                  return source.id !== action.result.data.deleteSource.id;
 	                });
 	              }
 	            }

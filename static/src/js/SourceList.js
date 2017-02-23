@@ -20,13 +20,18 @@ class SourceList extends React.Component {
   }
 
   subscribe() {
-    console.log("what have", this.props)
     this.props.subscribeToMore({
       document: sourceAddedSubscription,
-      variables: {},
-      updateQuery: (prev, { subscriptionData }) => {
-        console.log("in updateQueries", prev, subscriptionData)
-        return
+      variables: { user_id: this.props.userId },
+      updateQuery: (previousResult, { subscriptionData }) => {
+        console.log("in updateQueries", previousResult, subscriptionData)
+        return update(previousResult, {
+            sourceList: {
+                sources: {
+                    $unshift: [subscriptionData.data.sourceAdded],
+                },
+            },
+        })
       }
     })
   }

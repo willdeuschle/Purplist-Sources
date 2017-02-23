@@ -10,8 +10,10 @@ from app import app, db, subscription_server
 app.config.from_object(os.environ['APP_SETTINGS'])
 
 # websockets
-from gevent import monkey
-monkey.patch_all()
+# from gevent import monkey
+# monkey.patch_all()
+import eventlet
+eventlet.monkey_patch()
 
 
 migrate = Migrate(app, db)

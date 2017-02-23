@@ -35,11 +35,18 @@ pubsub = PubSub()
 # out from what we are doing in this file
 setup_functions = {}
 
-def sourceAdded(options, args, subscription_name):
-    print("in setup funciton for sourceAdded", options, args, subscription_name)
-    return {'sourceAdded': {}}
+# determine who to send this update to
+def filter_source_added(root_value, context, **variables):
+    if not variables.get('user_id', None):
+        raise ValueError('No user id passed as variable')
+    else:
+        return root_value.user_id == int(variables['user_id'])
 
-setup_functions['sourceAdded'] = sourceAdded # not filtering / offering options
+# configure sourceAdded subscription
+def sourceAdded(options, args, subscription_name):
+    return {'sourceAdded': {'filter': filter_source_added}}
+
+setup_functions['sourceAdded'] = sourceAdded # add the sourceAdded subscription
 subscription_manager = SubscriptionManager(schema, pubsub, setup_functions)
 
 from transport_websockets.transport import SubscriptionServer
@@ -183,6 +190,7 @@ def chromeext():
         db.session.add(s)
         db.session.commit()
 
+        print("LIT", request.__dict__)
         # use subscriptions
         pubsub.publish('sourceAdded', s)
 

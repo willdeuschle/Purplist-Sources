@@ -30,7 +30,6 @@ class PubSub(object):
         """
         publish a payload to the specified channel
         """
-        print("publishing", trigger_name, payload, self.subscriptions)
         self.ee.emit(trigger_name, payload)
         return True
 
@@ -38,11 +37,9 @@ class PubSub(object):
         """
         subscribe to a given channel to get updates from mutations
         """
-        print("setting up subscription", trigger_name, on_message)
         self.ee.on(trigger_name, on_message)
         self.sub_id_counter += 1
         self.subscriptions[self.sub_id_counter] = [trigger_name, on_message]
-        print("what is counter", self.sub_id_counter)
         return self.sub_id_counter
 
     def unsubscribe(self, subId):
@@ -74,7 +71,7 @@ class SubscriptionManager(object):
 
     def publish(self, trigger_name, payload):
         """
-        just publish using our pubsub engine
+        just publish using pubsub engine
         """
         self.pubsub.publish(trigger_name, payload)
 
@@ -105,7 +102,6 @@ class SubscriptionManager(object):
                 # there can only be a single root field on a subscription
                 # the root field will be the first selection
                 root_field = definition.selection_set.selections[0]
-                print("what is root field", root_field, root_field.name, root_field.name.value)
                 subscription_name = root_field.name.value
 
                 fields = self.schema.get_subscription_type().fields
@@ -116,21 +112,16 @@ class SubscriptionManager(object):
                     # parse the variable value and add it to our args
                     args[arg_definition.name] = value_from_ast(arg.value, arg_definition.type, kwargs['variables'])
 
-        print("hmm", self.setup_functions)
         # see if the channel we are trying to subscribe to was declared
         # in the setup_functions and do some prep if it was
         if self.setup_functions.get(subscription_name, None):
             # execute the setup_function for this subscription_name
-            print("WOO")
             trigger_map = self.setup_functions[subscription_name](kwargs, args, subscription_name)
-            print("WOO", trigger_map)
         else:
-            print("NOO")
             # otherwise use the defaults, with the subscription_name being
             # the key for the trigger_map
             trigger_map = {subscription_name: {}}
 
-        print("what is trigger_map", trigger_map)
 
         # increment the current subscription id (does this need to be
         # assigned to a different variable or is that just for js?) - I don't
@@ -157,29 +148,26 @@ class SubscriptionManager(object):
             # root_value is the payload returned by the EventEmitter / trigger,
             # by default it is the value returned from the mutation resolver
             def on_message(root_value):
-                print("ITS HAPPENING")
                 # check if it's a funciotn
                 if callable(kwargs['context']):
                     context = kwargs['context']()
                 else:
                     context = kwargs['context']
                 # eval the filter function to see how we should proceed
-                do_execute = filter_func(root_value, context)
+                # TODO decide if even useful to have context? or good to have both context and variables
+                do_execute = filter_func(root_value, context, **kwargs['variables'])
                 if not do_execute:
                     return
                 # is this async like in js? - no I don't think so
                 try:
-                    print("what have", self.schema, parsed_query, root_value, context, kwargs['variables'], kwargs.get('operation_name', None))
                     data = execute(self.schema,
                                    parsed_query,
                                    root_value,
                                    context,
                                    kwargs['variables'],
                                    kwargs.get('operation_name', None))
-                    print("what is data", data)
                     kwargs['callback'](None, data)
                 except Exception as e:
-                    print("there was an error?", e)
                     kwargs['callback'](e)
 
             # subscribe and keep the sub id

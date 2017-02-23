@@ -13,10 +13,6 @@ const networkInterface = new createNetworkInterface({
 })
 
 SubscriptionClient.prototype.sendMessage = function (message) {
-  this.client.on('subscription_data', (stuff) => {
-    console.log("WOO", stuff)
-    debugger
-  })
   switch (this.client.io.readyState) {
     case this.client.io.OPEN:
       this.client.send(JSON.stringify(message));
@@ -50,7 +46,8 @@ const INIT_FAIL = 'init_fail';
 SubscriptionClient.prototype.connect = function(isReconnect=false) {
   this.client = new this.wsImpl(this.url, GRAPHQL_SUBSCRIPTIONS);
 
-  this.client.onopen = () => {
+  //this.client.onopen = () => {
+  this.client.io.addEventListener('open', () => {
     this.eventEmitter.emit(isReconnect ? 'reconnect' : 'connect');
     this.reconnecting = false;
     this.backoff.reset();
@@ -65,20 +62,20 @@ SubscriptionClient.prototype.connect = function(isReconnect=false) {
 
     // Send INIT message, no need to wait for connection to success (reduce roundtrips)
     this.sendMessage({type: INIT, payload: this.connectionParams});
-  };
+  });
 
-  this.client.onclose = () => {
+  this.client.io.addEventListener('close', () => {
     this.eventEmitter.emit('disconnect');
 
     this.tryReconnect();
-  };
+  });
 
-  this.client.onerror = () => {
+  this.client.addEventListener('error', () => {
     // Capture and ignore errors to prevent unhandled exceptions, wait for
     // onclose to fire before attempting a reconnect.
-  };
+  });
 
-  this.client.on(SUBSCRIPTION_MESSAGE, ({ data }) => {
+  this.client.addEventListener(SUBSCRIPTION_MESSAGE, ({ data }) => {
     console.log("success", data)
     let parsedMessage
     try {
@@ -88,10 +85,7 @@ SubscriptionClient.prototype.connect = function(isReconnect=false) {
       throw new Error(`Message must be JSON-parseable. Got: ${data}`);
     }
     const subId = parsedMessage.id;
-    console.log("subid", subId)
     if ([KEEPALIVE, INIT_SUCCESS, INIT_FAIL].indexOf(parsedMessage.type) === -1 && !this.subscriptions[subId]) {
-      console.log("not here")
-      debugger
       this.unsubscribe(subId);
       return;
     }
@@ -119,7 +113,6 @@ SubscriptionClient.prototype.connect = function(isReconnect=false) {
 
         break;
       case SUBSCRIPTION_DATA:
-        console.log("RECEIVED DATA", parsedMessage)
         if (parsedMessage.payload.data && !parsedMessage.payload.errors) {
             this.subscriptions[subId].handler(null, parsedMessage.payload.data);
         } else {
@@ -141,7 +134,6 @@ SubscriptionClient.prototype.connect = function(isReconnect=false) {
 class modIO extends io {
   constructor(args) {
     super(args)
-    console.log("hm", io.Manager)
     this.io.OPEN = 'open'
     this.io.CONNECTING = 'opening'
     this.io.CLOSING = 'closing'

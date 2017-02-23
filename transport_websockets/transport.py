@@ -44,15 +44,18 @@ class SubscriptionServer(object):
         self.keep_alive = keep_alive
 
         # initialize websocket, and init with our app
+        # self.socketio = SocketIO(async_mode='eventlet', engineio_logger=True)
         self.socketio = SocketIO()
         self.socketio.init_app(app)
 
         # to run on connection
         # TODO: make sure the request coming to this websocket is for graphql_subscriptions
         def socket_connect():
+            print("client connected")
             print("need to eventually validate request method", request.method, request.sid)
-            self.socketio.emit('msg', {'data': 'hi'}, namespace='/ws')
+            self.socketio.emit('message', {'data': 'hi'}, namespace='/ws')
         self.socketio.on_event('connect', socket_connect, namespace='/ws')
+
 
         # to run on disconnect
         # TODO: clean up the subscriptions
@@ -91,18 +94,23 @@ class SubscriptionServer(object):
                           # namespace="/ws",
                           # room=request.sid)
 
-        # need to make a closure for this request id
+        # closure over request id
         request_id = request.sid
 
         # first parse our message
         try:
             parsed_message = json.loads(message)
+            print("what message", parsed_message)
         except Exception as e:
             # send failure
             self.send_subscription_fail(None, {'errors': e}, request_id)
             return
 
-        sub_id = parsed_message['id']
+        sub_id = parsed_message.get('id', None)
+        unique_sub_id = None
+        # scope our subscription id here
+        if sub_id is not None:
+            unique_sub_id = str(request_id) + str(sub_id)
 
         # handle our different message types
 
@@ -111,7 +119,7 @@ class SubscriptionServer(object):
             print("INIT")
             try:
                 # if we have some custom set-up
-                # I think this is to filter some things out on INIT
+                # this is to filter some things out on INIT
                 on_connect_context = True
                 if self.on_connect:
                     on_connect_context = self.on_connect(parsed_message['payload'])
@@ -146,10 +154,9 @@ class SubscriptionServer(object):
                     base_params = self.on_subscribe(parsed_message, base_params)
 
                 # if we already have a subscription with this id unsub first
-                # unclear if this works or not
-                if self.connection_subscriptions.get(sub_id, None):
-                    self.unsubscribe(self.connection_subscriptions[sub_id])
-                    self.connection_subscriptions.pop(sub_id)
+                if self.connection_subscriptions.get(unique_sub_id, None):
+                    self.unsubscribe(self.connection_subscriptions[unique_sub_id])
+                    self.connection_subscriptions.pop(unique_sub_id)
 
                 if not isinstance(base_params, dict):
                     error = 'Invalid params returned from on_subscribe - return values must be an object'
@@ -161,7 +168,6 @@ class SubscriptionServer(object):
                 # result is GraphQL ExecutionResult
                 # should also think about passing the request through to here in case we error?
                 def callback(error=None, result=None):
-                    print("in callback", error, result)
                     if not error:
                         self.send_subscription_data(sub_id, {'data': result.data}, request_id)
                     elif isinstance(error, dict) and 'errors' in error:
@@ -175,45 +181,46 @@ class SubscriptionServer(object):
                 # get back the subscription id of the subscription_manager
                 graphql_sub_id = self.subscription_manager.subscribe(**base_params)
 
-                self.connection_subscriptions[sub_id] = graphql_sub_id
+                self.connection_subscriptions[unique_sub_id] = graphql_sub_id
 
                 self.send_subscription_success(sub_id, request_id)
+
             # need to work on error handling
             except Exception as e:
-                print("what errors", e)
+                print("error", e)
                 # is this the right way to do this?
                 # if e.get('errors', None):
                 if isinstance(e, dict):
                     # these are graphql errors
                     self.send_subscription_fail(sub_id, {'errors': e.errors}, request_id)
                 else:
-                    # this is a runtime error, is this the right way to handle it?
+                    # this is a runtime error
                     self.send_subscription_fail(sub_id, {'errors': e}, request_id)
             return
 
         # SUBSCRIPTION_END case
         elif parsed_message['type'] == SUBSCRIPTION_END:
             # just get the sub_id, unsub, delete it
-            if self.connection_subscriptions.get(sub_id, None):
-                self.unsubscribe(self.connection_subscriptions[sub_id])
-                self.connection_subscriptions.pop(sub_id)
+            if self.connection_subscriptions.get(unique_sub_id, None):
+                self.unsubscribe(self.connection_subscriptions[unique_sub_id])
+                self.connection_subscriptions.pop(unique_sub_id)
             return
 
         # otherwise fail
         else:
-            self.send_subscription_fail(sub_id, {'errors': {'message': 'Invalid message type'}}, request_id)
+            self.send_subscription_fail(sub_id, {'errors': 'Invalid message type'}, request_id)
             return
 
-    ### FIRST THING TO DO TODAY: figure out how to store the sid so that we can send it on appropriately
     def send_subscription_data(self, sub_id, payload, request_id):
         """
         send update to the appropriate client via the session id
         """
-        print("sending data", payload, request.__dict__)
+        print("sending data", payload, request_id)
         message = {
             'type': SUBSCRIPTION_DATA,
             'id': sub_id,
             'payload': payload,
+            'room': request_id,
         }
         self.socketio.emit(SUBSCRIPTION_MESSAGE,
                           {'data': json.dumps(message)},
@@ -224,7 +231,8 @@ class SubscriptionServer(object):
         """
         alert client to failure in setting up subscription
         """
-        error_message = str(payload['error'])
+        print("errors", payload)
+        error_message = str(payload['errors'])
         message = {
             'type': SUBSCRIPTION_FAIL,
             'id': sub_id,
@@ -239,7 +247,7 @@ class SubscriptionServer(object):
         """
         notify client of success in setting up subscription
         """
-        print("SUCCESS", sub_id, request.sid)
+        print("SUCCESS", sub_id, request_id)
         message = {
             'type': SUBSCRIPTION_SUCCESS,
             'id': sub_id,
@@ -258,8 +266,7 @@ class SubscriptionServer(object):
                           {'data': json.dumps(message)},
                           namespace='/ws',
                           room=request_id)
-        # self.socketio.emit('init_result',
 
-    # going to worry about this later
+    # going to worry about this later - no need to worry we are using ping/pong to keep alive
     def send_keep_alive(self):
         pass
