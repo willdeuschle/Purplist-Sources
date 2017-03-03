@@ -1,0 +1,10 @@
+setup.cfg
+setup.py
+python_graphql_subscriptions/__init__.py
+python_graphql_subscriptions/python_graphql_subscriptions.py
+python_graphql_subscriptions.egg-info/PKG-INFO
+python_graphql_subscriptions.egg-info/SOURCES.txt
+python_graphql_subscriptions.egg-info/dependency_links.txt
+python_graphql_subscriptions.egg-info/not-zip-safe
+python_graphql_subscriptions.egg-info/requires.txt
+python_graphql_subscriptions.egg-info/top_level.txt

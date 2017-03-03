@@ -165,7 +165,6 @@ def logout():
 # for our chrome extension
 @app.route('/chromeext/', methods=['GET', 'POST'])
 def chromeext():
-    print("what is pubsub", pubsub)
     user_id = getattr(current_user, 'id', None)
     if not user_id:
         return jsonify({'logged_in': False})

@@ -1,0 +1,12 @@
+README.rst
+setup.cfg
+setup.py
+promise/__init__.py
+promise/compat.py
+promise/iterate_promise.py
+promise/promise.py
+promise.egg-info/PKG-INFO
+promise.egg-info/SOURCES.txt
+promise.egg-info/dependency_links.txt
+promise.egg-info/requires.txt
+promise.egg-info/top_level.txt
