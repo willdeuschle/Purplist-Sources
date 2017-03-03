@@ -6,7 +6,7 @@ enum-compat==0.0.2
 eventlet==0.20.1
 Flask==0.12
 Flask-GraphQL==1.4.0
-flask-graphql-subscriptions-transport==0.1.3
+flask-graphql-subscriptions-transport==0.1.4
 Flask-Login==0.4.0
 Flask-Migrate==1.8.0
 Flask-Script==2.0.5
