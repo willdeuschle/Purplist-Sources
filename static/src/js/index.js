@@ -15,6 +15,7 @@ const networkInterface = new createNetworkInterface({
 SubscriptionClient.prototype.sendMessage = function (message) {
   switch (this.client.io.readyState) {
     case this.client.io.OPEN:
+      console.log("I can send?")
       this.client.send(JSON.stringify(message));
       break;
     case this.client.io.CONNECTING:
@@ -45,9 +46,13 @@ const INIT_FAIL = 'init_fail';
 // websockets use different connecting methods
 SubscriptionClient.prototype.connect = function(isReconnect=false) {
   this.client = new this.wsImpl(this.url, GRAPHQL_SUBSCRIPTIONS);
+  //this.client = io.connect(this.url, {
+    //upgrade: false,
+    //transports: ['websocket']
+  //})
+  console.log("who is client", this.client)
 
-  //this.client.onopen = () => {
-  this.client.io.addEventListener('open', () => {
+  this.client.io.on('open', () => {
     this.eventEmitter.emit(isReconnect ? 'reconnect' : 'connect');
     this.reconnecting = false;
     this.backoff.reset();
@@ -64,19 +69,19 @@ SubscriptionClient.prototype.connect = function(isReconnect=false) {
     this.sendMessage({type: INIT, payload: this.connectionParams});
   });
 
-  this.client.io.addEventListener('close', () => {
+  this.client.on('close', () => {
     this.eventEmitter.emit('disconnect');
 
     this.tryReconnect();
   });
 
-  this.client.addEventListener('error', () => {
+  this.client.on('error', () => {
     // Capture and ignore errors to prevent unhandled exceptions, wait for
     // onclose to fire before attempting a reconnect.
   });
 
-  this.client.addEventListener(SUBSCRIPTION_MESSAGE, ({ data }) => {
-    console.log("success", data)
+
+  this.client.on(SUBSCRIPTION_MESSAGE, ({ data }) => {
     let parsedMessage
     try {
       parsedMessage = JSON.parse(data);

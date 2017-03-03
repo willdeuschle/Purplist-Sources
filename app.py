@@ -29,7 +29,7 @@ from schema import schema, GraphqlAuthorizationMiddleware
 # )
 
 # need to add my setup_functions
-from transport_websockets.subscriptions import SubscriptionManager, PubSub
+from python_graphql_subscriptions import SubscriptionManager, PubSub
 pubsub = PubSub()
 # add our setup function of interest - will eventually want to separate this
 # out from what we are doing in this file
@@ -49,12 +49,10 @@ def sourceAdded(options, args, subscription_name):
 setup_functions['sourceAdded'] = sourceAdded # add the sourceAdded subscription
 subscription_manager = SubscriptionManager(schema, pubsub, setup_functions)
 
-from transport_websockets.transport import SubscriptionServer
+# from transport_websockets.transport import SubscriptionServer
+from flask_graphql_subscriptions_transport import SubscriptionServer
 subscription_server = SubscriptionServer(app,
                                          subscription_manager)
-# from flask_socketio import SocketIO
-# socketio = SocketIO()
-# socketio.init_app(app)
 
 # manages user authentication and sesions
 lm = LoginManager(app)
@@ -75,13 +73,6 @@ def graphql():
         context={'current_user': current_user},
         graphiql=app.config['DEVELOPMENT'],
     )()
-
-# this endpoint handles additions of sources from the home page
-# @app.route('/addsource', methods=['POST'])
-# def addsource():
-    # title = request.data.get('title', None)
-    # sourceUrl = request.data.get('sourceUrl', None)
-
 
 
 # this route is to handle unauthorized people, send them to login
@@ -138,7 +129,6 @@ def oauth_callback(provider):
     return redirect(url_for('index', username=user.username))
 
 
-
 @app.route('/download/', methods=['GET', 'POST'])
 @app.route('/download/<sourceListId>/', methods=['GET', 'POST'])
 @login_required
@@ -163,12 +153,14 @@ def download_list(sourceListId=None):
 def login():
     return render_template('login.html', title='Login')
 
+
 # this logs you out and returns you to the landing page
 @app.route('/logout/')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
 
 # for our chrome extension
 @app.route('/chromeext/', methods=['GET', 'POST'])
@@ -190,7 +182,6 @@ def chromeext():
         db.session.add(s)
         db.session.commit()
 
-        print("LIT", request.__dict__)
         # use subscriptions
         pubsub.publish('sourceAdded', s)
 
@@ -202,23 +193,6 @@ def chromeext():
 @login_required
 def index(username, sourceListId=None):
     return render_template('index.html')
-
-# @socketio.on('connect', namespace='/dd')
-# def ws_conn():
-    # socketio.emit('msg', {'data': 'hi'}, namespace='/dd')
-
-
-# @socketio.on('disconnect', namespace='/dd')
-# def ws_disconn():
-    # socketio.emit('msg', {'data': 'bye'}, namespace='/dd')
-
-# @socketio.on('listen', namespace='/dd')
-# def ws_listen(message):
-    # print(message['listen'])
-    # socketio.emit('listen', {'data': cgi.escape(message['listen'])},
-                  # namespace="/dd")
-# another way to do it
-# socketio.on('listen', namespace='/dd')(ws_listen)
 
 
 if __name__ == '__main__':

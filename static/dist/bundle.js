@@ -97,6 +97,7 @@
 	_subscriptionsTransportWs.SubscriptionClient.prototype.sendMessage = function (message) {
 	  switch (this.client.io.readyState) {
 	    case this.client.io.OPEN:
+	      console.log("I can send?");
 	      this.client.send(JSON.stringify(message));
 	      break;
 	    case this.client.io.CONNECTING:
@@ -131,9 +132,13 @@
 	  var isReconnect = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 
 	  this.client = new this.wsImpl(this.url, GRAPHQL_SUBSCRIPTIONS);
+	  //this.client = io.connect(this.url, {
+	  //upgrade: false,
+	  //transports: ['websocket']
+	  //})
+	  console.log("who is client", this.client);
 
-	  //this.client.onopen = () => {
-	  this.client.io.addEventListener('open', function () {
+	  this.client.io.on('open', function () {
 	    _this.eventEmitter.emit(isReconnect ? 'reconnect' : 'connect');
 	    _this.reconnecting = false;
 	    _this.backoff.reset();
@@ -153,21 +158,20 @@
 	    _this.sendMessage({ type: INIT, payload: _this.connectionParams });
 	  });
 
-	  this.client.io.addEventListener('close', function () {
+	  this.client.on('close', function () {
 	    _this.eventEmitter.emit('disconnect');
 
 	    _this.tryReconnect();
 	  });
 
-	  this.client.addEventListener('error', function () {
+	  this.client.on('error', function () {
 	    // Capture and ignore errors to prevent unhandled exceptions, wait for
 	    // onclose to fire before attempting a reconnect.
 	  });
 
-	  this.client.addEventListener(SUBSCRIPTION_MESSAGE, function (_ref) {
+	  this.client.on(SUBSCRIPTION_MESSAGE, function (_ref) {
 	    var data = _ref.data;
 
-	    console.log("success", data);
 	    var parsedMessage = void 0;
 	    try {
 	      parsedMessage = JSON.parse(data);

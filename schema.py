@@ -382,9 +382,7 @@ class Subscription(graphene.ObjectType):
         description='An individual source',
     )
 
-    # have really no idea if this is how you set up a subscription schema
     def resolve_source_added(self, args, context, info):
-        print("FOOOOOOL", self, args, context)
         return self
 
 

@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: python-graphql-subscriptions
+Version: 0.1.5
+Summary: Adds support for subscriptions to GraphQL applications that use a Python backend.
+Home-page: https://github.com/willdeuschle/Python-GraphQL-Subscriptions
+Author: Will Deuschle
+Author-email: wjdeuschle@gmail.com
+License: MIT
+Description: UNKNOWN
+Platform: UNKNOWN
