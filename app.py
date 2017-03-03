@@ -1,4 +1,5 @@
 import os
+import cgi
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager, login_required, logout_user, login_user, current_user
 from flask import Flask, render_template, url_for, redirect, flash, request, make_response, jsonify, session
@@ -27,6 +28,32 @@ from schema import schema, GraphqlAuthorizationMiddleware
     # )
 # )
 
+# need to add my setup_functions
+from python_graphql_subscriptions import SubscriptionManager, PubSub
+pubsub = PubSub()
+# add our setup function of interest - will eventually want to separate this
+# out from what we are doing in this file
+setup_functions = {}
+
+# determine who to send this update to
+def filter_source_added(root_value, context, **variables):
+    if not variables.get('user_id', None):
+        raise ValueError('No user id passed as variable')
+    else:
+        return root_value.user_id == int(variables['user_id'])
+
+# configure sourceAdded subscription
+def sourceAdded(options, args, subscription_name):
+    return {'sourceAdded': {'filter': filter_source_added}}
+
+setup_functions['sourceAdded'] = sourceAdded # add the sourceAdded subscription
+subscription_manager = SubscriptionManager(schema, pubsub, setup_functions)
+
+# from transport_websockets.transport import SubscriptionServer
+from flask_graphql_subscriptions_transport import SubscriptionServer
+subscription_server = SubscriptionServer(app,
+                                         subscription_manager)
+
 # manages user authentication and sesions
 lm = LoginManager(app)
 @lm.user_loader
@@ -46,13 +73,6 @@ def graphql():
         context={'current_user': current_user},
         graphiql=app.config['DEVELOPMENT'],
     )()
-
-# this endpoint handles additions of sources from the home page
-# @app.route('/addsource', methods=['POST'])
-# def addsource():
-    # title = request.data.get('title', None)
-    # sourceUrl = request.data.get('sourceUrl', None)
-
 
 
 # this route is to handle unauthorized people, send them to login
@@ -109,7 +129,6 @@ def oauth_callback(provider):
     return redirect(url_for('index', username=user.username))
 
 
-
 @app.route('/download/', methods=['GET', 'POST'])
 @app.route('/download/<sourceListId>/', methods=['GET', 'POST'])
 @login_required
@@ -134,6 +153,7 @@ def download_list(sourceListId=None):
 def login():
     return render_template('login.html', title='Login')
 
+
 # this logs you out and returns you to the landing page
 @app.route('/logout/')
 @login_required
@@ -141,9 +161,11 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
+
 # for our chrome extension
 @app.route('/chromeext/', methods=['GET', 'POST'])
 def chromeext():
+    print("what is pubsub", pubsub)
     user_id = getattr(current_user, 'id', None)
     if not user_id:
         return jsonify({'logged_in': False})
@@ -159,6 +181,10 @@ def chromeext():
                    source_url=payload['source_url'])
         db.session.add(s)
         db.session.commit()
+
+        # use subscriptions
+        pubsub.publish('sourceAdded', s)
+
         return jsonify({'logged_in': True})
 
 # this is the index page

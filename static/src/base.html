@@ -13,6 +13,8 @@
         </title>
         <link rel='stylesheet' href="{{ url_for('static', filename='base_styles.css') }}" />
         <script src="https://use.fontawesome.com/30917e9134.js"></script>
+        <!--Unfortunately need to use this cdn until I figure out how to get it with npm-->
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js"></script>
         <script>
           window.cu_id = {{current_user.id}}
         </script>

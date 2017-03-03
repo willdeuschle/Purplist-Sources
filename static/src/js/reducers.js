@@ -53,7 +53,7 @@ export const sourceListColumnReducer = (previousResult, action, variables) => {
       case mutationTypes.deleteSourceList:
         return update(previousResult, {
           sourceLists: {
-            $apply: currentSourceLists => currentSourceLists.filter(sourceList => sourceList.id != action.result.data.deleteSourceList.id)
+            $apply: currentSourceLists => currentSourceLists.filter(sourceList => sourceList.id !== action.result.data.deleteSourceList.id)
           },
         })
       default:
@@ -88,7 +88,7 @@ export const sourceListReducer = (previousResult, action, variables) => {
         return update(previousResult, {
           sourceList: {
             sources: {
-              $apply: currentSources => currentSources.filter(source => source.id != action.result.data.updateSource.id)
+              $apply: currentSources => currentSources.filter(source => source.id !== action.result.data.updateSource.id)
             },
           },
         })
@@ -97,7 +97,7 @@ export const sourceListReducer = (previousResult, action, variables) => {
         return update(previousResult, {
           sourceList: {
             sources: {
-              $apply: currentSources => currentSources.filter(source => source.id != action.result.data.deleteSource.id)
+              $apply: currentSources => currentSources.filter(source => source.id !== action.result.data.deleteSource.id)
             },
           },
         })
