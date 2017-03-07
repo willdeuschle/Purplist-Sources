@@ -195,6 +195,5 @@ def index(username, sourceListId=None):
 
 
 if __name__ == '__main__':
-    print("WE ARE IN MAIN")
     subscription_server.socketio.run(app)
     # app.run()
