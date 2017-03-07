@@ -246,7 +246,10 @@
 	  return modIO;
 	}(io);
 
-	var wsClient = new _subscriptionsTransportWs.SubscriptionClient('http://localhost:5000/ws', {
+	//const wsClient = new SubscriptionClient('http://localhost:5000/ws', {
+
+
+	var wsClient = new _subscriptionsTransportWs.SubscriptionClient(location.origin + '/ws', {
 	  reconnect: true,
 	  connectionParams: {}
 	},

@@ -147,7 +147,8 @@ class modIO extends io {
   }
 }
 
-const wsClient = new SubscriptionClient('http://localhost:5000/ws', {
+//const wsClient = new SubscriptionClient('http://localhost:5000/ws', {
+const wsClient = new SubscriptionClient(`${location.origin}/ws`, {
     reconnect: true,
     connectionParams: {
     }
