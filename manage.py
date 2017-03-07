@@ -80,4 +80,5 @@ manager.add_command("runserver", Server())
 
 
 if __name__ == '__main__':
+    print("HERE WE ARE HERE WE ARE")
     manager.run()
