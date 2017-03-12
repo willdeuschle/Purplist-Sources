@@ -63,6 +63,7 @@ def load_user(id):
     except:
         return None
 
+
 @app.route('/graphql', methods=['GET', 'POST'])
 @login_required
 def graphql():
